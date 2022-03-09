@@ -62,7 +62,7 @@ return [
     'permissionNotFound'        => 'Tidak dapat menemukan izin: {0}',
 
     // Banned
-    'userIsBanned'              => 'Pengguna telah dibanned. Hubungi administrator',
+    'userIsBanned'              => 'Pengguna baru menunggu validasi administrator.',
 
     // Too many requests
     'tooManyRequests'           => 'Terlalu banyak permintaan.  Harap tunggu {0, number} detik.',
@@ -84,10 +84,11 @@ return [
     'repeatPassword'            => 'Ulangi kata sandi',
     'emailOrUsername'           => 'Email atau nama pengguna',
     'username'                  => 'Nama pengguna',
+    'jenis_pengguna'            => 'Jenis pengguna',
     'register'                  => 'Daftar',
     'signIn'                    => 'Masuk',
     'alreadyRegistered'         => 'Sudah terdaftar?',
-    'weNeverShare'              => 'Kami tidak akan pernah membagi email Anda dengan orang lain.',
+    'weNeverShare'              => 'Email harus aktif. Untuk aktivasi dan mengatur ulang kata sandi akun Anda.',
     'resetYourPassword'         => 'Mereset password Anda',
     'enterCodeEmailPassword'    => 'Masukkan kode yang Anda terima melalui email, alamat email Anda, dan kata sandi baru Anda.',
     'token'                     => 'Token',

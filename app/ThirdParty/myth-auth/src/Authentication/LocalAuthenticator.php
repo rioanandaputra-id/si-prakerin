@@ -29,18 +29,6 @@ class LocalAuthenticator extends AuthenticationBase implements AuthenticatorInte
             return false;
         }
 
-        if ($this->user->isBanned())
-        {
-            // Always record a login attempt, whether success or not.
-            $ipAddress = service('request')->getIPAddress();
-            $this->recordLoginAttempt($credentials['email'] ?? $credentials['username'], $ipAddress, $this->user->id ?? null, false);
-
-            $this->error = lang('Auth.userIsBanned');
-
-            $this->user = null;
-            return false;
-        }
-
         if (! $this->user->isActivated())
         {
             // Always record a login attempt, whether success or not.
@@ -52,6 +40,18 @@ class LocalAuthenticator extends AuthenticationBase implements AuthenticatorInte
             ]);
 
             $this->error = lang('Auth.notActivated') .' '. anchor(route_to('resend-activate-account').'?'.$param, lang('Auth.activationResend'));
+
+            $this->user = null;
+            return false;
+        }
+
+        if ($this->user->isBanned())
+        {
+            // Always record a login attempt, whether success or not.
+            $ipAddress = service('request')->getIPAddress();
+            $this->recordLoginAttempt($credentials['email'] ?? $credentials['username'], $ipAddress, $this->user->id ?? null, false);
+
+            $this->error = lang('Auth.userIsBanned');
 
             $this->user = null;
             return false;

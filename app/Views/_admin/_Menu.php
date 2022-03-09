@@ -65,7 +65,7 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fa fa-building"></i>
                 <p>
-                    Kerja Industri
+                    Praktik Industri
                 </p>
             </a>
         </li>
@@ -113,7 +113,7 @@
             <a href="" class="nav-link">
                 <i class="nav-icon fa fa-lock"></i>
                 <p>
-                    Akun
+                    Akun Saya
                 </p>
             </a>
         </li>

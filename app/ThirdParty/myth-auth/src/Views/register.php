@@ -15,6 +15,16 @@
                         <?= csrf_field() ?>
 
                         <div class="form-group">
+                            <label for="jenis_pengguna"><?=lang('Auth.jenis_pengguna')?></label>
+                            <select name="jenis_pengguna" class="form-control <?php if(session('errors.jenis_pengguna')) : ?>is-invalid<?php endif ?>">
+                                <option value="">--Pilih--</option>
+                                <option value="Admin" <?= (old('jenis_pengguna') == 'Admin') ? 'selected' : '' ; ?>>Admin</option>
+                                <option value="Dosen" <?= (old('jenis_pengguna') == 'Dosen') ? 'selected' : '' ; ?>>Dosen</option>
+                                <option value="Mahasiswa" <?= (old('jenis_pengguna') == 'Mahasiswa') ? 'selected' : '' ; ?>>Mahasiswa</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email"><?=lang('Auth.email')?></label>
                             <input type="email" class="form-control <?php if(session('errors.email')) : ?>is-invalid<?php endif ?>"
                                    name="email" aria-describedby="emailHelp" placeholder="<?=lang('Auth.email')?>" value="<?= old('email') ?>">

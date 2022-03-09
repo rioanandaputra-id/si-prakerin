@@ -1,8 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-    <a href="#" class="brand-link">
-        <img src="<?= base_url('siprakerin.png'); ?>" alt="" class="brand-image mt-1">
-        <span class="brand-text font-weight" style="font-size: 25px;"><strong>SI-PRAKERIN</strong></span><br>
+    <a href="#" class="brand-link p-1">
+        <img src="<?= base_url('siprakerin.png'); ?>" alt="" class="brand-image mt-2" style="max-height: 35px;">
+        <small class="brand-text d-block">Sistem Informasi</small>
+        <span class="brand-text d-block mb-1" style="font-size: 15px;"><strong>PRAKTIK INDUSTRI</strong></span>
     </a>
 
     <div class="sidebar">

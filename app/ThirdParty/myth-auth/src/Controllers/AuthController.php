@@ -179,6 +179,7 @@ class AuthController extends Controller
 
 		// Validate basics first since some password rules rely on these fields
 		$rules = [
+			'jenis_pengguna' => 'required',
 			'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
 			'email'    => 'required|valid_email|is_unique[users.email]',
 		];
@@ -206,9 +207,9 @@ class AuthController extends Controller
 		$this->config->requireActivation === null ? $user->activate() : $user->generateActivateHash();
 
 		// Ensure default group gets assigned if set
-        if (! empty($this->config->defaultUserGroup)) {
-            $users = $users->withGroup($this->config->defaultUserGroup);
-        }
+        // if (! empty($this->config->defaultUserGroup)) {
+            $users = $users->withGroup($this->request->getPost('jenis_pengguna'));
+        // }
 
 		if (! $users->save($user))
 		{
