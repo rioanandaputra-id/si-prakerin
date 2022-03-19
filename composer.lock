@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25b79e653d1cd56b46d4079896692eea",
+    "content-hash": "b2605727ed2ff26f612106e8ab7cc9d0",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -63,6 +63,54 @@
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
             "time": "2022-02-26T00:51:52+00:00"
+        },
+        {
+            "name": "irsyadulibad/codeigniter4-datatables",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/irsyadulibad/ci4-datatables.git",
+                "reference": "198232d8763c1ad20aa24c3067056582ce0283b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/irsyadulibad/ci4-datatables/zipball/198232d8763c1ad20aa24c3067056582ce0283b8",
+                "reference": "198232d8763c1ad20aa24c3067056582ce0283b8",
+                "shasum": ""
+            },
+            "require": {
+                "codeigniter4/framework": "^4",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Irsyadulibad\\DataTables\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ahmad Irsyadul Ibad",
+                    "email": "ahmadirsyadulibad7@gmail.com",
+                    "homepage": "http://irsyadulibad.my.id",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Server side DataTables library for CodeIgniter4 framework",
+            "keywords": [
+                "codeigniter",
+                "datatables",
+                "server side"
+            ],
+            "support": {
+                "issues": "https://github.com/irsyadulibad/ci4-datatables/issues",
+                "source": "https://github.com/irsyadulibad/ci4-datatables/tree/2.0.1"
+            },
+            "time": "2022-03-16T11:40:45+00:00"
         },
         {
             "name": "kint-php/kint",

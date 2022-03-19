@@ -7,21 +7,21 @@ use CodeIgniter\Model;
 class TahunAkademikModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'tahunakademiks';
+    protected $table            = 'tb_tahun_akademik';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id', 'tahun_akademik', 'dibuat_pada', 'diperbaharui_pada'];
 
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'dibuat_pada';
+    protected $updatedField  = 'diperbaharui_pada';
+    // protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];

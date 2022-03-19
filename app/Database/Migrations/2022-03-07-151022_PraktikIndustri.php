@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class KerjaIndustri extends Migration
+class PraktikIndustri extends Migration
 {
     public function up()
     {

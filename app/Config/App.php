@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = BASE;
+    public $baseURL = 'https://si-prakerin.test';
 
     /**
      * --------------------------------------------------------------------------

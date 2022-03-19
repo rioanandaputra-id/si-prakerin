@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 
-class Auth extends BaseController
+class Rekap extends BaseController
 {
     public function index()
     {
-        echo "asasassasas";
+        //
     }
 }

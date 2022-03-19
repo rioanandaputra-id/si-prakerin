@@ -45,6 +45,7 @@ class Autoload extends AutoloadConfig
         'Config'      => APPPATH . 'Config',
         'App'         => APPPATH, 
 		'Myth\Auth'   => APPPATH .'ThirdParty/myth-auth/src', 
+        'Irsyadulibad\DataTables'   => APPPATH .'Libraries/codeigniter4-datatables/src',
     ];
 
     /**

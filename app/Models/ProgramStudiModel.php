@@ -7,21 +7,21 @@ use CodeIgniter\Model;
 class ProgramStudiModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'programstudis';
+    protected $table            = 'tb_program_studi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['nama_prodi', 'nama_alias'];
 
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'dibuat_pada';
+    protected $updatedField  = 'diperbaharui_pada';
+    // protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
