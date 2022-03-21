@@ -17,12 +17,43 @@ class DataMaster extends BaseController
 
     public function view_dosen()
     {
-        //
+        if ($this->request->isAJAX()) {
+            $data = DataTables::use('tb_dosen')
+                ->join('tb_program_studi', 'tb_dosen.id_prodi = tb_program_studi.id', 'LEFT JOIN')
+                ->join('users', 'tb_dosen.id_akun = users.id', 'INNER JOIN')
+                ->addColumn('checkbox', function ($data) {
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id . '">';
+                })
+                ->addColumn('aksi', function ($data) {
+                    return '<button type="button" id="detail" class="btn btn-primary btn-sm mr-1" onclick="update(`' . $data->id . '`)"> <i class="fa fa-search text-white"></i> </button>' .
+                        '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id . '`)"> <i class="fa fa-edit text-white"></i> </button>';
+                })
+                ->rawColumns(['checkbox', 'aksi'])
+                ->make();
+            return $data;
+        }
+        return view('_admin/DataMaster_Dosen');
     }
 
     public function view_mahasiswa()
     {
-        //
+        if ($this->request->isAJAX()) {
+            $data = DataTables::use('tb_mahasiswa')
+                ->join('tb_tahun_akademik', 'tb_mahasiswa.id_thn_akademik = tb_tahun_akademik.id', 'LEFT JOIN')
+                ->join('tb_program_studi', 'tb_mahasiswa.id_prodi = tb_program_studi.id', 'LEFT JOIN')
+                ->join('users', 'tb_mahasiswa.id_akun = users.id', 'INNER JOIN')
+                ->addColumn('checkbox', function ($data) {
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id . '">';
+                })
+                ->addColumn('aksi', function ($data) {
+                    return '<button type="button" id="detail" class="btn btn-primary btn-sm mr-1" onclick="update(`' . $data->id . '`)"> <i class="fa fa-search text-white"></i> </button>'.
+                           '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id . '`)"> <i class="fa fa-edit text-white"></i> </button>';
+                })
+                ->rawColumns(['checkbox', 'aksi'])
+                ->make();
+            return $data;
+        }
+        return view('_admin/DataMaster_Mahasiswa');
     }
 
     public function view_perusahaan()
@@ -55,7 +86,7 @@ class DataMaster extends BaseController
                     return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id . '">';
                 })
                 ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id . '`, `' . $data->nama_prodi .'`, `' . $data->nama_alias . '`)"> <i class="fa fa-edit text-white"></i> </button>';
+                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id . '`, `' . $data->nama_prodi . '`, `' . $data->nama_alias . '`)"> <i class="fa fa-edit text-white"></i> </button>';
                 })
                 ->rawColumns(['checkbox', 'aksi'])
                 ->make();

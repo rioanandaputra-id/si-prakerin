@@ -19,11 +19,11 @@ class TahunAkademik extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'dibuat_pada' => [
+            'dibuat' => [
                 'type'           => 'DATETIME',
                 'null'           => true,
             ],
-            'diperbaharui_pada' => [
+            'diperbaharui' => [
                 'type'           => 'DATETIME',
                 'null'           => true,
             ],
