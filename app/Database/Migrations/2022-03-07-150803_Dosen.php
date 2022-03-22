@@ -9,7 +9,7 @@ class Dosen extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id'             => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'id_dsn'         => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'id_akun'        => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
             'id_prodi'       => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
             'nip_dsn'        => ['type' => 'CHAR', 'constraint' => 20],
@@ -23,10 +23,10 @@ class Dosen extends Migration
             'dibuat'         => ['type' => 'DATETIME', 'null' => TRUE],
             'diperbaharui'   => ['type' => 'DATETIME', 'null' => TRUE],
         ]);
-        $this->forge->addKey('id', TRUE);
+        $this->forge->addKey('id_dsn', TRUE);
         $this->forge->addKey(['id_akun','id_prodi'], FALSE);
-        // $this->forge->addForeignKey('id_prodi', 'tb_program_studi', 'id', '', 'CASCADE');
-        // $this->forge->addForeignKey('id_akun', 'users', 'id', '', 'CASCADE');
+        // $this->forge->addForeignKey('id_prodi', 'tb_program_studi', 'id_prodi', '', 'CASCADE');
+        // $this->forge->addForeignKey('id_akun', 'users', 'id_akun', '', 'CASCADE');
         $this->forge->createTable('tb_dosen');
     }
 

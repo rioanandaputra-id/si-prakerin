@@ -5,12 +5,6 @@
             <div class="col-sm-6">
                 <div class="row">
                     <h5>Data Master - Mahasiswa</h5>
-                    <div class="ml-3">
-                        <button id="add" class="btn btn-success btn-sm mb-4"> <i class="fa fa-plus-circle"></i>
-                            Tambah</button>
-                        <button type="button" id="delete" class="btn btn-danger btn-sm mb-4"> <i class="fa fa-trash"></i>
-                            Hapus</button>
-                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -23,41 +17,89 @@
     </div>
 </section>
 
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
-                                <thead class="bg-success">
-                                    <tr>
-                                        <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                        <th>NAMA</th>
-                                        <th>NPM</th>
-                                        <th>JENKEL</th>
-                                        <th>PRODI</th>
-                                        <th>THN. AKADEMIK</th>
-                                        <th>STATUS</th>
-                                    </tr>
-                                </thead>
-
-                                <tfoot class="bg-success">
-                                    <tr>
-                                        <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                        <th>NAMA</th>
-                                        <th>NPM</th>
-                                        <th>JENKEL</th>
-                                        <th>PRODI</th>
-                                        <th>THN. AKADEMIK</th>
-                                        <th>STATUS</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                    <div class="card-header d-flex p-0">
+                        <div class="card-title p-3">
+                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</button>
+                            <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
+                                Hapus</button>
+                            <button type="button" id="delete" class="btn btn-warning btn-flat btn-sm"> <i class="fa fa-check"></i>
+                                Validasi</button>
                         </div>
+                        <ul class="nav nav-pills ml-auto p-3">
+                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link btn-sm" href="#tab_1" data-toggle="tab">Belum Validasi</a></li>
+                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link active btn-sm" href="#tab_2" data-toggle="tab">Sudah Validasi</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tab_1">
+                                <div class="table-responsive">
+                                    <table id="dataTableA" class="table table-bordered table-hover dataTableA dtr-inline" style="width: 100%; font-size:smaller;">
+                                        <thead class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>NPM</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
+                                                <th>THN. AKADEMIK</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tfoot class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>NPM</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
+                                                <th>THN. AKADEMIK</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane active" id="tab_2">
+                                <div class="table-responsive">
+                                    <table id="dataTableB" class="table table-bordered table-hover dataTableB dtr-inline" style="width: 100%; font-size:smaller;">
+                                        <thead class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>NPM</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
+                                                <th>THN. AKADEMIK</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tfoot class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>NPM</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
+                                                <th>THN. AKADEMIK</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -97,7 +139,7 @@ Data Master - Mahasiswa
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var table = $('#dataTable').DataTable({
+        var table = $('#dataTableB').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -113,7 +155,7 @@ Data Master - Mahasiswa
                     data: 'nama_mhs',
                     name: 'nama_mhs',
                     render: function(data, type, row, meta) {
-                        return '<a href="javascript:update('+ row.id +');">' + data + '</a>';
+                        return '<a href="javascript:update(' + row.id_mhs + ');">' + data + '</a>';
                     }
                 },
                 {
@@ -129,8 +171,8 @@ Data Master - Mahasiswa
                     name: 'nama_prodi'
                 },
                 {
-                    data: 'tahun_akademik',
-                    name: 'tahun_akademik'
+                    data: 'thn_akademik',
+                    name: 'thn_akademik'
                 },
                 {
                     data: 'status_mhs',

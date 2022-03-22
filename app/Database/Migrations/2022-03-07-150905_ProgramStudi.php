@@ -9,7 +9,7 @@ class ProgramStudi extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id'          => [
+            'id_prodi'          => [
                 'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => TRUE,
@@ -32,7 +32,7 @@ class ProgramStudi extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addKey('id', TRUE);
+        $this->forge->addKey('id_prodi', TRUE);
         $this->forge->createTable('tb_program_studi');
     }
 

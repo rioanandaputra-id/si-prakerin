@@ -5,12 +5,6 @@
             <div class="col-sm-6">
                 <div class="row">
                     <h5>Data Master - Tahun Akademik</h5>
-                    <div class="ml-3">
-                        <button id="add" class="btn btn-success btn-sm mb-4"> <i class="fa fa-plus-circle"></i>
-                            Tambah</button>
-                        <button type="button" id="delete" class="btn btn-danger btn-sm mb-4"> <i class="fa fa-trash"></i>
-                            Hapus</button>
-                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -23,22 +17,27 @@
     </div>
 </section>
 
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header d-flex p-0">
+                        <div class="card-title p-3">
+                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</button>
+                            <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
+                                Hapus</button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%">
+                            <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
                                 <thead class="bg-success">
                                     <tr>
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>TAHUN AKADEMIK</th>
                                         <th>DIPERBAHARUI</th>
-                                        <th>AKSI</th>
                                     </tr>
                                 </thead>
 
@@ -47,7 +46,6 @@
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>TAHUN AKADEMIK</th>
                                         <th>DIPERBAHARUI</th>
-                                        <th>AKSI</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -103,18 +101,15 @@ Data Master - Tahun Akademik
                 searchable: false
             },
             {
-                data: 'tahun_akademik',
-                name: 'tahun_akademik'
+                data: 'thn_akademik',
+                name: 'thn_akademik',
+                render: function(data, type, row, meta) {
+                    return '<a href="javascript:update(' + row.id_thn_akademik + ');">' + data + '</a>';
+                }
             },
             {
-                data: 'diperbaharui_pada',
-                name: 'diperbaharui_pada'
-            },
-            {
-                data: 'aksi',
-                name: 'aksi',
-                orderable: false,
-                searchable: false
+                data: 'diperbaharui',
+                name: 'diperbaharui'
             },
         ],
         order: [
@@ -234,55 +229,55 @@ Data Master - Tahun Akademik
     });
 
     function update(id, categoryy) {
-            Swal.fire({
-                title: 'Ubah Kategori Artikel',
-                input: 'text',
-                inputValue: categoryy,
-                inputPlaceholder: 'Nama Kategori Artikel',
-                showCancelButton: true,
-                cancelButtonText: 'Batal',
-                confirmButtonText: 'Ubah',
-                inputValidator: function(value) {
-                    return new Promise(function(resolve, reject) {
-                        if (value == '') {
-                            resolve(
-                                'Nama Kategori Artikel tidak boleh kosong!');
-                        } else {
-                            resolve();
-                        }
-                    });
-                }
-            }).then(function(result) {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ url('backend/master/category_article/update') }}",
-                        type: "PUT",
-                        data: {
-                            '_token': "{{ csrf_token() }}",
-                            'id': id,
-                            'categoryy': result.value
-                        },
-                        success: function(data) {
-                            Swal.fire({
-                                title: "Berhasil!",
-                                text: "Data berhasil diubah",
-                                icon: "success",
-                                button: "Tutup",
-                            });
-                            $('#tbcategory').DataTable().ajax.reload();
-                        },
-                        error: function(data) {
-                            Swal.fire({
-                                title: "Gagal!",
-                                text: "Data gagal diubah",
-                                icon: "error",
-                                button: "Tutup",
-                            });
-                        }
-                    });
-                }
-            });
-        }
+        Swal.fire({
+            title: 'Ubah Kategori Artikel',
+            input: 'text',
+            inputValue: categoryy,
+            inputPlaceholder: 'Nama Kategori Artikel',
+            showCancelButton: true,
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ubah',
+            inputValidator: function(value) {
+                return new Promise(function(resolve, reject) {
+                    if (value == '') {
+                        resolve(
+                            'Nama Kategori Artikel tidak boleh kosong!');
+                    } else {
+                        resolve();
+                    }
+                });
+            }
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "{{ url('backend/master/category_article/update') }}",
+                    type: "PUT",
+                    data: {
+                        '_token': "{{ csrf_token() }}",
+                        'id': id,
+                        'categoryy': result.value
+                    },
+                    success: function(data) {
+                        Swal.fire({
+                            title: "Berhasil!",
+                            text: "Data berhasil diubah",
+                            icon: "success",
+                            button: "Tutup",
+                        });
+                        $('#tbcategory').DataTable().ajax.reload();
+                    },
+                    error: function(data) {
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: "Data gagal diubah",
+                            icon: "error",
+                            button: "Tutup",
+                        });
+                    }
+                });
+            }
+        });
+    }
 </script>
 <?php $this->endSection(); ?>
 

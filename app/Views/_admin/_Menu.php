@@ -40,12 +40,12 @@ if (!function_exists('omenu')) {
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="<?= $seg = site_url('admin/datamaster/admin'); ?>" class="nav-link <?= cmenu($seg); ?>">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Admin</p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= $seg = site_url('admin/datamaster/dosen'); ?>" class="nav-link <?= cmenu($seg); ?>">
                         <i class="far fa-circle nav-icon"></i>

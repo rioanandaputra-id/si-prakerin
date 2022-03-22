@@ -9,15 +9,15 @@ class TahunAkademik extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id'  => [
+            'id_thn_akademik'  => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'tahun_akademik'       => [
+            'thn_akademik'       => [
                 'type'           => 'VARCHAR',
-                'constraint'     => '255',
+                'constraint'     => '10',
             ],
             'dibuat' => [
                 'type'           => 'DATETIME',
@@ -28,7 +28,7 @@ class TahunAkademik extends Migration
                 'null'           => true,
             ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addKey('id_thn_akademik', true);
         $this->forge->createTable('tb_tahun_akademik');
     }
 
