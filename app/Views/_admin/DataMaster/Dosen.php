@@ -1,16 +1,23 @@
+<?php $this->extend('/_admin/Menu/Menu'); ?>
+<?php $this->section('title'); ?>
+<?php echo $title = 'Data Master - Dosen'; ?>
+<?php $this->endSection(); ?>
+
+<!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
 <?php $this->section('content'); ?>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
                 <div class="row">
-                    <h5>Data Master - Perusahaan</h5>
+                    <h5><?= $title; ?></h5>
                 </div>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>">Beranda</a></li>
-                    <li class="breadcrumb-item active">Data Master - Perusahaan</li>
+                    <li class="breadcrumb-item active"><?= $title; ?></li>
                 </ol>
             </div>
         </div>
@@ -24,8 +31,8 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
-                                Tambah</button>
+                            <a href="<?= site_url('admin/datamaster/dosen/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
                             <button type="button" id="delete" class="btn btn-warning btn-flat btn-sm"> <i class="fa fa-check"></i>
@@ -45,9 +52,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
+                                                <th>NIP/NIK</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </thead>
@@ -56,9 +63,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
+                                                <th>NIP/NIK</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </tfoot>
@@ -73,9 +80,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
+                                                <th>NIP/NIK</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </thead>
@@ -84,9 +91,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
+                                                <th>NIP/NIK</th>
+                                                <th>JENKEL</th>
+                                                <th>PRODI</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </tfoot>
@@ -103,37 +110,12 @@
     </div>
 </section>
 
-
-
 <?php $this->endSection(); ?>
-<!-- =================================================================================== -->
+<!-- =================================[[[[ AKHIR KONTEN ]]]]======================================= -->
 
-<?php $this->extend('_admin/_Template'); ?>
 
-<?php $this->section('title'); ?>
-Data Master - Perusahaan
-<?php $this->endSection(); ?>
-
-<?php $this->section('css'); ?>
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
-<?php $this->endSection(); ?>
-
+<!-- =================================[[[[ AWAL CSS JS ]]]]======================================== -->
 <?php $this->section('js'); ?>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/jszip/jszip.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="text/javascript">
     $('#dataTableB').DataTable({
@@ -143,33 +125,36 @@ Data Master - Perusahaan
             url: ''
         },
         columns: [{
-                data: 'checkbox',
-                name: 'checkbox',
+                data: 'id_dsn',
+                name: 'id_dsn',
                 orderable: false,
-                searchable: false
+                searchable: false,
+                render: function(data, type, row, meta) {
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_mhs + '">';
+                }
             },
             {
-                data: 'nama_perusahaan',
-                name: 'nama_perusahaan',
+                data: 'nama_dsn',
+                name: 'nama_dsn',
                 render: function(data, type, row, meta) {
                     return '<a href="javascript:update(' + row.id_dsn + ');">' + data + '</a>';
                 }
             },
             {
-                data: 'telp_perusahaan',
-                name: 'telp_perusahaan'
+                data: 'nip_dsn',
+                name: 'nip_dsn'
             },
             {
-                data: 'email_perusahaan',
-                name: 'email_perusahaan'
+                data: 'jenkel_dsn',
+                name: 'jenkel_dsn'
             },
             {
-                data: 'alamat_perusahaan',
-                name: 'alamat_perusahaan'
+                data: 'nama_prodi',
+                name: 'nama_prodi'
             },
             {
-                data: 'status_perusahaan',
-                name: 'status_perusahaan'
+                data: 'status_dsn',
+                name: 'status_dsn'
             }
         ],
         order: [
@@ -337,6 +322,6 @@ Data Master - Perusahaan
         });
     }
 </script>
-<?php $this->endSection(); ?>
 
-<!-- =================================================================================== -->
+<?php $this->endSection(); ?>
+<!-- =================================[[[[ AKHIR CSS JS ]]]]======================================= -->

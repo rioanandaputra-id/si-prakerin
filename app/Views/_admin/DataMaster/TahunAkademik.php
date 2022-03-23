@@ -1,16 +1,23 @@
+<?php $this->extend('/_admin/Menu/Menu'); ?>
+<?php $this->section('title'); ?>
+<?php echo $title = 'Data Master - Tahun Akademik'; ?>
+<?php $this->endSection(); ?>
+
+<!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
 <?php $this->section('content'); ?>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
                 <div class="row">
-                    <h5>Data Master - Program Studi</h5>
+                    <h5><?= $title; ?></h5>
                 </div>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>">Beranda</a></li>
-                    <li class="breadcrumb-item active">Data Master - Program Studi</li>
+                    <li class="breadcrumb-item active"><?= $title; ?></li>
                 </ol>
             </div>
         </div>
@@ -36,8 +43,7 @@
                                 <thead class="bg-success">
                                     <tr>
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                        <th>NAMA PRODI</th>
-                                        <th>NAMA ALIAS</th>
+                                        <th>TAHUN AKADEMIK</th>
                                         <th>DIPERBAHARUI</th>
                                     </tr>
                                 </thead>
@@ -45,8 +51,7 @@
                                 <tfoot class="bg-success">
                                     <tr>
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                        <th>NAMA PRODI</th>
-                                        <th>NAMA ALIAS</th>
+                                        <th>TAHUN AKADEMIK</th>
                                         <th>DIPERBAHARUI</th>
                                     </tr>
                                 </tfoot>
@@ -60,34 +65,11 @@
 </section>
 
 <?php $this->endSection(); ?>
-<!-- =================================================================================== -->
+<!-- =================================[[[[ AKHIR KONTEN ]]]]======================================= -->
 
-<?php $this->extend('_admin/_Template'); ?>
 
-<?php $this->section('title'); ?>
-Data Master - Program Studi
-<?php $this->endSection(); ?>
-
-<?php $this->section('css'); ?>
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
-<?php $this->endSection(); ?>
-
+<!-- =================================[[[[ AWAL CSS JS ]]]]======================================== -->
 <?php $this->section('js'); ?>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/jszip/jszip.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="text/javascript">
     $('#dataTable').DataTable({
@@ -97,26 +79,25 @@ Data Master - Program Studi
             url: ''
         },
         columns: [{
-                data: 'checkbox',
-                name: 'checkbox',
+                data: 'id_thn_akademik',
+                name: 'id_thn_akademik',
                 orderable: false,
-                searchable: false
-            },
-            {
-                data: 'nama_prodi',
-                name: 'nama_prodi',
+                searchable: false,
                 render: function(data, type, row, meta) {
-                    return '<a href="javascript:update(' + row.id_prodi + ');">' + data + '</a>';
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_thn_akademik + '">';
                 }
             },
             {
-                data: 'nama_alias',
-                name: 'nama_alias'
+                data: 'thn_akademik',
+                name: 'thn_akademik',
+                render: function(data, type, row, meta) {
+                    return '<a href="javascript:update(' + row.id_thn_akademik + ');">' + data + '</a>';
+                }
             },
             {
                 data: 'diperbaharui',
                 name: 'diperbaharui'
-            }
+            },
         ],
         order: [
             [1, "desc"]
@@ -149,9 +130,10 @@ Data Master - Program Studi
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "<?= current_url() ?>" + '/delete',
+                        url: "{{ url('backend/master/category_article/delete') }}",
                         type: "DELETE",
                         data: {
+                            '_token': "{{ csrf_token() }}",
                             'checkbox_item': id
                         },
                         success: function(data) {
@@ -162,7 +144,7 @@ Data Master - Program Studi
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            $('#dataTable').DataTable().ajax.reload();
+                            $('#tbcategory').DataTable().ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({
@@ -205,9 +187,10 @@ Data Master - Program Studi
         }).then(function(result) {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "<?= current_url() ?>" + '/create',
+                    url: "{{ url('backend/master/category_article/create') }}",
                     type: "POST",
                     data: {
+                        '_token': "{{ csrf_token() }}",
                         'categoryy': result.value
                     },
                     success: function(data) {
@@ -283,6 +266,6 @@ Data Master - Program Studi
         });
     }
 </script>
-<?php $this->endSection(); ?>
 
-<!-- =================================================================================== -->
+<?php $this->endSection(); ?>
+<!-- =================================[[[[ AKHIR CSS JS ]]]]======================================= -->

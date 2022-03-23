@@ -3,7 +3,13 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use Irsyadulibad\DataTables\DataTables;
+use App\Models\AdminModel;
+use App\Models\DokumenModel;
+use App\Models\DosenModel;
+use App\Models\MahasiswaModel;
+use App\Models\PerusahaanModel;
+use App\Models\ProgramStudiModel;
+use App\Models\TahunAkademikModel;
 
 class DataMaster extends BaseController
 {
@@ -12,190 +18,139 @@ class DataMaster extends BaseController
 
     public function view_admin()
     {
-        //
+        $model = new AdminModel();
+        if ($this->request->isAJAX()) {
+            return $model->dt();
+        }
+        return view('_admin/DataMaster/Admin');
     }
 
     public function view_dosen()
     {
+        $model = new DosenModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_dosen')
-                ->join('tb_program_studi', 'tb_dosen.id_prodi = tb_program_studi.id_prodi', 'LEFT JOIN')
-                ->join('users', 'tb_dosen.id_akun = users.id', 'INNER JOIN')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_dsn . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="detail" class="btn btn-primary btn-sm mr-1" onclick="update(`' . $data->id_dsn . '`)"> <i class="fa fa-search text-white"></i> </button>' .
-                        '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_dsn . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_Dosen');
+        return view('_admin/DataMaster/Dosen');
     }
 
     public function view_mahasiswa()
     {
+        $model = new MahasiswaModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_mahasiswa')
-                ->join('tb_tahun_akademik', 'tb_mahasiswa.id_thn_akademik = tb_tahun_akademik.id_thn_akademik', 'LEFT JOIN')
-                ->join('tb_program_studi', 'tb_mahasiswa.id_prodi = tb_program_studi.id_prodi', 'LEFT JOIN')
-                ->join('users', 'tb_mahasiswa.id_akun = users.id', 'INNER JOIN')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_mhs . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="detail" class="btn btn-primary btn-sm mr-1" onclick="update(`' . $data->id_mhs . '`)"> <i class="fa fa-search text-white"></i> </button>'.
-                           '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_mhs . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_Mahasiswa');
+        return view('_admin/DataMaster/Mahasiswa');
     }
 
     public function view_perusahaan()
     {
+        $model = new PerusahaanModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_perusahaan')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_perusahaan . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_perusahaan . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_Perusahaan');
+        return view('_admin/DataMaster/Perusahaan');
     }
 
     public function view_tahun_akademik()
     {
+        $model = new TahunAkademikModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_tahun_akademik')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_thn_akademik . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_thn_akademik . '`, `' . $data->thn_akademik . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_TahunAkademik');
+        return view('_admin/DataMaster/TahunAkademik');
     }
 
     public function view_program_studi()
     {
+        $model = new ProgramStudiModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_program_studi')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_prodi . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_prodi . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_ProgramStudi');
+        return view('_admin/DataMaster/ProgramStudi');
     }
 
     public function view_dokumen()
     {
+        $model = new DokumenModel();
         if ($this->request->isAJAX()) {
-            $data = DataTables::use('tb_dokumen')
-                ->addColumn('checkbox', function ($data) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' . $data->id_dokumen . '">';
-                })
-                ->addColumn('aksi', function ($data) {
-                    return '<button type="button" id="edit" class="btn btn-warning btn-sm" onclick="update(`' . $data->id_dokumen . '`)"> <i class="fa fa-edit text-white"></i> </button>';
-                })
-                ->rawColumns(['checkbox', 'aksi'])
-                ->make();
-            return $data;
+            return $model->dt();
         }
-        return view('_admin/DataMaster_Dokumen');
+        return view('_admin/DataMaster/Dokumen');
     }
 
     //--------------------------------------------------------------------
 
     public function view_add_admin()
     {
-        //
+        return view('_admin/DataMaster/AdminAdd');
     }
 
     public function view_add_dosen()
     {
-        //
+        return view('_admin/DataMaster/DosenAdd');
     }
 
     public function view_add_mahasiswa()
     {
-        //
+        return view('_admin/DataMaster/MahasiswaAdd');
     }
 
     public function view_add_perusahaan()
     {
-        //
+        return view('_admin/DataMaster/PerusahaanAdd');
     }
 
     public function view_add_tahun_akademik()
     {
-        //
+        return view('_admin/DataMaster/TahunAkademikAdd');
     }
 
     public function view_add_program_studi()
     {
-        //
+        return view('_admin/DataMaster/ProgramStudiAdd');
     }
 
     public function view_add_dokumen()
     {
-        //
+        return view('_admin/DataMaster/DokumenAdd');
     }
 
     //--------------------------------------------------------------------
 
     public function view_edit_admin()
     {
-        //
+        return view('_admin/DataMaster/AdminEdit');
     }
 
     public function view_edit_dosen()
     {
-        //
+        return view('_admin/DataMaster/DosenEdit');
     }
 
     public function view_edit_mahasiswa()
     {
-        //
+        return view('_admin/DataMaster/MahasiswaEdit');
     }
 
     public function view_edit_perusahaan()
     {
-        //
+        return view('_admin/DataMaster/PerusahaanEdit');
     }
 
     public function view_edit_tahun_akademik()
     {
-        //
+        return view('_admin/DataMaster/TahunAkademikEdit');
     }
 
     public function view_edit_program_studi()
     {
-        //
+        return view('_admin/DataMaster/ProgramStudiEdit');
     }
 
     public function view_edit_dokumen()
     {
-        //
+        return view('_admin/DataMaster/DokumenEdit');
     }
 
     //--------------------------------------------------------------------

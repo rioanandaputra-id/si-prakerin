@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateAuthTables extends Migration
+class Auth extends Migration
 {
     public function up()
     {

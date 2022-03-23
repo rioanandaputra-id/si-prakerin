@@ -1,16 +1,23 @@
+<?php $this->extend('/_admin/Menu/Menu'); ?>
+<?php $this->section('title'); ?>
+<?php echo $title = 'Data Master - Perusahaan'; ?>
+<?php $this->endSection(); ?>
+
+<!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
 <?php $this->section('content'); ?>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
                 <div class="row">
-                    <h5>Data Master - Mahasiswa</h5>
+                    <h5><?= $title; ?></h5>
                 </div>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?= base_url() ?>">Beranda</a></li>
-                    <li class="breadcrumb-item active">Data Master - Mahasiswa</li>
+                    <li class="breadcrumb-item active"><?= $title; ?></li>
                 </ol>
             </div>
         </div>
@@ -45,10 +52,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </thead>
@@ -57,10 +63,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </tfoot>
@@ -75,10 +80,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </thead>
@@ -87,10 +91,9 @@
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </tfoot>
@@ -108,81 +111,55 @@
 </section>
 
 <?php $this->endSection(); ?>
-<!-- =================================================================================== -->
+<!-- =================================[[[[ AKHIR KONTEN ]]]]======================================= -->
 
-<?php $this->extend('_admin/_Template'); ?>
 
-<?php $this->section('title'); ?>
-Data Master - Mahasiswa
-<?php $this->endSection(); ?>
-
-<?php $this->section('css'); ?>
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'); ?>">
-<?php $this->endSection(); ?>
-
+<!-- =================================[[[[ AWAL CSS JS ]]]]======================================== -->
 <?php $this->section('js'); ?>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/dataTables.responsive.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/dataTables.buttons.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/jszip/jszip.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/pdfmake.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/pdfmake/vfs_fonts.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.html5.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.print.min.js'); ?>"></script>
-<script src="<?= base_url('assets/adminlte-v3/plugins/datatables-buttons/js/buttons.colVis.min.js'); ?>"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var table = $('#dataTableB').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: ''
+    $('#dataTableB').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: ''
+        },
+        columns: [{
+                data: 'id_perusahaan',
+                name: 'id_perusahaan',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row, meta) {
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_perusahaan + '">';
+                }
             },
-            columns: [{
-                    data: 'checkbox',
-                    name: 'checkbox',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'nama_mhs',
-                    name: 'nama_mhs',
-                    render: function(data, type, row, meta) {
-                        return '<a href="javascript:update(' + row.id_mhs + ');">' + data + '</a>';
-                    }
-                },
-                {
-                    data: 'nim_mhs',
-                    name: 'nim_mhs'
-                },
-                {
-                    data: 'jenkel_mhs',
-                    name: 'jenkel_mhs'
-                },
-                {
-                    data: 'nama_prodi',
-                    name: 'nama_prodi'
-                },
-                {
-                    data: 'thn_akademik',
-                    name: 'thn_akademik'
-                },
-                {
-                    data: 'status_mhs',
-                    name: 'status_mhs'
-                },
-            ],
-            order: [
-                [1, "desc"]
-            ],
-        });
+            {
+                data: 'nama_perusahaan',
+                name: 'nama_perusahaan',
+                render: function(data, type, row, meta) {
+                    return '<a href="javascript:update(' + row.id_dsn + ');">' + data + '</a>';
+                }
+            },
+            {
+                data: 'telp_perusahaan',
+                name: 'telp_perusahaan'
+            },
+            {
+                data: 'email_perusahaan',
+                name: 'email_perusahaan'
+            },
+            {
+                data: 'alamat_perusahaan',
+                name: 'alamat_perusahaan'
+            },
+            {
+                data: 'status_perusahaan',
+                name: 'status_perusahaan'
+            }
+        ],
+        order: [
+            [1, "desc"]
+        ],
     });
 
     $('.checkbox_all').click(function() {
@@ -345,6 +322,6 @@ Data Master - Mahasiswa
         });
     }
 </script>
-<?php $this->endSection(); ?>
 
-<!-- =================================================================================== -->
+<?php $this->endSection(); ?>
+<!-- =================================[[[[ AKHIR CSS JS ]]]]======================================= -->

@@ -21,7 +21,7 @@ class Dosen extends Migration
             'alamat_dsn'     => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
             'status_dsn'     => ['type' => 'CHAR', 'constraint' => 20, 'null' => TRUE],
             'dibuat'         => ['type' => 'DATETIME', 'null' => TRUE],
-            'diperbaharui'   => ['type' => 'DATETIME', 'null' => TRUE],
+            'diperbarui'   => ['type' => 'DATETIME', 'null' => TRUE],
         ]);
         $this->forge->addKey('id_dsn', TRUE);
         $this->forge->addKey(['id_akun','id_prodi'], FALSE);

@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/fontawesome-free/css/all.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/dist/css/adminlte.min.css'); ?>">
+
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <?= $this->renderSection('css'); ?>
 </head>
 
@@ -16,14 +19,14 @@
 
   <div class="wrapper">
 
-    <?= $this->include('template/adminlte-v3/Navbar'); ?>
-    <?= $this->include('template/adminlte-v3/Sidebar'); ?>
+    <?= $this->include('_template/adminlte-v3/Navbar'); ?>
+    <?= $this->include('_template/adminlte-v3/Sidebar'); ?>
 
     <div class="content-wrapper">
       <?= $this->renderSection('content'); ?>
     </div>
 
-    <?= $this->include('template/adminlte-v3/Footer'); ?>
+    <?= $this->include('_template/adminlte-v3/Footer'); ?>
 
   </div>
 
@@ -38,6 +41,10 @@
   <script src="<?= base_url('assets/adminlte-v3/plugins/chart.js/Chart.min.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/dist/js/demo.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/dist/js/pages/dashboard2.js'); ?>"></script>
+
+  <script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <?= $this->renderSection('js'); ?>
 </body>
 

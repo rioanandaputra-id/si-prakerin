@@ -3,40 +3,37 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Irsyadulibad\DataTables\DataTables;
 
 class PerusahaanModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'perusahaans';
-    protected $primaryKey       = 'id';
+    protected $table            = 'tb_perusahaan';
+    protected $primaryKey       = 'id_perusahaan';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
-
-    // Dates
+    protected $allowedFields    = [
+        'nama_perusahaan',
+        'alamat_perusahaan',
+        'telp_perusahaan',
+        'email_perusahaan',
+        'web_perusahaan',
+        'long_perusahaan',
+        'lat_perusahaan',
+        'status_perusahaan',
+    ];
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'dibuat';
+    protected $updatedField  = 'diperbarui';
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    public function dt()
+    {
+        $data = DataTables::use($this->table)
+            ->make();
+        return $data;
+    }
 }

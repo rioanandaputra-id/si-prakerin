@@ -22,7 +22,7 @@ class DosenSeeder extends Seeder
                 'alamat_dsn' => 'Jl. Bali No.1',
                 'status_dsn' => 'Aktif',
                 'dibuat' => date('Y-m-d H:i:s'),
-                'diperbaharui' => date('Y-m-d H:i:s')
+                'diperbarui' => date('Y-m-d H:i:s')
             ],
             [
                 'id_dsn' => '2',
@@ -37,7 +37,7 @@ class DosenSeeder extends Seeder
                 'alamat_dsn' => 'Jl. Penjara No.1',
                 'status_dsn' => 'Aktif',
                 'dibuat' => date('Y-m-d H:i:s'),
-                'diperbaharui' => date('Y-m-d H:i:s')
+                'diperbarui' => date('Y-m-d H:i:s')
             ]
         ];
 

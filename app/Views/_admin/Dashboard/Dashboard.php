@@ -1,4 +1,4 @@
-<?php $this->extend('_admin/_Template') ?>
+<?php $this->extend('/_admin/Menu/Menu') ?>
 <?php $this->section('title');
 echo 'Dashboard Admin';
 $this->endSection(); ?>
