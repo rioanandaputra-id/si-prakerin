@@ -35,6 +35,8 @@
                                 Tambah</button>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
+                                <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
+                                Segarkan</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -74,7 +76,7 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    $('#dataTable').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -108,6 +110,10 @@
         order: [
             [1, "desc"]
         ],
+    });
+
+    $('#reload').click(function() {
+        dataTable.ajax.reload();
     });
 
     $('.checkbox_all').click(function() {

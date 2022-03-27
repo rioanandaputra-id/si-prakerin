@@ -40,30 +40,44 @@ class Perusahaan extends Migration
             'email_perusahaan'       => [
                 'type'           => 'CHAR',
                 'constraint'     => '150',
+                'null'           => TRUE
             ],
             'web_perusahaan'     => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
+                'null'           => TRUE
             ],
             'long_perusahaan'     => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '10',
+                'null'           => TRUE
             ],
             'lat_perusahaan'     => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '10',
+                'null'           => TRUE
             ],
-            'status_perusahaan'     => [
+            'status_perusahaan'  => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '30',
             ],
-            'dibuat'           => [
+            'perusahaan_dibuat'           => [
+                'type'           => 'DATETIME',
+            ],
+            'perusahaan_diubah'       => [
                 'type'           => 'DATETIME',
                 'null'           => TRUE,
             ],
-            'diperbarui'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
+            'id_pembuat_perusahaan'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_perusahaan'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
         $this->forge->addKey('id_perusahaan', TRUE);

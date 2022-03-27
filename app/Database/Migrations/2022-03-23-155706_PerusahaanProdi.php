@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class PerusahaanProgramStudi extends Migration
+class PerusahaanProdi extends Migration
 {
     public function up()
     {
@@ -30,21 +30,31 @@ class PerusahaanProgramStudi extends Migration
                 'constraint'     => 11,
                 'null'           => true,
             ],
-            'dibuat' => [
+            'perusahaan_prodi_dibuat'           => [
                 'type'           => 'DATETIME',
-                'null'           => true,
             ],
-            'diperbarui' => [
+            'perusahaan_prodi_diubah'       => [
                 'type'           => 'DATETIME',
-                'null'           => true,
+                'null'           => TRUE,
+            ],
+            'id_pembuat_perusahaan_prodi'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_perusahaan_prodi'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
         $this->forge->addKey('id_perusahaan_prodi', true);
-        $this->forge->createTable('tb_perusahaan_program_studi');
+        $this->forge->createTable('tb_perusahaan_prodi');
     }
 
     public function down()
     {
-        $this->forge->dropTable('tb_perusahaan_program_studi');
+        $this->forge->dropTable('tb_perusahaan_prodi');
     }
 }

@@ -23,21 +23,31 @@ class ProgramStudi extends Migration
                 'type'            => 'VARCHAR',
                 'constraint'      => '100',
             ],
-            'dibuat' => [
+            'prodi_dibuat'           => [
                 'type'           => 'DATETIME',
-                'null'           => true,
             ],
-            'diperbaharui' => [
+            'prodi_diubah'       => [
                 'type'           => 'DATETIME',
-                'null'           => true,
+                'null'           => TRUE,
+            ],
+            'id_pembuat_prodi'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_prodi'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
         $this->forge->addKey('id_prodi', TRUE);
-        $this->forge->createTable('tb_program_studi');
+        $this->forge->createTable('tb_prodi');
     }
 
     public function down()
     {
-        $this->forge->dropTable('tb_program_studi');
+        $this->forge->dropTable('tb_prodi');
     }
 }

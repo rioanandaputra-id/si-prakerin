@@ -1,3 +1,7 @@
+<?php
+$this->extend('_template/adminlte-v3/Master');
+$this->section('menu');
+?>
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
@@ -74,3 +78,5 @@
         </li>
     </ul>
 </nav>
+
+<?php $this->endSection(); ?>

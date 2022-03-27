@@ -37,6 +37,8 @@
                                 Hapus</button>
                             <button type="button" id="delete" class="btn btn-warning btn-flat btn-sm"> <i class="fa fa-check"></i>
                                 Validasi</button>
+                            <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
+                                Segarkan</button>
                         </div>
                         <ul class="nav nav-pills ml-auto p-3">
                             <li class="nav-item"><a style="border-radius:0%;" class="nav-link btn-sm" href="#tab_1" data-toggle="tab">Belum Validasi</a></li>
@@ -123,54 +125,56 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        var table = $('#dataTableB').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: ''
+    var dataTableB = $('#dataTableB').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: ''
+        },
+        columns: [{
+                data: 'id_mahasiswa',
+                name: 'id_mahasiswa',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row, meta) {
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_mahasiswa + '">';
+                }
             },
-            columns: [{
-                    data: 'id_mhs',
-                    name: 'id_mhs',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row, meta) {
-                        return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_mhs + '">';
-                    }
-                },
-                {
-                    data: 'nama_mhs',
-                    name: 'nama_mhs',
-                    render: function(data, type, row, meta) {
-                        return '<a href="javascript:update(' + row.id_mhs + ');">' + data + '</a>';
-                    }
-                },
-                {
-                    data: 'nim_mhs',
-                    name: 'nim_mhs'
-                },
-                {
-                    data: 'jenkel_mhs',
-                    name: 'jenkel_mhs'
-                },
-                {
-                    data: 'nama_prodi',
-                    name: 'nama_prodi'
-                },
-                {
-                    data: 'thn_akademik',
-                    name: 'thn_akademik'
-                },
-                {
-                    data: 'status_mhs',
-                    name: 'status_mhs'
-                },
-            ],
-            order: [
-                [1, "desc"]
-            ],
-        });
+            {
+                data: 'nama_mahasiswa',
+                name: 'nama_mahasiswa',
+                render: function(data, type, row, meta) {
+                    return '<a href="javascript:update(' + row.id_mahasiswa + ');">' + data + '</a>';
+                }
+            },
+            {
+                data: 'nim_mahasiswa',
+                name: 'nim_mahasiswa'
+            },
+            {
+                data: 'jenkel_mahasiswa',
+                name: 'jenkel_mahasiswa'
+            },
+            {
+                data: 'nama_prodi',
+                name: 'nama_prodi'
+            },
+            {
+                data: 'tahun_akademik',
+                name: 'tahun_akademik'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+        ],
+        order: [
+            [1, "desc"]
+        ],
+    });
+
+    $('#reload').click(function() {
+        dataTableB.ajax.reload();
     });
 
     $('.checkbox_all').click(function() {
@@ -199,8 +203,8 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "<?= current_url() ?>" + '/delete',
-                        type: "DELETE",
+                        url: "<?= site_url('admin/datamaster/mahasiswa/delete') ?>",
+                        type: "POST",
                         data: {
                             'checkbox_item': id
                         },
@@ -212,7 +216,7 @@
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            $('#dataTable').DataTable().ajax.reload();
+                            dataTableB.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({

@@ -17,8 +17,10 @@ class DokumenSeeder extends Seeder
             'path_dokumen'     => 'surat_permohonan.pdf',
             'upload_dokumen'       => 1,
             'status_dokumen'     => 'Aktif',
-            'dibuat'     => '2020-03-07',
-            'diperbarui'     => '2020-03-07',
+            'dokumen_dibuat' => date('Y-m-d H:i:s'),
+            'dokumen_diubah' => date('Y-m-d H:i:s'),
+            'id_pembuat_dokumen' => 1,
+            'id_pengubah_dokumen' => 1,
         ];
         $this->db->table('tb_dokumen')->insert($data);
     }

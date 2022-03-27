@@ -35,8 +35,10 @@
                                 Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
-                            <button type="button" id="delete" class="btn btn-warning btn-flat btn-sm"> <i class="fa fa-check"></i>
+                            <button type="button" id="validation" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check-circle"></i>
                                 Validasi</button>
+                            <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
+                                Segarkan</button>
                         </div>
                         <ul class="nav nav-pills ml-auto p-3">
                             <li class="nav-item"><a style="border-radius:0%;" class="nav-link btn-sm" href="#tab_1" data-toggle="tab">Belum Validasi</a></li>
@@ -118,7 +120,7 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    $('#dataTableB').DataTable({
+    var dataTableB = $('#dataTableB').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -162,6 +164,10 @@
         ],
     });
 
+    $('#reload').click(function() {
+        dataTableB.ajax.reload();
+    });
+
     $('.checkbox_all').click(function() {
         if ($(this).is(':checked')) {
             $('.checkbox_item').prop('checked', true);
@@ -188,8 +194,8 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "<?= current_url() ?>" + '/delete',
-                        type: "DELETE",
+                        url: "<?= site_url('admin/datamaster/pegawai/delete') ?>",
+                        type: "POST",
                         data: {
                             'checkbox_item': id
                         },

@@ -43,13 +43,23 @@ class Dokumen extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '30',
             ],
-            'dibuat'     => [
+            'dokumen_dibuat'           => [
                 'type'           => 'DATETIME',
-                'null'           => true,
             ],
-            'diperbarui'     => [
+            'dokumen_diubah'       => [
                 'type'           => 'DATETIME',
-                'null'           => true,
+                'null'           => TRUE,
+            ],
+            'id_pembuat_dokumen'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_dokumen'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
 
         ]);

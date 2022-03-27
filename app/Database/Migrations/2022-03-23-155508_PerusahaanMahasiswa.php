@@ -9,7 +9,7 @@ class PerusahaanMahasiswa extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_perusahaan_mhs'  => [
+            'id_perusahaan_mahasiswa'  => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -20,7 +20,7 @@ class PerusahaanMahasiswa extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
-            'id_mhs'  => [
+            'id_mahasiswa'  => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -31,21 +31,31 @@ class PerusahaanMahasiswa extends Migration
                 'unsigned'       => true,
                 'null'           => true,
             ],
-            'status_perusahaan_mhs'  => [
+            'status_perusahaan_mahasiswa'  => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 30,
                 'null'           => true,
             ],
-            'dibuat'  => [
-                'type'       => 'DATETIME',
-                'null'       => true,
+            'perusahaan_mahasiswa_dibuat'           => [
+                'type'           => 'DATETIME',
             ],
-            'diperbarui'  => [
-                'type'       => 'DATETIME',
-                'null'       => true,
+            'perusahaan_mahasiswa_diubah'       => [
+                'type'           => 'DATETIME',
+                'null'           => TRUE,
+            ],
+            'id_pembuat_perusahaan_mahasiswa'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_perusahaan_mahasiswa'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
-        $this->forge->addKey('id_perusahaan_mhs', true);
+        $this->forge->addKey('id_perusahaan_mahasiswa', true);
         $this->forge->createTable('tb_perusahaan_mahasiswa');
     }
 

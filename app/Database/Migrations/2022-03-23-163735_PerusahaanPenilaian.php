@@ -15,7 +15,7 @@ class PerusahaanPenilaian extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'id_perusahaan_mhs'  => [
+            'id_perusahaan_mahasiswa'  => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -25,20 +25,30 @@ class PerusahaanPenilaian extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
-            'nilai'  => [
+            'perusahaan_nilai'  => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 20,
             ],
-            'nilai_detail'  => [
+            'perusahaan_nilai_detail'  => [
                 'type'           => 'TEXT',
             ],
-            'dibuat'          => [
+            'perusahaan_penilaian_dibuat'           => [
                 'type'           => 'DATETIME',
-                'null'           => true,
             ],
-            'diperbarui'          => [
+            'perusahaan_penilaian_diubah'       => [
                 'type'           => 'DATETIME',
-                'null'           => true,
+                'null'           => TRUE,
+            ],
+            'id_pembuat_perusahaan_penilaian'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_perusahaan_penilaian'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
         $this->forge->addKey('id_perusahaan_penilaian', true);

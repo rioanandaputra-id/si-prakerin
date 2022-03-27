@@ -24,16 +24,28 @@ class PerusahaanModel extends Model
         'long_perusahaan',
         'lat_perusahaan',
         'status_perusahaan',
+        'perusahaan_dibuat',
+        'perusahaan_diubah',
+        'id_pembuat_perusahaan',
+        'id_pengubah_perusahaan',
     ];
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'dibuat';
-    protected $updatedField  = 'diperbarui';
+    // protected $dateFormat    = 'datetime';
+    // protected $createdField  = 'perusahaan_dibuat';
+    // protected $updatedField  = 'perusahaan_diubah';
 
-    public function dt()
+    public function dt($status)
     {
-        $data = DataTables::use($this->table)
-            ->make();
+        if ($status == 0) {
+            $data = DataTables::use($this->table)
+                ->where('status_perusahaan', 'Baru')
+                ->make();
+        } else {
+            $data = DataTables::use($this->table)
+                ->where('status_perusahaan', 'Diterima')
+                ->orWhere('status_perusahaan', 'Ditolak')
+                ->make();
+        }
         return $data;
     }
 }

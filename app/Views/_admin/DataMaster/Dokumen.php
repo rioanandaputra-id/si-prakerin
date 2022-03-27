@@ -78,7 +78,7 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    $('#dataTable').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -132,6 +132,10 @@
         }
     });
 
+    $('#reload').click(function() {
+        dataTable.ajax.reload();
+    });
+    
     $('#delete').click(function() {
         var id = [];
         $('.checkbox_item:checked').each(function() {
@@ -148,10 +152,9 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "{{ url('backend/master/category_article/delete') }}",
-                        type: "DELETE",
+                        url: "<?= site_url('admin/datamaster/dokumen/delete') ?>",
+                        type: "POST",
                         data: {
-                            '_token': "{{ csrf_token() }}",
                             'checkbox_item': id
                         },
                         success: function(data) {
@@ -162,7 +165,7 @@
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            $('#tbcategory').DataTable().ajax.reload();
+                            dataTable.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({

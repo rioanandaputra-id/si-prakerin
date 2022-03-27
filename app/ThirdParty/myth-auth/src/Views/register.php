@@ -11,7 +11,7 @@
 
                     <?= view('Myth\Auth\Views\_message_block') ?>
 
-                    <form action="<?= route_to('register') ?>" method="post">
+                    <form action="<?= site_url('admin/datamaster/mahasiswa/create') ?>" method="post">
                         <?= csrf_field() ?>
 
                         <div class="form-group">

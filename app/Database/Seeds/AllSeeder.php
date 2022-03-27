@@ -10,10 +10,10 @@ class AllSeeder extends Seeder
     {
         $this->call('UsersSeeder');
         $this->call('TahunAkademikSeeder');
-        $this->call('ProgramStudiSeeder');
+        $this->call('ProdiSeeder');
         $this->call('PerusahaanSeeder');
         $this->call('MahasiswaSeeder');
-        $this->call('DosenSeeder');
+        $this->call('PegawaiSeeder');
         $this->call('DokumenSeeder');
     }
 }

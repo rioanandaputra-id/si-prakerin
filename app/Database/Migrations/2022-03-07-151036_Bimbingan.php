@@ -15,12 +15,12 @@ class Bimbingan extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
-            'id_mhs_perusahaan' => [
+            'id_mahasiswa_perusahaan' => [
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => true,
             ],
-            'id_dsn' => [
+            'id_seminar' => [
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => true,
@@ -42,13 +42,23 @@ class Bimbingan extends Migration
                 'constraint' => '255',
                 'null' => true,
             ],
-            'dibuat' => [
-                'type' => 'DATETIME',
-                'null' => true,
+            'seminar_dibuat'           => [
+                'type'           => 'DATETIME',
             ],
-            'diperbarui' => [
-                'type' => 'DATETIME',
-                'null' => true,
+            'seminar_diubah'       => [
+                'type'           => 'DATETIME',
+                'null'           => TRUE,
+            ],
+            'id_pembuat_seminar'         => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+            ],
+            'id_pengubah_seminar'        => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'null'           => TRUE
             ],
         ]);
 
