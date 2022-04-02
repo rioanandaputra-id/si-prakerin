@@ -164,8 +164,8 @@
                 name: 'tahun_akademik'
             },
             {
-                data: 'status',
-                name: 'status'
+                data: 'status_mahasiswa',
+                name: 'status_mahasiswa'
             },
         ],
         order: [

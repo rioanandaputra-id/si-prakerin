@@ -13,7 +13,7 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block">Rio Ananda Putra</a>
-                <small class="d-block">Dosen Ilmu Komputer</small>
+                <small class="d-block">Administrator</small>
             </div>
         </div>
 

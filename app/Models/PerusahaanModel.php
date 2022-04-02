@@ -24,28 +24,39 @@ class PerusahaanModel extends Model
         'long_perusahaan',
         'lat_perusahaan',
         'status_perusahaan',
-        'perusahaan_dibuat',
-        'perusahaan_diubah',
         'id_pembuat_perusahaan',
         'id_pengubah_perusahaan',
     ];
-    protected $useTimestamps = false;
-    // protected $dateFormat    = 'datetime';
-    // protected $createdField  = 'perusahaan_dibuat';
-    // protected $updatedField  = 'perusahaan_diubah';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'perusahaan_dibuat';
+    protected $updatedField  = 'perusahaan_diubah';
+    protected $validationRules = [
+        'nama_perusahaan'   => 'required|min_length[4]|max_length[10]',
+        'alamat_perusahaan' => 'required|min_length[4]|max_length[10]',
+        'telp_perusahaan'   => 'required|min_length[8]|max_length[20]',
+    ];
 
-    public function dt($status)
+    public function getDt($status)
     {
-        if ($status == 0) {
+        if ($status == false) {
             $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Baru')
+                ->where('status_perusahaan', 'Pengajuan Baru')
                 ->make();
         } else {
             $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Diterima')
-                ->orWhere('status_perusahaan', 'Ditolak')
+                ->where('status_perusahaan', 'Pengajuan Diterima')
+                ->orWhere('status_perusahaan', 'Pengajuan Ditolak')
                 ->make();
         }
         return $data;
+    }
+
+    public function getAkun()
+    {
+        $this->select('tb_perusahaan.*, pembuat.username AS username_pembuat, pengubah.username AS username_pengubah');
+        $this->join('users AS pembuat', 'pembuat.id = tb_perusahaan.id_pembuat_perusahaan', 'left');
+        $this->join('users AS pengubah', 'pengubah.id = tb_perusahaan.id_pengubah_perusahaan', 'left');
+        return $this;
     }
 }

@@ -8,19 +8,17 @@ class TahunAkademikModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'tb_tahun_akademik';
-    protected $primaryKey       = 'id_thn_akademik';
+    protected $primaryKey       = 'id_tahun_akademik';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'thn_akademik',
+        'tahun_akademik',
+        'status_tahun_akademik',
     ];
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'dibuat';
-    protected $updatedField  = 'diperbarui';
 
     public function dt()
     {

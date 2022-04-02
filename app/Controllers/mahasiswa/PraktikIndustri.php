@@ -8,6 +8,6 @@ class PraktikIndustri extends BaseController
 {
     public function index()
     {
-        //
+        return view('_mahasiswa/PraktikIndustri/Perusahaan');
     }
 }

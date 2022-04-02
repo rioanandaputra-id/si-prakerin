@@ -31,11 +31,13 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
-                                Tambah</button>
+                            <a href="<?= site_url('admin/datamaster/tahunakademik/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
-                                <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
+                            <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
+                                Konfirmasi</button>
+                            <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
                         </div>
                     </div>
@@ -46,7 +48,7 @@
                                     <tr>
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>TAHUN AKADEMIK</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
 
@@ -54,7 +56,7 @@
                                     <tr>
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>TAHUN AKADEMIK</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -81,24 +83,24 @@
             url: ''
         },
         columns: [{
-                data: 'id_thn_akademik',
-                name: 'id_thn_akademik',
+                data: 'id_tahun_akademik',
+                name: 'id_tahun_akademik',
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_thn_akademik + '">';
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_tahun_akademik + '">';
                 }
             },
             {
-                data: 'thn_akademik',
-                name: 'thn_akademik',
+                data: 'tahun_akademik',
+                name: 'tahun_akademik',
                 render: function(data, type, row, meta) {
-                    return '<a href="javascript:update(' + row.id_thn_akademik + ');">' + data + '</a>';
+                    return "<a href='<?= site_url('admin/datamaster/tahunakademik/edit/?id='); ?>" + row.id_tahun_akademik +"' >" + data +"</a>";
                 }
             },
             {
-                data: 'diperbaharui',
-                name: 'diperbaharui'
+                data: 'status_tahun_akademik',
+                name: 'status_tahun_akademik'
             },
         ],
         order: [
@@ -136,11 +138,10 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "{{ url('backend/master/category_article/delete') }}",
-                        type: "DELETE",
+                        url: "<?= site_url('admin/datamaster/tahunakademik/delete') ?>",
+                        type: "POST",
                         data: {
-                            '_token': "{{ csrf_token() }}",
-                            'checkbox_item': id
+                            'id_tahun_akademik': id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -150,7 +151,7 @@
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            $('#tbcategory').DataTable().ajax.reload();
+                            dataTableB.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({

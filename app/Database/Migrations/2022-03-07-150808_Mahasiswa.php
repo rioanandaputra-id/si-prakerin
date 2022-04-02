@@ -23,24 +23,24 @@ class Mahasiswa extends Migration
             'nama_ortua'        => ['type' => 'VARCHAR', 'constraint' => '150', 'null' => TRUE],
             'no_hp_ortua'       => ['type' => 'CHAR', 'constraint' => '20', 'null' => TRUE],
             'status_mahasiswa'        => ['type' => 'CHAR', 'constraint' => 20],
-            'mahasiswa_dibuat'           => [
-                'type'           => 'DATETIME',
-            ],
-            'mahasiswa_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
-            ],
-            'id_pembuat_mahasiswa'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_mahasiswa'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
-            ],
+            // 'mahasiswa_dibuat'           => [
+            //     'type'           => 'DATETIME',
+            // ],
+            // 'mahasiswa_diubah'       => [
+            //     'type'           => 'DATETIME',
+            //     'null'           => TRUE,
+            // ],
+            // 'id_pembuat_mahasiswa'         => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            // ],
+            // 'id_pengubah_mahasiswa'        => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            //     'null'           => TRUE
+            // ],
         ]);
         $this->forge->addKey('id_mahasiswa', TRUE);
         $this->forge->addKey(['id_tahun_akademik','id_prodi','id_akun'], FALSE);

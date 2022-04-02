@@ -47,7 +47,7 @@
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>NAMA PRODI</th>
                                         <th>NAMA ALIAS</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
 
@@ -56,7 +56,7 @@
                                         <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                         <th>NAMA PRODI</th>
                                         <th>NAMA ALIAS</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -103,8 +103,8 @@
                 name: 'nama_alias'
             },
             {
-                data: 'diperbaharui',
-                name: 'diperbaharui'
+                data: 'status_prodi',
+                name: 'status_prodi'
             }
         ],
         order: [

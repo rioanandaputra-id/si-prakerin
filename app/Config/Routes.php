@@ -65,7 +65,16 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'ro
     $routes->post('datamaster/dokumen/delete', 'DataMaster::delete_dokumen');
 });
 
+$routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'role:Mahasiswa'], function ($routes) {
+    $routes->get('/', 'Dashboard::index');
+    $routes->get('praktikindustri', 'PraktikIndustri::index');
+    $routes->get('praktikindustri/add', 'PraktikIndustri::add');
+    $routes->get('praktikindustri/edit', 'PraktikIndustri::edit');
 
+    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
+    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
+    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
+});
 
 
 
@@ -78,10 +87,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'ro
 $routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'role:Dosen'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
 });
-$routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'role:Mahasiswa'], function ($routes) {
-    $routes->get('/', 'Dashboard::index');
-    $routes->get('akun', 'Akun::index');
-});
+
 $routes->group('tamu', ['namespace' => 'App\Controllers\Tamu'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
 });

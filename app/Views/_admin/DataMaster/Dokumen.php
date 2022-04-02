@@ -47,7 +47,7 @@
                                         <th>FORMAT</th>
                                         <th>UKURAN</th>
                                         <th>STATUS</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <!-- <th>DIPERBAHARUI</th> -->
                                     </tr>
                                 </thead>
 
@@ -58,7 +58,7 @@
                                         <th>FORMAT</th>
                                         <th>UKURAN</th>
                                         <th>STATUS</th>
-                                        <th>DIPERBAHARUI</th>
+                                        <!-- <th>DIPERBAHARUI</th> -->
                                     </tr>
                                 </tfoot>
                             </table>
@@ -112,10 +112,10 @@
                 data: 'status_dokumen',
                 name: 'status_dokumen'
             },
-            {
-                data: 'diperbarui',
-                name: 'diperbarui'
-            },
+            // {
+            //     data: 'diperbarui',
+            //     name: 'diperbarui'
+            // },
         ],
         order: [
             [1, "desc"]

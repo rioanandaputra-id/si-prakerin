@@ -21,10 +21,10 @@ class PegawaiSeeder extends Seeder
                 'no_hp_pegawai' => '081212121212',
                 'alamat_pegawai' => 'Jl. Bali No.1',
                 'status_pegawai' => 'Aktif',
-                'pegawai_dibuat' => date('Y-m-d H:i:s'),
-                'pegawai_diubah' => date('Y-m-d H:i:s'),
-                'id_pembuat_pegawai' => 1,
-                'id_pengubah_pegawai' => 1,
+                // 'pegawai_dibuat' => date('Y-m-d H:i:s'),
+                // 'pegawai_diubah' => date('Y-m-d H:i:s'),
+                // 'id_pembuat_pegawai' => 1,
+                // 'id_pengubah_pegawai' => 1,
             ],
             [
                 'id_pegawai' => '2',
@@ -38,10 +38,10 @@ class PegawaiSeeder extends Seeder
                 'no_hp_pegawai' => '08122222222',
                 'alamat_pegawai' => 'Jl. Penjara No.1',
                 'status_pegawai' => 'Aktif',
-                'pegawai_dibuat' => date('Y-m-d H:i:s'),
-                'pegawai_diubah' => date('Y-m-d H:i:s'),
-                'id_pembuat_pegawai' => 1,
-                'id_pengubah_pegawai' => 1,
+                // 'pegawai_dibuat' => date('Y-m-d H:i:s'),
+                // 'pegawai_diubah' => date('Y-m-d H:i:s'),
+                // 'id_pembuat_pegawai' => 1,
+                // 'id_pengubah_pegawai' => 1,
             ]
         ];
 

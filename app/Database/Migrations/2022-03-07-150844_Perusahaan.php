@@ -61,24 +61,24 @@ class Perusahaan extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '30',
             ],
-            'perusahaan_dibuat'           => [
-                'type'           => 'DATETIME',
-            ],
-            'perusahaan_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
-            ],
-            'id_pembuat_perusahaan'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_perusahaan'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
-            ],
+            // 'perusahaan_dibuat'           => [
+            //     'type'           => 'DATETIME',
+            // ],
+            // 'perusahaan_diubah'       => [
+            //     'type'           => 'DATETIME',
+            //     'null'           => TRUE,
+            // ],
+            // 'id_pembuat_perusahaan'         => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            // ],
+            // 'id_pengubah_perusahaan'        => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            //     'null'           => TRUE
+            // ],
         ]);
         $this->forge->addKey('id_perusahaan', TRUE);
         $this->forge->createTable('tb_perusahaan');

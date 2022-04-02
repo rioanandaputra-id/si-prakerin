@@ -4,24 +4,26 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use Irsyadulibad\DataTables\DataTables;
-class ProgramStudiModel extends Model
+class ProdiModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'tb_program_studi';
-    protected $primaryKey       = 'id_program_studi';
+    protected $table            = 'tb_prodi';
+    protected $primaryKey       = 'id_prodi';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'nama_program_studi',
+        'nama_prodi',
         'nama_alias',
+        'prodi_dibuat',
+        'prodi_diubah',
     ];
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'dibuat';
-    protected $updatedField  = 'diperbarui';
+    protected $createdField  = 'prodi_dibuat';
+    protected $updatedField  = 'prodi_diubah';
 
     public function dt()
     {

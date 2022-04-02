@@ -43,24 +43,24 @@ class Dokumen extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '30',
             ],
-            'dokumen_dibuat'           => [
-                'type'           => 'DATETIME',
-            ],
-            'dokumen_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
-            ],
-            'id_pembuat_dokumen'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_dokumen'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
-            ],
+            // 'dokumen_dibuat'           => [
+            //     'type'           => 'DATETIME',
+            // ],
+            // 'dokumen_diubah'       => [
+            //     'type'           => 'DATETIME',
+            //     'null'           => TRUE,
+            // ],
+            // 'id_pembuat_dokumen'         => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            // ],
+            // 'id_pengubah_dokumen'        => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            //     'null'           => TRUE
+            // ],
 
         ]);
         $this->forge->addKey('id_dokumen', TRUE);

@@ -1,6 +1,6 @@
 <?php $this->extend('/_admin/Menu/Menu'); ?>
 <?php $this->section('title'); ?>
-<?php echo $title = 'Data Master - Perusahaan'; ?>
+<?php echo $title = 'Praktik Industri - Perusahaan'; ?>
 <?php $this->endSection(); ?>
 
 <!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
@@ -155,7 +155,7 @@
                                 <td>:</td>
                                 <td id="alamat_perusahaan"></td>
                             </tr>
-                            <!-- <tr>
+                            <tr>
                                 <td>Dibuat Pada</td>
                                 <td>:</td>
                                 <td id="perusahaan_dibuat"></td>
@@ -174,15 +174,15 @@
                                 <td>Diubah Oleh</td>
                                 <td>:</td>
                                 <td id="pengubah_perusahaan"></td>
-                            </tr> -->
+                            </tr>
                         </table>
                     </div>
                     <div class="col-sm-5">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.759771901876!2d106.74163531435997!3d-6.1629186621153265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f793f34eb29b%3A0xdba28b9c28c20ce2!2sChemindo%20Interbuana!5e0!3m2!1sid!2sid!4v1648380760336!5m2!1sid!2sid" width="450" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.759771901876!2d106.74163531435997!3d-6.1629186621153265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f793f34eb29b%3A0xdba28b9c28c20ce2!2sChemindo%20Interbuana!5e0!3m2!1sid!2sid!4v1648380760336!5m2!1sid!2sid" width="450" height="260" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
 
-                <!-- <div class="row mt-4">
+                <div class="row mt-4">
                     <div class="col">
                         <table id="perusahaan_prodi" class="table table-bordered table-hover dtr-inline" style="width: 100%; font-size:smaller;">
                             <thead class="bg-success">
@@ -193,11 +193,11 @@
                             </thead>
                         </table>
                     </div>
-                </div> -->
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup <i class="fa fa-times"></i></button>
-                <a href="#" class="btn btn-primary" id="btnModalEdit">Ubah data <i class="fa fa-edit"></i></a>
+                <button type="button" class="btn btn-primary">Edit <i class="fa fa-edit"></i></button>
             </div>
         </div>
     </div>
@@ -341,7 +341,7 @@
                         url: "<?= site_url('admin/datamaster/perusahaan/delete') ?>",
                         type: "POST",
                         data: {
-                            'id_perusahaan': id
+                            'checkbox_item': id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -383,9 +383,9 @@
                 title: 'Konfirmasi status perusahaan',
                 input: 'select',
                 inputOptions: {
-                    'Pengajuan Baru': 'Pengajuan Baru',
-                    'Pengajuan Ditolak': 'Pengajuan Ditolak',
-                    'Pengajuan Diterima': 'Pengajuan Diterima'
+                    'Baru': 'Baru',
+                    'Ditolak': 'Ditolak',
+                    'Diterima': 'Diterima'
                 },
                 inputPlaceholder: '--pilih--',
                 showCancelButton: true,
@@ -406,9 +406,9 @@
                         url: "<?= site_url('admin/datamaster/perusahaan/update') ?>",
                         type: "POST",
                         data: {
-                            'konfirmasi': true,
-                            'id_perusahaan': id,
-                            'status_perusahaan': result.value
+                            'konfirmasi': 1,
+                            'checkbox_item': id,
+                            'status': result.value
                         },
                         success: function(data) {
                             Swal.fire({
@@ -451,27 +451,29 @@
             },
             success: function(data) {
 
-                // $('#detailModal .modal-body #perusahaan_prodi').DataTable({
-                //     destroy: true,
-                //     processing: true,
-                //     serverSide: true,
-                //     ajax: {
-                //         url: '<?= site_url('admin/datamaster/prodi') ?>'
-                //     },
-                //     columns: [
-                //         {
-                //             data: 'nama_prodi',
-                //             name: 'nama_prodi',
-                //         },
-                //         {
-                //             data: 'nama_alias',
-                //             name: 'nama_alias'
-                //         }
-                //     ],
-                //     order: [
-                //         [0, "desc"]
-                //     ],
-                // });
+                console.log(data);
+
+                $('#detailModal .modal-body #perusahaan_prodi').DataTable({
+                    destroy: true,
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '<?= site_url('admin/datamaster/prodi') ?>'
+                    },
+                    columns: [
+                        {
+                            data: 'nama_prodi',
+                            name: 'nama_prodi',
+                        },
+                        {
+                            data: 'nama_alias',
+                            name: 'nama_alias'
+                        }
+                    ],
+                    order: [
+                        [0, "desc"]
+                    ],
+                });
 
                 $('#detailModal .modal-body #nama_perusahaan').html(data.nama_perusahaan);
                 $('#detailModal .modal-body #telp_perusahaan').html(data.telp_perusahaan);
@@ -479,11 +481,10 @@
                 $('#detailModal .modal-body #web_perusahaan').html(data.web_perusahaan);
                 $('#detailModal .modal-body #alamat_perusahaan').html(data.alamat_perusahaan);
                 $('#detailModal .modal-body #status_perusahaan').html(data.status_perusahaan);
-                // $('#detailModal .modal-body #perusahaan_dibuat').html(data.perusahaan_dibuat);
-                // $('#detailModal .modal-body #perusahaan_diubah').html(data.perusahaan_diubah);
-                // $('#detailModal .modal-body #pembuat_perusahaan').html(data.username_pembuat);
-                // $('#detailModal .modal-body #pengubah_perusahaan').html(data.username_pengubah);
-                $('#detailModal .modal-footer #btnModalEdit').prop('href', "<?= site_url('admin/datamaster/perusahaan/edit/?id=')?>" + data.id_perusahaan);
+                $('#detailModal .modal-body #perusahaan_dibuat').html(data.perusahaan_dibuat);
+                $('#detailModal .modal-body #perusahaan_diubah').html(data.perusahaan_diubah);
+                $('#detailModal .modal-body #pembuat_perusahaan').html(data.username_pembuat);
+                $('#detailModal .modal-body #pengubah_perusahaan').html(data.username_pengubah);
                 $('#detailModal').modal('show');
             },
             error: function(data) {

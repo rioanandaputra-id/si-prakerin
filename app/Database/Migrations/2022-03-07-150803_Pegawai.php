@@ -20,24 +20,24 @@ class Pegawai extends Migration
             'no_hp_pegawai'      => ['type' => 'CHAR', 'constraint' => '20', 'null' => TRUE],
             'alamat_pegawai'     => ['type' => 'VARCHAR', 'constraint' => '255', 'null' => TRUE],
             'status_pegawai'     => ['type' => 'CHAR', 'constraint' => 20],
-            'pegawai_dibuat'           => [
-                'type'           => 'DATETIME',
-            ],
-            'pegawai_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
-            ],
-            'id_pembuat_pegawai'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_pegawai'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
-            ],
+            // 'pegawai_dibuat'           => [
+            //     'type'           => 'DATETIME',
+            // ],
+            // 'pegawai_diubah'       => [
+            //     'type'           => 'DATETIME',
+            //     'null'           => TRUE,
+            // ],
+            // 'id_pembuat_pegawai'         => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            // ],
+            // 'id_pengubah_pegawai'        => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            //     'null'           => TRUE
+            // ],
         ]);
         $this->forge->addKey('id_pegawai', TRUE);
         $this->forge->addKey(['id_akun', 'id_prodi'], FALSE);

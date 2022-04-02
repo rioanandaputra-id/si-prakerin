@@ -12,6 +12,7 @@
 
   <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/adminlte-v3/plugins/sweetalert2/sweetalert2.min.css'); ?>">
   <?= $this->renderSection('css'); ?>
 </head>
 
@@ -44,7 +45,7 @@
 
   <script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'); ?>"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="<?= base_url('assets/adminlte-v3/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
   <?= $this->renderSection('js'); ?>
 </body>
 

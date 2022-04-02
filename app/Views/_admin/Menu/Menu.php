@@ -53,7 +53,7 @@ $this->section('menu');
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $seg = site_url('admin/datamaster/programstudi'); ?>" class="nav-link <?= cmenu($seg); ?>">
+                    <a href="<?= $seg = site_url('admin/datamaster/prodi'); ?>" class="nav-link <?= cmenu($seg); ?>">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Program Studi</p>
                     </a>

@@ -19,24 +19,28 @@ class TahunAkademik extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '10',
             ],
-            'tahun_akademik_dibuat'           => [
-                'type'           => 'DATETIME',
+            'status_tahun_akademik'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '30',
             ],
-            'tahun_akademik_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
-            ],
-            'id_pembuat_tahun_akademik'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_tahun_akademik'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
-            ],
+            // 'tahun_akademik_dibuat'           => [
+            //     'type'           => 'DATETIME',
+            // ],
+            // 'tahun_akademik_diubah'       => [
+            //     'type'           => 'DATETIME',
+            //     'null'           => TRUE,
+            // ],
+            // 'id_pembuat_tahun_akademik'         => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            // ],
+            // 'id_pengubah_tahun_akademik'        => [
+            //     'type'           => 'INT',
+            //     'constraint'     => 11,
+            //     'unsigned'       => TRUE,
+            //     'null'           => TRUE
+            // ],
         ]);
         $this->forge->addKey('id_tahun_akademik', true);
         $this->forge->createTable('tb_tahun_akademik');
