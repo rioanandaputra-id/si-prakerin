@@ -43,29 +43,35 @@
                     <form action="<?= site_url('admin/datamaster/perusahaan/update') ?>" method="POST">
                         <div class="card-body">
                             <div class="form-group">
+                                <input type="hidden" name="id_perusahaan" value="<?= $perusahaan['id_perusahaan'] ?>">
                                 <label for="nama_perusahaan">Nama Perusahaan: <i class="text-danger">*</i></label>
-                                <input type="text" class="form-control <?php if(session('errors.nama_perusahaan')) : ?>is-invalid<?php endif ?>" name="nama_perusahaan" placeholder="Masukan Nama Perusahaan" value="<?= $perusahaan['nama_perusahaan']; ?>">
-                                    <small class="text-danger"><?php if(session('errors.nama_perusahaan')) : echo session('errors.nama_perusahaan'); endif ?></small>
+                                <input type="text" class="form-control <?php if (session('errors.nama_perusahaan')) : ?>is-invalid<?php endif ?>" name="nama_perusahaan" placeholder="Masukan Nama Perusahaan" value="<?= $perusahaan['nama_perusahaan']; ?>">
+                                <small class="text-danger"><?php if (session('errors.nama_perusahaan')) : echo session('errors.nama_perusahaan');
+                                                            endif ?></small>
                             </div>
                             <div class="form-group">
                                 <label for="alamat_perusahaan">Alamat Perusahaan: <i class="text-danger">*</i></label>
-                                <input type="text" class="form-control <?php if(session('errors.alamat_perusahaan')) : ?>is-invalid<?php endif ?>" name="alamat_perusahaan" placeholder="Masukan Alamat Perusahaan" value="<?= $perusahaan['alamat_perusahaan']; ?>">
-                                    <small class="text-danger"><?php if(session('errors.alamat_perusahaan')) : echo session('errors.alamat_perusahaan'); endif ?></small>
+                                <input type="text" class="form-control <?php if (session('errors.alamat_perusahaan')) : ?>is-invalid<?php endif ?>" name="alamat_perusahaan" placeholder="Masukan Alamat Perusahaan" value="<?= $perusahaan['alamat_perusahaan']; ?>">
+                                <small class="text-danger"><?php if (session('errors.alamat_perusahaan')) : echo session('errors.alamat_perusahaan');
+                                                            endif ?></small>
                             </div>
                             <div class="form-group">
                                 <label for="telp_perusahaan">Telpon Perusahaan: <i class="text-danger">*</i></label>
-                                <input type="number" class="form-control <?php if(session('errors.telp_perusahaan')) : ?>is-invalid<?php endif ?>" name="telp_perusahaan" placeholder="Masukan Telpon Perusahaan" value="<?= $perusahaan['telp_perusahaan']; ?>">
-                                    <small class="text-danger"><?php if(session('errors.telp_perusahaan')) : echo session('errors.telp_perusahaan'); endif ?></small>
+                                <input type="number" class="form-control <?php if (session('errors.telp_perusahaan')) : ?>is-invalid<?php endif ?>" name="telp_perusahaan" placeholder="Masukan Telpon Perusahaan" value="<?= $perusahaan['telp_perusahaan']; ?>">
+                                <small class="text-danger"><?php if (session('errors.telp_perusahaan')) : echo session('errors.telp_perusahaan');
+                                                            endif ?></small>
                             </div>
                             <div class="form-group">
                                 <label for="email_perusahaan">Email Perusahaan:</label>
-                                <input type="email" class="form-control <?php if(session('errors.email_perusahaan')) : ?>is-invalid<?php endif ?>" name="email_perusahaan" placeholder="Masukan Email Perusahaan" value="<?= $perusahaan['email_perusahaan']; ?>">
-                                    <small class="text-danger"><?php if(session('errors.email_perusahaan')) : echo session('errors.email_perusahaan'); endif ?></small>
+                                <input type="email" class="form-control <?php if (session('errors.email_perusahaan')) : ?>is-invalid<?php endif ?>" name="email_perusahaan" placeholder="Masukan Email Perusahaan" value="<?= $perusahaan['email_perusahaan']; ?>">
+                                <small class="text-danger"><?php if (session('errors.email_perusahaan')) : echo session('errors.email_perusahaan');
+                                                            endif ?></small>
                             </div>
                             <div class="form-group">
                                 <label for="web_perusahaan">Web Perusahaan:</label>
-                                <input type="url" class="form-control <?php if(session('errors.web_perusahaan')) : ?>is-invalid<?php endif ?>" name="web_perusahaan" placeholder="Masukan Web Perusahaan" value="<?= $perusahaan['web_perusahaan']; ?>">
-                                    <small class="text-danger"><?php if(session('errors.web_perusahaan')) : echo session('errors.web_perusahaan'); endif ?></small>
+                                <input type="url" class="form-control <?php if (session('errors.web_perusahaan')) : ?>is-invalid<?php endif ?>" name="web_perusahaan" placeholder="Masukan Web Perusahaan" value="<?= $perusahaan['web_perusahaan']; ?>">
+                                <small class="text-danger"><?php if (session('errors.web_perusahaan')) : echo session('errors.web_perusahaan');
+                                                            endif ?></small>
                             </div>
                             <div class="form-group">
                                 <label for="googleMap">Pin Lokasi Perusahaan Pada Maps:</label>
@@ -105,6 +111,7 @@
 <script>
     // variabel global marker
     var marker;
+
     function taruhMarker(peta, posisiTitik) {
         if (marker) {
             // pindahkan marker
@@ -122,9 +129,11 @@
     }
 
     function initialize() {
+        var long = document.getElementById("long_perusahaan").value;
+        var lat = document.getElementById("lat_perusahaan").value;
         var propertiPeta = {
-            center: new google.maps.LatLng(-5.4205572857990925, 105.26098815549176),
-            zoom: 9,
+            center: new google.maps.LatLng(lat, long),
+            zoom: 18,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var peta = new google.maps.Map(document.getElementById("googleMap"), propertiPeta);
@@ -132,6 +141,11 @@
         google.maps.event.addListener(peta, 'click', function(event) {
             taruhMarker(this, event.latLng);
         });
+
+        if (long != "" && lat != "") {
+            var posisiTitik = new google.maps.LatLng(lat, long);
+            taruhMarker(peta, posisiTitik);
+        }
     }
     // event jendela di-load  
     google.maps.event.addDomListener(window, 'load', initialize);

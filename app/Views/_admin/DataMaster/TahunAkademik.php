@@ -95,7 +95,7 @@
                 data: 'tahun_akademik',
                 name: 'tahun_akademik',
                 render: function(data, type, row, meta) {
-                    return "<a href='<?= site_url('admin/datamaster/tahunakademik/edit/?id='); ?>" + row.id_tahun_akademik +"' >" + data +"</a>";
+                    return "<a href='<?= site_url('admin/datamaster/tahunakademik/edit/?id='); ?>" + row.id_tahun_akademik + "' >" + data + "</a>";
                 }
             },
             {

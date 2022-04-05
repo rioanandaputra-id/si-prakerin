@@ -24,19 +24,9 @@ class PerusahaanModel extends Model
         'long_perusahaan',
         'lat_perusahaan',
         'status_perusahaan',
-        'id_pembuat_perusahaan',
-        'id_pengubah_perusahaan',
     ];
-    protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'perusahaan_dibuat';
-    protected $updatedField  = 'perusahaan_diubah';
-    protected $validationRules = [
-        'nama_perusahaan'   => 'required|min_length[4]|max_length[10]',
-        'alamat_perusahaan' => 'required|min_length[4]|max_length[10]',
-        'telp_perusahaan'   => 'required|min_length[8]|max_length[20]',
-    ];
-
+    protected $useTimestamps = false;
+    
     public function getDt($status)
     {
         if ($status == false) {

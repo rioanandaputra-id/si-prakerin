@@ -19,7 +19,7 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function view_pegawai()
+    public function PegawaiView()
     {
         $model = new PegawaiModel();
         if ($this->request->isAJAX()) {
@@ -28,7 +28,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/Pegawai');
     }
 
-    public function view_mahasiswa()
+    public function MahasiswaView()
     {
         $model = new MahasiswaModel();
         if ($this->request->isAJAX()) {
@@ -37,7 +37,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/Mahasiswa');
     }
 
-    public function view_perusahaan()
+    public function PerusahaanView()
     {
         $model  = new PerusahaanModel();
         $id     = $this->request->getGet('id');
@@ -47,7 +47,11 @@ class DataMaster extends BaseController
 
         if ($detail == true) {
             $data = $model->find($id);
-            return json_encode($data);
+            if ($data) {
+                return view('_admin/DataMaster/PerusahaanDetail', ['perusahaan' => $data]);
+            } else {
+                throw new PageNotFoundException('Halaman tidak ditemukan');
+            }
         } else {
             if ($ajax) {
                 if ($status == false) {
@@ -61,7 +65,7 @@ class DataMaster extends BaseController
         }
     }
 
-    public function view_tahun_akademik()
+    public function TahunAkademikView()
     {
         $model = new TahunAkademikModel();
         if ($this->request->isAJAX()) {
@@ -70,7 +74,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/TahunAkademik');
     }
 
-    public function view_prodi()
+    public function ProdiView()
     {
         $model = new ProdiModel();
         if ($this->request->isAJAX()) {
@@ -79,7 +83,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/ProgramStudi');
     }
 
-    public function view_dokumen()
+    public function DokumenView()
     {
         $model = new DokumenModel();
         if ($this->request->isAJAX()) {
@@ -90,59 +94,49 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function view_add_admin()
-    {
-        return view('_admin/DataMaster/AdminAdd');
-    }
-
-    public function view_add_pegawai()
+    public function PegawaiViewAdd()
     {
         return view('_admin/DataMaster/PegawaiAdd');
     }
 
-    public function view_add_mahasiswa()
+    public function MahasiswaViewAdd()
     {
         return view('_admin/DataMaster/MahasiswaAdd');
     }
 
-    public function view_add_perusahaan()
+    public function PerusahaanViewAdd()
     {
         return view('_admin/DataMaster/PerusahaanAdd');
     }
 
-    public function view_add_tahun_akademik()
+    public function TahunAkademikViewAdd()
     {
         return view('_admin/DataMaster/TahunAkademikAdd');
     }
 
-    public function view_add_prodi()
+    public function ProdiViewAdd()
     {
         return view('_admin/DataMaster/ProgramStudiAdd');
     }
 
-    public function view_add_dokumen()
+    public function DokumenViewAdd()
     {
         return view('_admin/DataMaster/DokumenAdd');
     }
 
     //--------------------------------------------------------------------
 
-    public function view_edit_admin()
-    {
-        return view('_admin/DataMaster/AdminEdit');
-    }
-
-    public function view_edit_pegawai()
+    public function PegawaiViewEdit()
     {
         return view('_admin/DataMaster/PegawaiEdit');
     }
 
-    public function view_edit_mahasiswa()
+    public function MahasiswaViewEdit()
     {
         return view('_admin/DataMaster/MahasiswaEdit');
     }
 
-    public function view_edit_perusahaan()
+    public function PerusahaanViewEdit()
     {
         $model = new PerusahaanModel();
         $id = $this->request->getVar('id');
@@ -152,7 +146,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/PerusahaanEdit', $data);
     }
 
-    public function view_edit_tahun_akademik()
+    public function TahunAkademikViewEdit()
     {
         $model = new TahunAkademikModel();
         $id = $this->request->getVar('id');
@@ -162,7 +156,7 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/TahunAkademikEdit', $data);
     }
 
-    public function view_edit_prodi()
+    public function ProdiViewEdit()
     {
         $model = new ProdiModel();
         $id = $this->request->getVar('id');
@@ -172,19 +166,14 @@ class DataMaster extends BaseController
         return view('_admin/DataMaster/ProgramStudiEdit', $data);
     }
 
-    public function view_edit_dokumen()
+    public function DokumenViewEdit()
     {
         return view('_admin/DataMaster/DokumenEdit');
     }
 
     //--------------------------------------------------------------------
 
-    public function create_admin()
-    {
-        //
-    }
-
-    public function create_pegawai()
+    public function PegawaiCreate()
     {
         $input_pegawai = $this->validate([
             'id_prodi' => 'required|number|max_length[11]',
@@ -252,7 +241,7 @@ class DataMaster extends BaseController
         }
     }
 
-    public function create_mahasiswa()
+    public function MahasiswaCreate()
     {
         $input_mahasiswa = $this->validate([
             'nim_mahasiswa' => 'required|min_length[10]|max_length[10]|is_unique[tb_mahasiswa.nim_mahasiswa]',
@@ -319,8 +308,18 @@ class DataMaster extends BaseController
         }
     }
 
-    public function create_perusahaan()
+    public function PerusahaanCreate()
     {
+        $model = new PerusahaanModel();
+        $nama_perusahaan = $this->request->getPost('nama_perusahaan');
+        $alamat_perusahaan = $this->request->getPost('alamat_perusahaan');
+        $telp_perusahaan = $this->request->getPost('telp_perusahaan');
+        $email_perusahaan = $this->request->getPost('email_perusahaan');
+        $web_perusahaan = $this->request->getPost('web_perusahaan');
+        $long_perusahaan = $this->request->getPost('long_perusahaan');
+        $lat_perusahaan = $this->request->getPost('lat_perusahaan');
+        $status_perusahaan = (in_groups('Admin')) ? 'Pengajuan Diterima' : 'Pengajuan Baru';
+
         $input = $this->validate([
             'nama_perusahaan' => 'required|min_length[3]|max_length[150]',
             'alamat_perusahaan' => 'required|min_length[3]|max_length[225]',
@@ -332,32 +331,32 @@ class DataMaster extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $model = new PerusahaanModel();
+        $create = $model->save([
+            'nama_perusahaan' => $nama_perusahaan,
+            'alamat_perusahaan' => $alamat_perusahaan,
+            'telp_perusahaan' => $telp_perusahaan,
+            'email_perusahaan' => $email_perusahaan,
+            'web_perusahaan' => $web_perusahaan,
+            'long_perusahaan' => $long_perusahaan,
+            'lat_perusahaan' => $lat_perusahaan,
+            'status_perusahaan' => $status_perusahaan,
+        ]);
 
-        try {
-            $model->save([
-                'nama_perusahaan' => $this->request->getPost('nama_perusahaan'),
-                'alamat_perusahaan' => $this->request->getPost('alamat_perusahaan'),
-                'telp_perusahaan' => $this->request->getPost('telp_perusahaan'),
-                'email_perusahaan' => $this->request->getPost('email_perusahaan'),
-                'web_perusahaan' => $this->request->getPost('web_perusahaan'),
-                'long_perusahaan' => $this->request->getPost('long_perusahaan'),
-                'lat_perusahaan' => $this->request->getPost('lat_perusahaan'),
-                'status_perusahaan' => (in_groups('Admin')) ? 'Pengajuan Diterima' : 'Pengajuan Baru',
-                'perusahaan_dibuat' => date('Y-m-d H:i:s'),
-                'id_pembuat_perusahaan' => user_id(),
-            ]);
-
-            session()->setFlashdata('success', 'Data perusahaan berhasil ditambahkan');
-            return redirect()->to('/admin/datamaster/perusahaan');
-        } catch (\Exception $e) {
+        if (!$create) {
             session()->setFlashdata('errors', 'Data perusahaan gagal ditambahkan');
             return redirect()->back()->withInput();
+        } else {
+            session()->setFlashdata('success', 'Data perusahaan berhasil ditambahkan');
+            return redirect()->to('/admin/datamaster/perusahaan/add');
         }
     }
 
-    public function create_tahun_akademik()
+    public function TahunAkademikCreate()
     {
+        $model = new TahunAkademikModel();
+        $tahun_akademik = $this->request->getPost('tahun_akademik');
+        $status_tahun_akademik = $this->request->getPost('status_tahun_akademik');
+
         $input = $this->validate([
             'tahun_akademik' => 'required|min_length[4]|max_length[10]',
             'status_tahun_akademik' => 'required',
@@ -368,23 +367,21 @@ class DataMaster extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $model = new TahunAkademikModel();
+        $create = $model->save([
+            'tahun_akademik' => $tahun_akademik,
+            'status_tahun_akademik' => $status_tahun_akademik,
+        ]);
 
-        try {
-            $model->save([
-                'tahun_akademik' => $this->request->getPost('tahun_akademik'),
-                'status_tahun_akademik' => $this->request->getPost('status_tahun_akademik'),
-            ]);
-
-            session()->setFlashdata('success', 'Data tahun akademik berhasil ditambahkan');
-            return redirect()->to('/admin/datamaster/tahunakademik/add');
-        } catch (\Exception $e) {
+        if (!$create) {
             session()->setFlashdata('errors', 'Data tahun akademik gagal ditambahkan');
             return redirect()->back()->withInput();
+        } else {
+            session()->setFlashdata('success', 'Data tahun akademik berhasil ditambahkan');
+            return redirect()->to('/admin/datamaster/tahunakademik/add');
         }
     }
 
-    public function create_prodi()
+    public function ProdiCreate()
     {
         $input = $this->validate([
             'nama_prodi' => 'required|min_length[4]|max_length[10]',
@@ -414,7 +411,7 @@ class DataMaster extends BaseController
         }
     }
 
-    public function create_dokumen()
+    public function DokumenCreate()
     {
         $this->load->helper('slug_helper');
         $input = $this->validate([
@@ -465,172 +462,238 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function update_admin()
+    public function PegawaiUpdate()
     {
         //
     }
 
-    public function update_pegawai()
+    public function MahasiswaUpdate()
     {
-        //
+        $model = new MahasiswaModel();
+        $nim = $this->request->getPost('nim');
+        $nama_mahasiswa = $this->request->getPost('nama_mahasiswa');
+        $tempat_lahir = $this->request->getPost('tempat_lahir');
+        $tanggal_lahir = $this->request->getPost('tanggal_lahir');
+        $jenis_kelamin = $this->request->getPost('jenis_kelamin');
+        $agama = $this->request->getPost('agama');
+        $alamat = $this->request->getPost('alamat');
+        $no_hp = $this->request->getPost('no_hp');
+        $email = $this->request->getPost('email');
+        $id_prodi = $this->request->getPost('id_prodi');
+        $id_perusahaan = $this->request->getPost('id_perusahaan');
+        $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
+        $id_dokumen = $this->request->getPost('id_dokumen');
+        $status_mahasiswa = $this->request->getPost('status_mahasiswa');
+
+        
     }
 
-    public function update_mahasiswa()
+    public function PerusahaanUpdate()
     {
-        //
-    }
-
-    public function update_perusahaan()
-    {
-        $model      = new PerusahaanModel();
+        $model = new PerusahaanModel();
+        $id_perusahaan = $this->request->getPost('id_perusahaan');
         $konfirmasi = $this->request->getPost('konfirmasi');
-        $id         = $this->request->getPost('id_perusahaan');
-        $status     = ['status_perusahaan' => $this->request->getPost('status_perusahaan')];
+        $nama_perusahaan = $this->request->getPost('nama_perusahaan');
+        $alamat_perusahaan = $this->request->getPost('alamat_perusahaan');
+        $telp_perusahaan = $this->request->getPost('telp_perusahaan');
+        $email_perusahaan = $this->request->getPost('email_perusahaan');
+        $web_perusahaan = $this->request->getPost('web_perusahaan');
+        $long_perusahaan = $this->request->getPost('long_perusahaan');
+        $lat_perusahaan = $this->request->getPost('lat_perusahaan');
+        $status_perusahaan = $this->request->getPost('status_perusahaan');
 
+        if (!$konfirmasi) {
 
+            $input = $this->validate([
+                'nama_perusahaan' => 'required|min_length[5]|max_length[150]',
+                'alamat_perusahaan' => 'required|min_length[5]|max_length[225]',
+                'telp_perusahaan' => 'required|min_length[8]|max_length[20]',
+            ]);
 
-        if (!empty($konfirmasi)) {
-            $data = [
-                'nama_perusahaan'        => $this->request->getPost('nama_perusahaan'),
-                'alamat_perusahaan'      => $this->request->getPost('alamat_perusahaan'),
-                'telp_perusahaan'        => $this->request->getPost('telp_perusahaan'),
-                'email_perusahaan'       => $this->request->getPost('email_perusahaan'),
-                'web_perusahaan'         => $this->request->getPost('web_perusahaan'),
-                'long_perusahaan'        => $this->request->getPost('long_perusahaan'),
-                'lat_perusahaan'         => $this->request->getPost('lat_perusahaan'),
-                'perusahaan_diubah'      => date('Y-m-d H:i:s'),
-                'id_pengubah_perusahaan' => user_id()
-            ];
-            // try {
-            $model->update($id, $data);
-            session()->setFlashdata('success', 'Data Perusahaan berhasil diubah');
-            return redirect('admin/datamaster/perusahaan/edit/?id=' . $id);
-            // } catch (\Exception $e) {
-            //     session()->setFlashdata('errors', 'Data Perusahaan gagal diubah');
-            //     return redirect()->back()->withInput();
-            // }
+            if (!$input) {
+                session()->setFlashdata('errors', $this->validator->getErrors());
+                return redirect()->back()->withInput();
+            }
+
+            $update = $model->update($id_perusahaan, [
+                'nama_perusahaan' => $nama_perusahaan,
+                'alamat_perusahaan' => $alamat_perusahaan,
+                'telp_perusahaan' => $telp_perusahaan,
+                'email_perusahaan' => $email_perusahaan,
+                'web_perusahaan' => $web_perusahaan,
+                'long_perusahaan' => $long_perusahaan,
+                'lat_perusahaan' => $lat_perusahaan,
+                'status_perusahaan' => (in_groups('Admin')) ? 'Pengajuan Diterima' : 'Pengajuan Baru',
+            ]);
+
+            if ($update) {
+                session()->setFlashdata('success', 'Data perusahaan berhasil diubah');
+                return redirect()->to('admin/datamaster/perusahaan/edit/?id=' . $id_perusahaan);
+            } else {
+                session()->setFlashdata('errors', 'Data perusahaan gagal diubah');
+                return redirect()->back()->withInput();
+            }
         } else {
-            $model->update($id, $status);
+
+            $update = $model->update($id_perusahaan, [
+                'status_perusahaan' => $status_perusahaan,
+            ]);
+            return $update;
         }
     }
 
-    public function update_tahun_akademik()
+    public function TahunAkademikUpdate()
     {
         $model = new TahunAkademikModel();
-        $id = $this->request->getVar('id_tahun_akademik');
-        $tahun = $this->request->getPost('tahun_akademik');
-        $status = $this->request->getPost('status_tahun_akademik');
+        $id_tahun_akademik = $this->request->getVar('id_tahun_akademik');
+        $konfirmasi = $this->request->getPost('konfirmasi');
+        $tahun_akademik = $this->request->getPost('tahun_akademik');
+        $status_tahun_akademik = $this->request->getPost('status_tahun_akademik');
 
-        $input = $this->validate([
-            'tahun_akademik' => 'required|min_length[4]|max_length[10]',
-            'status_tahun_akademik' => 'required',
-        ]);
+        if (!$konfirmasi) {
 
-        if (!$input) {
-            session()->setFlashdata('errors', $this->validator->getErrors());
-            return redirect()->back()->withInput();
-        }
+            $input = $this->validate([
+                'tahun_akademik' => 'required|min_length[4]|max_length[10]',
+                'status_tahun_akademik' => 'required',
+            ]);
 
-        $update = $model->update($id, [
-            'tahun_akademik' => $tahun,
-            'status_tahun_akdemik' => $status
-        ]);
+            if (!$input) {
+                session()->setFlashdata('errors', $this->validator->getErrors());
+                return redirect()->back()->withInput();
+            }
 
-        if ($update) {
-            session()->setFlashdata('success', 'Data tahun akademik berhasil diubah');
-            return redirect()->to('/admin/datamaster/tahunakademik/edit/?id=' . $id);
+            $update = $model->update($id_tahun_akademik, [
+                'tahun_akademik' => $tahun_akademik,
+                'status_tahun_akademik' => $status_tahun_akademik,
+            ]);
+
+            if ($update) {
+                session()->setFlashdata('success', 'Data tahun akademik berhasil diubah');
+                return redirect()->to('admin/datamaster/tahunakademik/edit/?id=' . $id_tahun_akademik);
+            } else {
+                session()->setFlashdata('errors', 'Data tahun akademik gagal diubah');
+                return redirect()->back()->withInput();
+            }
         } else {
-            session()->setFlashdata('errors', 'Data tahun akademik gagal diubah');
-            return redirect()->back()->withInput();
+
+            $update = $model->update($id_tahun_akademik, [
+                'status_tahun_akademik' => $status_tahun_akademik,
+            ]);
+            return $update;
         }
     }
 
-    public function update_prodi()
+    public function ProdiUpdate()
     {
         $model = new ProdiModel();
-        $id = $this->request->getVar('id_prodi');
-        $prodi = $this->request->getPost('nama_prodi');
-        $alias = $this->request->getPost('nama_alias');
-        $status = $this->request->getPost('status_prodi');
+        $id_prodi = $this->request->getVar('id_prodi');
+        $konfirmasi = $this->request->getPost('konfirmasi');
+        $nama_prodi = $this->request->getPost('nama_prodi');
+        $nama_alias = $this->request->getPost('nama_alias');
+        $status_prodi = $this->request->getPost('status_prodi');
 
-        $input = $this->validate([
-            'nama_prodi' => 'required|min_length[4]|max_length[10]',
-            'status_prodi' => 'required',
-        ]);
+        if (!$konfirmasi) {
 
-        if (!$input) {
-            session()->setFlashdata('errors', $this->validator->getErrors());
-            return redirect()->back()->withInput();
-        }
+            $input = $this->validate([
+                'nama_prodi' => 'required|min_length[5]|max_length[150]',
+                'nama_alias' => 'required|min_length[5]|max_length[150]',
+                'status_prodi' => 'required',
+            ]);
 
-        $update = $model->update($id, [
-            'nama_prodi' => $prodi,
-            'nama_alias' => $alias,
-            'status_prodi' => $status
-        ]);
+            if (!$input) {
+                session()->setFlashdata('errors', $this->validator->getErrors());
+                return redirect()->back()->withInput();
+            }
 
-        if ($update) {
-            session()->setFlashdata('success', 'Data prodi berhasil diubah');
-            return redirect()->to('/admin/datamaster/prodi/edit/?id=' . $id);
+            $update = $model->update($id_prodi, [
+                'nama_prodi' => $nama_prodi,
+                'nama_alias' => $nama_alias,
+                'status_prodi' => $status_prodi,
+            ]);
+
+            if ($update) {
+                session()->setFlashdata('success', 'Data prodi berhasil diubah');
+                return redirect()->to('admin/datamaster/prodi/edit/?id=' . $id_prodi);
+            } else {
+                session()->setFlashdata('errors', 'Data prodi gagal diubah');
+                return redirect()->back()->withInput();
+            }
         } else {
-            session()->setFlashdata('errors', 'Data prodi gagal diubah');
-            return redirect()->back()->withInput();
+
+            $update = $model->update($id_prodi, [
+                'status_prodi' => $status_prodi,
+            ]);
+            return $update;
         }
     }
 
-    public function update_dokumen()
+    public function DokumenUpdate()
     {
-        //
+        // $model = new DokumenModel();
+        // $id_dokumen = $this->request->getPost('id_dokumen');
+        // $judul_dokumen = $this->request->getPost('judul_dokumen');
+        // $format_dokumen = $this->request->getPost('format_dokumen');
+        // $ukuran_dokumen = $this->request->getPost('ukuran_dokumen');
+        // $path_dokumen = $this->request->getPost('path_dokumen');
+        // $upload_dokumen = $this->request->getPost('upload_dokumen');
+        // $status_dokumen = $this->request->getPost('status_dokumen');
+
+        // $input = $this->validate([
+        //     'judul_dokumen' => 'required|min_length[4]|max_length[50]',
+        //     'format_dokumen' => 'required|min_length[4]|max_length[10]',
+        //     'ukuran_dokumen' => 'required|min_length[4]|max_length[10]',
+        //     'status_dokumen' => 'required',
+        // ]);
+
     }
 
     //--------------------------------------------------------------------
 
-    public function delete_admin()
+    public function PegawaiDelete()
     {
-        //
+        $model = new PegawaiModel();
+        $id_pegawai = $this->request->getPost('id_pegawai');
+        $delete = $model->delete($id_pegawai);
+        return $delete;
     }
 
-    public function delete_pegawai()
+    public function MahasiswaDelete()
     {
-        $id_pegawai = $this->request->getPost('checkbox_item');
-        $model_pegawai = new PegawaiModel();
-        $model_pegawai->whereIn('id_pegawai', $id_pegawai)->delete();
+        $model = new MahasiswaModel();
+        $id_mahasiswa = $this->request->getPost('id_mahasiswa');
+        $delete = $model->delete($id_mahasiswa);
+        return $delete;
     }
 
-    public function delete_mahasiswa()
+    public function PerusahaanDelete()
     {
-        $id_mahasiswa = $this->request->getPost('checkbox_item');
-        $model_mahasiswa = new MahasiswaModel();
-        $model_mahasiswa->whereIn('id_mahasiswa', $id_mahasiswa);
-
-        print_r($model_mahasiswa->get());
-    }
-
-    public function delete_perusahaan()
-    {
-        $id = $this->request->getPost('id_perusahaan');
         $model = new PerusahaanModel();
-        $model->delete($id);
+        $id_perusahaan = $this->request->getPost('id_perusahaan');
+        $delete = $model->delete($id_perusahaan);
+        return $delete;
     }
 
-    public function delete_tahun_akademik()
+    public function TahunAkademikDelete()
     {
-        $id = $this->request->getPost('id_tahun_akademik');
         $model = new TahunAkademikModel();
-        $model->delete($id);
+        $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
+        $delete = $model->delete($id_tahun_akademik);
+        return $delete;
     }
 
-    public function delete_prodi()
+    public function ProdiDelete()
     {
-        $id_prodi = $this->request->getPost('checkbox_item');
-        $model_prodi = new ProdiModel();
-        $model_prodi->whereIn('id_prodi', $id_prodi)->delete();
+        $model = new ProdiModel();
+        $id_prodi = $this->request->getPost('id_prodi');
+        $delete = $model->delete($id_prodi);
+        return $delete;
     }
 
-    public function delete_dokumen()
+    public function DokumenDelete()
     {
-        $id_dokumen = $this->request->getPost('checkbox_item');
-        $model_dokumen = new DokumenModel();
-        $model_dokumen->whereIn('id_dokumen', $id_dokumen)->delete();
+        $model = new DokumenModel();
+        $id_dokumen = $this->request->getPost('id_dokumen');
+        $delete = $model->delete($id_dokumen);
+        return $delete;
     }
 }
