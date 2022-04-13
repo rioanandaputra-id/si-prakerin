@@ -31,8 +31,8 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
-                                Tambah</button>
+                            <a href="<?= site_url('admin/datamaster/mahasiswa/add') ?>"  class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
                             <button type="button" id="delete" class="btn btn-warning btn-flat btn-sm"> <i class="fa fa-check"></i>
@@ -144,7 +144,7 @@
                 data: 'nama_mahasiswa',
                 name: 'nama_mahasiswa',
                 render: function(data, type, row, meta) {
-                    return '<a href="javascript:update(' + row.id_mahasiswa + ');">' + data + '</a>';
+                    return '<a href="<?= site_url('admin/datamaster/mahasiswa/edit/?id=') ?>' + row.id_mahasiswa + '">' + data + '</a>';
                 }
             },
             {

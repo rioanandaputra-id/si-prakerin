@@ -12,7 +12,7 @@ use App\Models\TahunAkademikModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-
+use Myth\Auth\Password;
 
 class DataMaster extends BaseController
 {
@@ -101,7 +101,11 @@ class DataMaster extends BaseController
 
     public function MahasiswaViewAdd()
     {
-        return view('_admin/DataMaster/MahasiswaAdd');
+        $mTahunAkademik = new TahunAkademikModel();
+        $mProdi = new ProdiModel();
+        $data['TahunAkademik'] = $mTahunAkademik->findAll();
+        $data['Prodi'] = $mProdi->findAll();
+        return view('_admin/DataMaster/MahasiswaAdd', $data);
     }
 
     public function PerusahaanViewAdd()
@@ -133,7 +137,18 @@ class DataMaster extends BaseController
 
     public function MahasiswaViewEdit()
     {
-        return view('_admin/DataMaster/MahasiswaEdit');
+        $id_mahasiswa = $this->request->getGet('id');
+        $mTahunAkademik = new TahunAkademikModel();
+        $mProdi = new ProdiModel();
+        $mMahasiswa = new MahasiswaModel();
+        $mAkun = new UserModel();
+
+        $data['TahunAkademik'] = $mTahunAkademik->findAll();
+        $data['Prodi'] = $mProdi->findAll();
+        $data['Mahasiswa'] = $mMahasiswa->find($id_mahasiswa);
+        $data['Akun'] = $mAkun->find($data['Mahasiswa']['id_akun']);
+
+        return view('_admin/DataMaster/MahasiswaEdit', $data);
     }
 
     public function PerusahaanViewEdit()
@@ -243,66 +258,71 @@ class DataMaster extends BaseController
 
     public function MahasiswaCreate()
     {
-        $input_mahasiswa = $this->validate([
-            'nim_mahasiswa' => 'required|min_length[10]|max_length[10]|is_unique[tb_mahasiswa.nim_mahasiswa]',
-            'nama_mahasiswa' => 'required|min_length[3]|max_length[50]',
-            'jenkel_mahasiswa' => 'required',
-            'tmpt_lahir_mahasiswa' => 'required',
-            'tgl_lahir_mahasiswa' => 'required',
-            'no_hp_mahasiswa' => 'required',
-            'alamat_mahasiswa' => 'required|valid_email',
-            'nama_ortua' => 'required',
-            'no_hp_ortua' => 'required',
-        ]);
+        $mMahasiswa = new MahasiswaModel();
+        $mAkun = new UserModel();
+        $mGroup = new GroupModel();
 
-        $input_akun = $this->validate([
+        $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
+        $id_prodi = $this->request->getPost('id_prodi');
+        $nim_mahasiswa = $this->request->getPost('nim_mahasiswa');
+        $nama_mahasiswa = $this->request->getPost('nama_mahasiswa');
+        $jenkel_mahasiswa = $this->request->getPost('jenkel_mahasiswa');
+        $tmpt_lahir_mahasiswa = $this->request->getPost('tmpt_lahir_mahasiswa');
+        $tgl_lahir_mahasiswa = $this->request->getPost('tgl_lahir_mahasiswa');
+        $no_hp_mahasiswa = $this->request->getPost('no_hp_mahasiswa');
+        $alamat_mahasiswa = $this->request->getPost('alamat_mahasiswa');
+        $nama_ortua = $this->request->getPost('nama_ortua');
+        $no_hp_ortua = $this->request->getPost('no_hp_ortua');
+
+        $email = $this->request->getPost('email');
+        $username = $this->request->getPost('username');
+        $password_hash = $this->request->getPost('password_hash');
+        $status = $this->request->getPost('status');
+
+        $valid = $this->validate([
+            'id_tahun_akademik' => 'required',
+            'id_prodi' => 'required',
+            'nim_mahasiswa' => 'required|is_unique[tb_mahasiswa.nim_mahasiswa]',
+            'nama_mahasiswa' => 'required',
             'email' => 'required|valid_email|is_unique[users.email]',
-            'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
-            'password' => 'required|min_length[8]|max_length[20]',
+            'username' => 'is_unique[users.username]',
+            'password_hash' => 'required|min_length[8]',
+            'status' => 'required',
         ]);
 
-        if (!$input_mahasiswa) {
+        if (!$valid) {
             session()->setFlashdata('errors', $this->validator->getErrors());
             return redirect()->back()->withInput();
         }
-
-        if (!$input_akun) {
-            session()->setFlashdata('errors', $this->validator->getErrors());
-            return redirect()->back()->withInput();
-        }
-
-        $model_mahasiswa = new MahasiswaModel();
-        $model_akun      = new UserModel();
-        $model_group     = new GroupModel();
 
         try {
-            $model_akun->save([
-                'email' => $this->request->getPost('email'),
-                'username' => $this->request->getPost('username'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            $mAkun->save([
+                'email' => $email,
+                'username' => $username,
+                'password_hash' => Password::hash($password_hash),
+                'status' => $status,
+                'active' => true
             ]);
 
-            $model_group->save([
-                'id_group' => 2,
-                'id_user' => $model_akun->getLastID(),
-            ]);
+            $mGroup->addUserToGroup($mAkun->getInsertID(), 3);
 
-            $model_mahasiswa->save([
-                'id_akun' => $model_akun->getLastID(),
-                'nim_mahasiswa' => $this->request->getPost('nim_mahasiswa'),
-                'nama_mahasiswa' => $this->request->getPost('nama_mahasiswa'),
-                'jenkel_mahasiswa' => $this->request->getPost('jenkel_mahasiswa'),
-                'tmpt_lahir_mahasiswa' => $this->request->getPost('tmpt_lahir_mahasiswa'),
-                'tgl_lahir_mahasiswa' => $this->request->getPost('tgl_lahir_mahasiswa'),
-                'no_hp_mahasiswa' => $this->request->getPost('no_hp_mahasiswa'),
-                'alamat_mahasiswa' => $this->request->getPost('alamat_mahasiswa'),
-                'nama_ortua' => $this->request->getPost('nama_ortua'),
-                'no_hp_ortua' => $this->request->getPost('no_hp_ortua'),
+            $mMahasiswa->save([
+                'id_akun' =>  $mAkun->getInsertID(),
+                'id_tahun_akademik' => $id_tahun_akademik,
+                'id_prodi' => $id_prodi,
+                'nim_mahasiswa' => $nim_mahasiswa,
+                'nama_mahasiswa' => $nama_mahasiswa,
+                'jenkel_mahasiswa' => $jenkel_mahasiswa,
+                'tmpt_lahir_mahasiswa' => $tmpt_lahir_mahasiswa,
+                'tgl_lahir_mahasiswa' => $tgl_lahir_mahasiswa,
+                'no_hp_mahasiswa' => $no_hp_mahasiswa,
+                'alamat_mahasiswa' => $alamat_mahasiswa,
+                'nama_ortua' => $nama_ortua,
+                'no_hp_ortua' => $no_hp_ortua,
             ]);
-
             session()->setFlashdata('success', 'Data mahasiswa berhasil ditambahkan');
             return redirect()->to('/admin/datamaster/mahasiswa/add');
-        } catch (\Exception $e) {
+        } catch (\Throwable $th) {
             session()->setFlashdata('errors', 'Data mahasiswa gagal ditambahkan');
             return redirect()->back()->withInput();
         }
@@ -469,23 +489,81 @@ class DataMaster extends BaseController
 
     public function MahasiswaUpdate()
     {
-        $model = new MahasiswaModel();
-        $nim = $this->request->getPost('nim');
-        $nama_mahasiswa = $this->request->getPost('nama_mahasiswa');
-        $tempat_lahir = $this->request->getPost('tempat_lahir');
-        $tanggal_lahir = $this->request->getPost('tanggal_lahir');
-        $jenis_kelamin = $this->request->getPost('jenis_kelamin');
-        $agama = $this->request->getPost('agama');
-        $alamat = $this->request->getPost('alamat');
-        $no_hp = $this->request->getPost('no_hp');
-        $email = $this->request->getPost('email');
-        $id_prodi = $this->request->getPost('id_prodi');
-        $id_perusahaan = $this->request->getPost('id_perusahaan');
-        $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
-        $id_dokumen = $this->request->getPost('id_dokumen');
-        $status_mahasiswa = $this->request->getPost('status_mahasiswa');
+        $mMahasiswa = new MahasiswaModel();
+        $mAkun = new UserModel();
 
-        
+        $id_mahasiswa = $this->request->getPost('id_mahasiswa');
+        $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
+        $id_prodi = $this->request->getPost('id_prodi');
+        $nim_mahasiswa = $this->request->getPost('nim_mahasiswa');
+        $nama_mahasiswa = $this->request->getPost('nama_mahasiswa');
+        $jenkel_mahasiswa = $this->request->getPost('jenkel_mahasiswa');
+        $tmpt_lahir_mahasiswa = $this->request->getPost('tmpt_lahir_mahasiswa');
+        $tgl_lahir_mahasiswa = $this->request->getPost('tgl_lahir_mahasiswa');
+        $no_hp_mahasiswa = $this->request->getPost('no_hp_mahasiswa');
+        $alamat_mahasiswa = $this->request->getPost('alamat_mahasiswa');
+        $nama_ortua = $this->request->getPost('nama_ortua');
+        $no_hp_ortua = $this->request->getPost('no_hp_ortua');
+
+        $id_akun = $mMahasiswa->select('id_akun')->where('id_mahasiswa', $id_mahasiswa)->first();
+        $email = $this->request->getPost('email');
+        $username = $this->request->getPost('username');
+        $password_hash = $this->request->getPost('password_hash');
+        $status = $this->request->getPost('status');
+
+        $valid = $this->validate([
+            'id_tahun_akademik' => 'required',
+            'id_prodi' => 'required',
+            'nim_mahasiswa' => 'required|is_unique[tb_mahasiswa.nim_mahasiswa, id_mahasiswa, ' . $id_mahasiswa . ']',
+            'nama_mahasiswa' => 'required',
+            'email' => 'required|valid_email|is_unique[users.email, id, ' . $id_akun["id_akun"] . ']',
+            'username' => 'is_unique[users.username, id, ' . $id_akun["id_akun"] . ']',
+            'status' => 'required',
+        ]);
+
+        if (!$valid) {
+            session()->setFlashdata('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $mMahasiswa->update($id_mahasiswa, [
+                'id_tahun_akademik' => $id_tahun_akademik,
+                'id_prodi' => $id_prodi,
+                'nim_mahasiswa' => $nim_mahasiswa,
+                'nama_mahasiswa' => $nama_mahasiswa,
+                'jenkel_mahasiswa' => $jenkel_mahasiswa,
+                'tmpt_lahir_mahasiswa' => $tmpt_lahir_mahasiswa,
+                'tgl_lahir_mahasiswa' => $tgl_lahir_mahasiswa,
+                'no_hp_mahasiswa' => $no_hp_mahasiswa,
+                'alamat_mahasiswa' => $alamat_mahasiswa,
+                'nama_ortua' => $nama_ortua,
+                'no_hp_ortua' => $no_hp_ortua,
+            ]);
+
+            if (!empty($password_hash)) {
+                $ok = $mAkun->update($id_akun["id_akun"], [
+                    'email' => $email,
+                    'username' => $username,
+                    'password_hash' => $password_hash,
+                    'status' => $status,
+                ]);
+            } else {
+                $ok =  $mAkun->update($id_akun["id_akun"], [
+                    'email' => $email,
+                    'username' => $username,
+                    'status' => $status,
+                ]);
+            }
+
+            dd($ok);
+
+            session()->setFlashdata('success', 'Data mahasiswa berhasil diperbarui');
+            return redirect()->to('/admin/datamaster/mahasiswa/edit/?id=' . $id_mahasiswa);
+        } catch (\Exception $e) {
+            session()->setFlashdata('errors', 'Data mahasiswa gagal diperbarui');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function PerusahaanUpdate()
