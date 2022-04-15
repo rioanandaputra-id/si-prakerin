@@ -9,22 +9,6 @@ class Bimbingan extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_bimbingan' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
-                'auto_increment' => true
-            ],
-            'id_mahasiswa_perusahaan' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
-            ],
-            'id_seminar' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
-            ],
             'judul_laporan' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
@@ -42,23 +26,21 @@ class Bimbingan extends Migration
                 'constraint' => '255',
                 'null' => true,
             ],
-            'seminar_dibuat'           => [
-                'type'           => 'DATETIME',
+            'id_bimbingan' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
+                'auto_increment' => true
             ],
-            'seminar_diubah'       => [
-                'type'           => 'DATETIME',
-                'null'           => TRUE,
+            'id_mahasiswa_perusahaan' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
             ],
-            'id_pembuat_seminar'         => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-            ],
-            'id_pengubah_seminar'        => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'null'           => TRUE
+            'id_seminar' => [
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => true,
             ],
         ]);
 

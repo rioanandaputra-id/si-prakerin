@@ -109,8 +109,8 @@
                                         <label for="jenkel_mahasiswa">Jenis Kelamin Mahasiswa</label>
                                         <select name="jenkel_mahasiswa" class="form-control <?php if (session('errors.jenkel_mahasiswa')) : ?>is-invalid<?php endif ?>">
                                             <option value="">--Pilih Jenis Kelamin Mahasiswa--</option>
-                                                <option value="Laki-laki" <?= (old('jenkel_mahasiswa') == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                                                <option value="Perempuan" <?= (old('jenkel_mahasiswa') == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                                                <option value="Laki-laki" <?= ($Mahasiswa['jenkel_mahasiswa'] == 'Laki-Laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                                <option value="Perempuan" <?= ($Mahasiswa['jenkel_mahasiswa'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                                         </select>
                                     </div>
                                     <div class="col-6">
@@ -147,14 +147,14 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="email">Email <i class="text-danger">*</i></label>
-                                        <input type="email" class="form-control <?php if (session('errors.email')) : ?>is-invalid<?php endif ?>" name="email" placeholder="Masukan Email" value="<?= $Akun->email; ?>">
-                                        <small class="text-danger"><?php if (session('errors.email')) : echo session('errors.email');
+                                        <label for="email_mahasiswa">Email </label>
+                                        <input type="email" class="form-control <?php if (session('errors.email_mahasiswa')) : ?>is-invalid<?php endif ?>" name="email_mahasiswa" placeholder="Masukan Email" value="<?= $Mahasiswa['email_mahasiswa']; ?>">
+                                        <small class="text-danger"><?php if (session('errors.email_mahasiswa')) : echo session('errors.email_mahasiswa');
                                                                     endif ?></small>
                                     </div>
                                     <div class="col-6">
-                                        <label for="username">Username </label>
-                                        <input type="username" class="form-control <?php if (session('errors.username')) : ?>is-invalid<?php endif ?>" name="username" placeholder="Masukan Username" value="<?= $Akun->username; ?>">
+                                        <label for="username">Username <i class="text-danger">*</i></label>
+                                        <input type="username" class="form-control <?php if (session('errors.username')) : ?>is-invalid<?php endif ?>" name="username" placeholder="Masukan Username" value="<?= $Akun['username']; ?>">
                                         <small class="text-danger"><?php if (session('errors.username')) : echo session('errors.username');
                                                                     endif ?></small>
                                     </div>
@@ -163,19 +163,19 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="password_hash">Kata Sandi </label>
-                                        <input type="password" class="form-control <?php if (session('errors.password_hash')) : ?>is-invalid<?php endif ?>" name="password_hash" placeholder="Masukan Kata Sandi" >
-                                        <small class="text-danger"><?php if (session('errors.password_hash')) : echo session('errors.password_hash');
+                                        <label for="password">Password </label>
+                                        <input type="password" class="form-control <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" name="password" placeholder="Masukan Kata Sandi" >
+                                        <small class="text-danger"><?php if (session('errors.password')) : echo session('errors.password');
                                                                     endif ?></small>
                                     </div>
                                     <div class="col-6">
-                                        <label for="status">Status <i class="text-danger">*</i></label>
-                                        <select name="status" class="form-control <?php if (session('errors.status')) : ?>is-invalid<?php endif ?>">
+                                        <label for="status_akun">Status <i class="text-danger">*</i></label>
+                                        <select name="status_akun" class="form-control <?php if (session('errors.status_akun')) : ?>is-invalid<?php endif ?>">
                                             <option value="">--Pilih Status--</option>
-                                                <option value="Aktif" <?= ($Akun->status == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                                                <option value="Tidak Aktif" <?= ($Akun->status == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                                <option value="Aktif" <?= ($Akun['status_akun'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                                <option value="Tidak Aktif" <?= ($Akun['status_akun'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
                                         </select>
-                                        <small class="text-danger"><?php if (session('errors.status')) : echo session('errors.status');
+                                        <small class="text-danger"><?php if (session('errors.status_akun')) : echo session('errors.status_akun');
                                                                     endif ?></small>
                                     </div>
                                 </div>

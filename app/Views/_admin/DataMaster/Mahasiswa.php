@@ -164,8 +164,8 @@
                 name: 'tahun_akademik'
             },
             {
-                data: 'status_mahasiswa',
-                name: 'status_mahasiswa'
+                data: 'status_akun',
+                name: 'status_akun'
             },
         ],
         order: [
@@ -206,7 +206,7 @@
                         url: "<?= site_url('admin/datamaster/mahasiswa/delete') ?>",
                         type: "POST",
                         data: {
-                            'checkbox_item': id
+                            'id_mahasiswa': id
                         },
                         success: function(data) {
                             Swal.fire({

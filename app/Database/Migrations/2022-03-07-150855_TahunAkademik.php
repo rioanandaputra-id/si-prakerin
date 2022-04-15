@@ -9,19 +9,19 @@ class TahunAkademik extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_tahun_akademik'  => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-                'auto_increment' => true,
-            ],
             'tahun_akademik'       => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '10',
             ],
             'status_tahun_akademik'       => [
-                'type'           => 'VARCHAR',
-                'constraint'     => '30',
+                'type' => 'enum',
+                'constraint' => "'Aktif','Tidak Aktif'",
+            ],
+            'id_tahun_akademik'  => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
             ],
             // 'tahun_akademik_dibuat'           => [
             //     'type'           => 'DATETIME',

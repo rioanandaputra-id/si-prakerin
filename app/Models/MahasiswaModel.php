@@ -20,6 +20,7 @@ class MahasiswaModel extends Model
         'jenkel_mahasiswa',
         'tmpt_lahir_mahasiswa',
         'tgl_lahir_mahasiswa',
+        'email_mahasiswa',
         'no_hp_mahasiswa',
         'alamat_mahasiswa',
         'status_mahasiswa',
@@ -28,7 +29,7 @@ class MahasiswaModel extends Model
     ];
     protected $useTimestamps = false;
     protected $tahun_akademik  = ['tb_tahun_akademik', 'tb_mahasiswa.id_tahun_akademik = tb_tahun_akademik.id_tahun_akademik', 'LEFT JOIN'];
-    protected $akun          = ['users', 'tb_mahasiswa.id_akun = users.id', 'INNER JOIN'];
+    protected $akun          = ['tb_akun', 'tb_mahasiswa.id_akun = tb_akun.id_akun', 'INNER JOIN'];
     protected $prodi         = ['tb_prodi', 'tb_mahasiswa.id_prodi = tb_prodi.id_prodi', 'LEFT JOIN'];
 
     public function dt()

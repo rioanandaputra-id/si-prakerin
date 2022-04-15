@@ -9,12 +9,6 @@ class Perusahaan extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_perusahaan'          => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => TRUE,
-                'auto_increment' => TRUE
-            ],
             // 'id_prodi'           => [
             //     'type'           => 'INT',
             //     'constraint'     => 11,
@@ -58,8 +52,14 @@ class Perusahaan extends Migration
                 'null'           => TRUE
             ],
             'status_perusahaan'  => [
-                'type'           => 'VARCHAR',
-                'constraint'     => '30',
+                'type' => 'enum',
+                'constraint' => "'Aktif','Tidak Aktif'",
+            ],
+            'id_perusahaan'          => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'auto_increment' => TRUE
             ],
             // 'perusahaan_dibuat'           => [
             //     'type'           => 'DATETIME',

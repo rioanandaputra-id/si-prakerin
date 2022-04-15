@@ -9,6 +9,7 @@ class AllSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersSeeder');
+        $this->call('AkunSeeder');
         $this->call('TahunAkademikSeeder');
         $this->call('ProdiSeeder');
         $this->call('PerusahaanSeeder');

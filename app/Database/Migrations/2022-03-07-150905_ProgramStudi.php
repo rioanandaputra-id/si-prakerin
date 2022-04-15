@@ -9,12 +9,6 @@ class ProgramStudi extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_prodi'          => [
-                'type'           => 'INT',
-                'constraint'     => 5,
-                'unsigned'       => TRUE,
-                'auto_increment' => TRUE
-            ],
             'nama_prodi'  => [
                 'type'            => 'VARCHAR',
                 'constraint'      => '100',
@@ -24,8 +18,14 @@ class ProgramStudi extends Migration
                 'constraint'      => '100',
             ],
             'status_prodi'  => [
-                'type'            => 'VARCHAR',
-                'constraint'      => '30',
+                'type' => 'enum',
+                'constraint' => "'Aktif','Tidak Aktif'",
+            ],
+            'id_prodi'          => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => TRUE,
+                'auto_increment' => TRUE
             ],
             // 'prodi_dibuat'           => [
             //     'type'           => 'DATETIME',

@@ -7,6 +7,14 @@ use App\Models\MahasiswaModel;
 
 class Akun extends BaseController
 {
+    public function __construct()
+    {
+        if (session()->get('peran_akun') != "Mahasiswa") {
+            echo 'Access denied';
+            exit;
+        }
+    }
+
     public function index()
     {
         $model = new MahasiswaModel();

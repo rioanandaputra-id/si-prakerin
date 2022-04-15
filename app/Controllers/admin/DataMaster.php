@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\AkunModel;
 use App\Models\DokumenModel;
 use App\Models\PegawaiModel;
 use App\Models\MahasiswaModel;
@@ -12,11 +13,18 @@ use App\Models\TahunAkademikModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Myth\Auth\Password;
+// use Myth\Auth\Password;
 
 class DataMaster extends BaseController
 {
-
+    public function __construct()
+    {
+        if (session()->get('peran_akun') != "Administrator") {
+            echo 'Access denied';
+            exit;
+        }
+    }
+    
     //--------------------------------------------------------------------
 
     public function PegawaiView()
@@ -141,13 +149,12 @@ class DataMaster extends BaseController
         $mTahunAkademik = new TahunAkademikModel();
         $mProdi = new ProdiModel();
         $mMahasiswa = new MahasiswaModel();
-        $mAkun = new UserModel();
+        $mAkun = new AkunModel();
 
         $data['TahunAkademik'] = $mTahunAkademik->findAll();
         $data['Prodi'] = $mProdi->findAll();
         $data['Mahasiswa'] = $mMahasiswa->find($id_mahasiswa);
         $data['Akun'] = $mAkun->find($data['Mahasiswa']['id_akun']);
-
         return view('_admin/DataMaster/MahasiswaEdit', $data);
     }
 
@@ -259,8 +266,7 @@ class DataMaster extends BaseController
     public function MahasiswaCreate()
     {
         $mMahasiswa = new MahasiswaModel();
-        $mAkun = new UserModel();
-        $mGroup = new GroupModel();
+        $mAkun = new AkunModel();
 
         $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
         $id_prodi = $this->request->getPost('id_prodi');
@@ -273,21 +279,21 @@ class DataMaster extends BaseController
         $alamat_mahasiswa = $this->request->getPost('alamat_mahasiswa');
         $nama_ortua = $this->request->getPost('nama_ortua');
         $no_hp_ortua = $this->request->getPost('no_hp_ortua');
+        $email_mahasiswa = $this->request->getPost('email_mahasiswa');
 
-        $email = $this->request->getPost('email');
         $username = $this->request->getPost('username');
-        $password_hash = $this->request->getPost('password_hash');
-        $status = $this->request->getPost('status');
+        $password = $this->request->getPost('password');
+        $status_akun = $this->request->getPost('status_akun');
 
         $valid = $this->validate([
             'id_tahun_akademik' => 'required',
             'id_prodi' => 'required',
             'nim_mahasiswa' => 'required|is_unique[tb_mahasiswa.nim_mahasiswa]',
             'nama_mahasiswa' => 'required',
-            'email' => 'required|valid_email|is_unique[users.email]',
-            'username' => 'is_unique[users.username]',
-            'password_hash' => 'required|min_length[8]',
-            'status' => 'required',
+            'email_mahasiswa' => 'is_unique[tb_mahasiswa.email_mahasiswa]',
+            'username' => 'is_unique[tb_akun.username]',
+            'password' => 'required|min_length[8]',
+            'status_akun' => 'required',
         ]);
 
         if (!$valid) {
@@ -297,14 +303,11 @@ class DataMaster extends BaseController
 
         try {
             $mAkun->save([
-                'email' => $email,
                 'username' => $username,
-                'password_hash' => Password::hash($password_hash),
-                'status' => $status,
-                'active' => true
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'peran_akun' => 'Mahasiswa',
+                'status_akun' => $status_akun,
             ]);
-
-            $mGroup->addUserToGroup($mAkun->getInsertID(), 3);
 
             $mMahasiswa->save([
                 'id_akun' =>  $mAkun->getInsertID(),
@@ -315,6 +318,7 @@ class DataMaster extends BaseController
                 'jenkel_mahasiswa' => $jenkel_mahasiswa,
                 'tmpt_lahir_mahasiswa' => $tmpt_lahir_mahasiswa,
                 'tgl_lahir_mahasiswa' => $tgl_lahir_mahasiswa,
+                'email_mahasiswa' => $email_mahasiswa,
                 'no_hp_mahasiswa' => $no_hp_mahasiswa,
                 'alamat_mahasiswa' => $alamat_mahasiswa,
                 'nama_ortua' => $nama_ortua,
@@ -490,7 +494,7 @@ class DataMaster extends BaseController
     public function MahasiswaUpdate()
     {
         $mMahasiswa = new MahasiswaModel();
-        $mAkun = new UserModel();
+        $mAkun = new AkunModel();
 
         $id_mahasiswa = $this->request->getPost('id_mahasiswa');
         $id_tahun_akademik = $this->request->getPost('id_tahun_akademik');
@@ -506,19 +510,19 @@ class DataMaster extends BaseController
         $no_hp_ortua = $this->request->getPost('no_hp_ortua');
 
         $id_akun = $mMahasiswa->select('id_akun')->where('id_mahasiswa', $id_mahasiswa)->first();
-        $email = $this->request->getPost('email');
+        $email_mahasiswa = $this->request->getPost('email_mahasiswa');
         $username = $this->request->getPost('username');
-        $password_hash = $this->request->getPost('password_hash');
-        $status = $this->request->getPost('status');
+        $password = $this->request->getPost('password');
+        $status_akun = $this->request->getPost('status_akun');
 
         $valid = $this->validate([
             'id_tahun_akademik' => 'required',
             'id_prodi' => 'required',
             'nim_mahasiswa' => 'required|is_unique[tb_mahasiswa.nim_mahasiswa, id_mahasiswa, ' . $id_mahasiswa . ']',
             'nama_mahasiswa' => 'required',
-            'email' => 'required|valid_email|is_unique[users.email, id, ' . $id_akun["id_akun"] . ']',
-            'username' => 'is_unique[users.username, id, ' . $id_akun["id_akun"] . ']',
-            'status' => 'required',
+            'email_mahasiswa' => 'is_unique[tb_mahasiswa.email_mahasiswa, id_mahasiswa, ' . $id_mahasiswa . ']',
+            'username' => 'is_unique[tb_akun.username, id_akun, ' . $id_akun["id_akun"] . ']',
+            'status_akun' => 'required',
         ]);
 
         if (!$valid) {
@@ -535,28 +539,25 @@ class DataMaster extends BaseController
                 'jenkel_mahasiswa' => $jenkel_mahasiswa,
                 'tmpt_lahir_mahasiswa' => $tmpt_lahir_mahasiswa,
                 'tgl_lahir_mahasiswa' => $tgl_lahir_mahasiswa,
+                'email_mahasiswa' => $email_mahasiswa,
                 'no_hp_mahasiswa' => $no_hp_mahasiswa,
                 'alamat_mahasiswa' => $alamat_mahasiswa,
                 'nama_ortua' => $nama_ortua,
                 'no_hp_ortua' => $no_hp_ortua,
             ]);
 
-            if (!empty($password_hash)) {
-                $ok = $mAkun->update($id_akun["id_akun"], [
-                    'email' => $email,
+            if (!empty($password)) {
+                $mAkun->update($id_akun["id_akun"], [
                     'username' => $username,
-                    'password_hash' => $password_hash,
-                    'status' => $status,
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'status_akun' => $status_akun,
                 ]);
             } else {
-                $ok =  $mAkun->update($id_akun["id_akun"], [
-                    'email' => $email,
+                $mAkun->update($id_akun["id_akun"], [
                     'username' => $username,
-                    'status' => $status,
+                    'status_akun' => $status_akun,
                 ]);
             }
-
-            dd($ok);
 
             session()->setFlashdata('success', 'Data mahasiswa berhasil diperbarui');
             return redirect()->to('/admin/datamaster/mahasiswa/edit/?id=' . $id_mahasiswa);

@@ -9,12 +9,6 @@ class Dokumen extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_dokumen'          => [
-                'type'           => 'INT',
-                'constraint'     => 5,
-                'unsigned'       => TRUE,
-                'auto_increment' => TRUE
-            ],
             // 'jenis_dokumen'        => [
             //     'type'           => 'VARCHAR',
             //     'constraint'     => '100',
@@ -42,6 +36,12 @@ class Dokumen extends Migration
             'status_dokumen'     => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '30',
+            ],
+            'id_dokumen'          => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => TRUE,
+                'auto_increment' => TRUE
             ],
             // 'dokumen_dibuat'           => [
             //     'type'           => 'DATETIME',

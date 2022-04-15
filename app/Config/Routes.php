@@ -2,18 +2,40 @@
 
 namespace Config;
 
+// Create a new instance of our RouteCollection class.
 $routes = Services::routes();
+
+// Load the system's routing file first, so that the app and ENVIRONMENT
+// can override as needed.
 if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
     require SYSTEMPATH . 'Config/Routes.php';
 }
-$routes->setDefaultNamespace('\Myth\Auth\Controllers');
-$routes->setDefaultController('AuthController');
+
+/*
+ * --------------------------------------------------------------------
+ * Router Setup
+ * --------------------------------------------------------------------
+ */
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 
-$routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'role:Admin'], function ($routes) {
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
+$routes->get('/', 'Home::index');
+$routes->match(['get', 'post'], 'login', 'AkunController::login', ["filter" => "noauth"]);
+$routes->get('logout', 'AkunController::logout');
+
+$routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
 
     $routes->get('datamaster/dosen', 'DataMaster::DosenView');
@@ -59,17 +81,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'ro
     $routes->post('datamaster/dokumen/delete', 'DataMaster::DokumenDelete');
 });
 
-
-
-
-
-
-
-
-
-
-
-$routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'role:Mahasiswa'], function ($routes) {
+$routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
     $routes->get('praktikindustri', 'PraktikIndustri::index');
     $routes->get('praktikindustri/add', 'PraktikIndustri::add');
@@ -80,14 +92,26 @@ $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter
     $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
 });
 
-$routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'role:Dosen'], function ($routes) {
+$routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
 });
 
-$routes->group('tamu', ['namespace' => 'App\Controllers\Tamu'], function ($routes) {
+$routes->group('tamu', ['namespace' => 'App\Controllers\Tamu', 'filter' => 'noauth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
 });
-
+/*
+ * --------------------------------------------------------------------
+ * Additional Routing
+ * --------------------------------------------------------------------
+ *
+ * There will often be times that you need additional routing and you
+ * need it to be able to override any defaults in this file. Environment
+ * based routes is one such time. require() additional route files here
+ * to make that happen.
+ *
+ * You will have access to the $routes object within that file without
+ * needing to reload it.
+ */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
