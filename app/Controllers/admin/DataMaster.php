@@ -39,8 +39,11 @@ class DataMaster extends BaseController
     public function MahasiswaView()
     {
         $model = new MahasiswaModel();
-        if ($this->request->isAJAX()) {
-            return $model->dt();
+        $ajax   = $this->request->isAJAX();
+        $status = $this->request->getGet('status');
+
+        if ($ajax) {
+            return $model->dt($status);
         }
         return view('_admin/DataMaster/Mahasiswa');
     }

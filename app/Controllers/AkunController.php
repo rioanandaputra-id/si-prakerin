@@ -20,7 +20,7 @@ class AkunController extends BaseController
 
             $errors = [
                 'password' => [
-                    'validateAkun' => "Username or Password didn't match",
+                    'validateAkun' => "Username dan Password tidak cocok | Akun tidak aktif",
                 ],
             ];
 

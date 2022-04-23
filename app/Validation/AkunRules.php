@@ -10,6 +10,7 @@ class AkunRules
     {
         $model = new AkunModel();
         $akun = $model->where('username', $data['username'])
+            ->where('status_akun', 'Aktif')
             ->first();
 
         if (!$akun) {

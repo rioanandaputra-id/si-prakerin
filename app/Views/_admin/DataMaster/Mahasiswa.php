@@ -52,7 +52,7 @@
                                     <table id="dataTableA" class="table table-bordered table-hover dataTableA dtr-inline" style="width: 100%; font-size:smaller;">
                                         <thead class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_allA"></th>
                                                 <th>NAMA</th>
                                                 <th>NPM</th>
                                                 <th>JENKEL</th>
@@ -64,7 +64,7 @@
 
                                         <tfoot class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_allA"></th>
                                                 <th>NAMA</th>
                                                 <th>NPM</th>
                                                 <th>JENKEL</th>
@@ -82,7 +82,7 @@
                                     <table id="dataTableB" class="table table-bordered table-hover dataTableB dtr-inline" style="width: 100%; font-size:smaller;">
                                         <thead class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_allB"></th>
                                                 <th>NAMA</th>
                                                 <th>NPM</th>
                                                 <th>JENKEL</th>
@@ -94,7 +94,7 @@
 
                                         <tfoot class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_allB"></th>
                                                 <th>NAMA</th>
                                                 <th>NPM</th>
                                                 <th>JENKEL</th>
@@ -125,11 +125,16 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    var dataTableB = $('#dataTableB').DataTable({
+
+var dataTableA = $('#dataTableA').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-            url: ''
+            url: '',
+            type: 'GET',
+            data: {
+                'status': 'baru'
+            }
         },
         columns: [{
                 data: 'id_mahasiswa',
@@ -137,7 +142,59 @@
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_mahasiswa + '">';
+                    return '<input type="checkbox" class="checkbox_itemA" name="checkbox_item[]" value="' + row.id_mahasiswa + '">';
+                }
+            },
+            {
+                data: 'nama_mahasiswa',
+                name: 'nama_mahasiswa',
+                render: function(data, type, row, meta) {
+                    return '<a href="<?= site_url('admin/datamaster/mahasiswa/edit/?id=') ?>' + row.id_mahasiswa + '">' + data + '</a>';
+                }
+            },
+            {
+                data: 'nim_mahasiswa',
+                name: 'nim_mahasiswa'
+            },
+            {
+                data: 'jenkel_mahasiswa',
+                name: 'jenkel_mahasiswa'
+            },
+            {
+                data: 'nama_prodi',
+                name: 'nama_prodi'
+            },
+            {
+                data: 'tahun_akademik',
+                name: 'tahun_akademik'
+            },
+            {
+                data: 'status_akun',
+                name: 'status_akun'
+            },
+        ],
+        order: [
+            [1, "desc"]
+        ],
+    });
+
+    var dataTableB = $('#dataTableB').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '',
+            type: 'GET',
+            data: {
+                'status': 'validasi'
+            }
+        },
+        columns: [{
+                data: 'id_mahasiswa',
+                name: 'id_mahasiswa',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row, meta) {
+                    return '<input type="checkbox" class="checkbox_itemB" name="checkbox_item[]" value="' + row.id_mahasiswa + '">';
                 }
             },
             {
@@ -174,22 +231,36 @@
     });
 
     $('#reload').click(function() {
+        dataTableA.ajax.reload();
         dataTableB.ajax.reload();
     });
 
-    $('.checkbox_all').click(function() {
+    $('.checkbox_allA').click(function() {
         if ($(this).is(':checked')) {
-            $('.checkbox_item').prop('checked', true);
-            $('.checkbox_all').prop('checked', true);
+            $('.checkbox_itemA').prop('checked', true);
+            $('.checkbox_allA').prop('checked', true);
         } else {
-            $('.checkbox_item').prop('checked', false);
-            $('.checkbox_all').prop('checked', false);
+            $('.checkbox_itemA').prop('checked', false);
+            $('.checkbox_allA').prop('checked', false);
+        }
+    });
+
+    $('.checkbox_allB').click(function() {
+        if ($(this).is(':checked')) {
+            $('.checkbox_itemB').prop('checked', true);
+            $('.checkbox_allB').prop('checked', true);
+        } else {
+            $('.checkbox_itemB').prop('checked', false);
+            $('.checkbox_allB').prop('checked', false);
         }
     });
 
     $('#delete').click(function() {
         var id = [];
-        $('.checkbox_item:checked').each(function() {
+        $('.checkbox_itemA:checked').each(function() {
+            id.push($(this).val());
+        });
+        $('.checkbox_itemB:checked').each(function() {
             id.push($(this).val());
         });
         if (id.length > 0) {
@@ -215,7 +286,9 @@
                                 icon: "success",
                                 button: "Tutup",
                             });
-                            $('.checkbox_all').prop('checked', false);
+                            $('.checkbox_allA').prop('checked', false);
+                            $('.checkbox_allB').prop('checked', false);
+                            dataTableA.ajax.reload();
                             dataTableB.ajax.reload();
                         },
                         error: function(data) {
@@ -237,105 +310,6 @@
             });
         }
     });
-
-    $('#add').click(function() {
-        Swal.fire({
-            title: 'Tambah Kategori Artikel',
-            input: 'text',
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Tambah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "<?= current_url() ?>" + '/create',
-                    type: "POST",
-                    data: {
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil ditambahkan",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal ditambahkan",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
-        });
-    });
-
-    function update(id, categoryy) {
-        Swal.fire({
-            title: 'Ubah Kategori Artikel',
-            input: 'text',
-            inputValue: categoryy,
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Ubah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('backend/master/category_article/update') }}",
-                    type: "PUT",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': id,
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil diubah",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal diubah",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
-        });
-    }
 </script>
 
 <?php $this->endSection(); ?>
