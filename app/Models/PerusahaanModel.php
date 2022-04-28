@@ -31,12 +31,11 @@ class PerusahaanModel extends Model
     {
         if ($status == false) {
             $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Pengajuan Baru')
+                ->where('status_perusahaan', 'Tidak Aktif')
                 ->make();
         } else {
             $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Pengajuan Diterima')
-                ->orWhere('status_perusahaan', 'Pengajuan Ditolak')
+                ->where('status_perusahaan', 'Aktif')
                 ->make();
         }
         return $data;

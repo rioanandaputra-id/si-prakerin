@@ -35,21 +35,16 @@
                                 Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
-                            <button type="button" id="validation" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check-circle"></i>
-                                Validasi</button>
+                            <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check-circle"></i>
+                                Konfirmasi</button>
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
                         </div>
-                        <ul class="nav nav-pills ml-auto p-3">
-                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link btn-sm" href="#tab_1" data-toggle="tab">Belum Validasi</a></li>
-                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link active btn-sm" href="#tab_2" data-toggle="tab">Sudah Validasi</a></li>
-                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="tab-pane" id="tab_1">
                                 <div class="table-responsive">
-                                    <table id="dataTableA" class="table table-bordered table-hover dataTableA dtr-inline" style="width: 100%; font-size:smaller;">
+                                    <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
                                         <thead class="bg-success">
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
@@ -57,6 +52,7 @@
                                                 <th>NIP/NIK</th>
                                                 <th>JENKEL</th>
                                                 <th>PRODI</th>
+                                                <th>AKSES</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </thead>
@@ -68,43 +64,13 @@
                                                 <th>NIP/NIK</th>
                                                 <th>JENKEL</th>
                                                 <th>PRODI</th>
+                                                <th>AKSES</th>
                                                 <th>STATUS</th>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                            </div>
-
-                            <div class="tab-pane active" id="tab_2">
-                                <div class="table-responsive">
-                                    <table id="dataTableB" class="table table-bordered table-hover dataTableB dtr-inline" style="width: 100%; font-size:smaller;">
-                                        <thead class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>NIP/NIK</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tfoot class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>NIP/NIK</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -120,43 +86,47 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    var dataTableB = $('#dataTableB').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: ''
         },
         columns: [{
-                data: 'id_dsn',
-                name: 'id_dsn',
+                data: 'id_dosen',
+                name: 'id_dosen',
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_mhs + '">';
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_dosen + '">';
                 }
             },
             {
-                data: 'nama_dsn',
-                name: 'nama_dsn',
+                data: 'nama_dosen',
+                name: 'nama_dosen',
                 render: function(data, type, row, meta) {
-                    return '<a href="javascript:update(' + row.id_dsn + ');">' + data + '</a>';
+                    return '<a href="<?= site_url('admin/datamaster/dosen/edit/?id_dosen=') ?>' + row.id_dosen + '">' + data + '</a>';
                 }
             },
             {
-                data: 'nip_dsn',
-                name: 'nip_dsn'
+                data: 'nip_dosen',
+                name: 'nip_dosen'
             },
             {
-                data: 'jenkel_dsn',
-                name: 'jenkel_dsn'
+                data: 'jenkel_dosen',
+                name: 'jenkel_dosen'
             },
             {
                 data: 'nama_prodi',
                 name: 'nama_prodi'
             },
             {
-                data: 'status_dsn',
-                name: 'status_dsn'
+                data: 'peran_akun',
+                name: 'peran_akun'
+            },
+            {
+                data: 'status_akun',
+                name: 'status_akun'
             }
         ],
         order: [
@@ -165,7 +135,7 @@
     });
 
     $('#reload').click(function() {
-        dataTableB.ajax.reload();
+        dataTable.ajax.reload();
     });
 
     $('.checkbox_all').click(function() {
@@ -194,10 +164,10 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "<?= site_url('admin/datamaster/pegawai/delete') ?>",
+                        url: "<?= site_url('admin/datamaster/dosen/delete') ?>",
                         type: "POST",
                         data: {
-                            'checkbox_item': id
+                            'id_dosen': id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -277,56 +247,71 @@
         });
     });
 
-    function update(id, categoryy) {
-        Swal.fire({
-            title: 'Ubah Kategori Artikel',
-            input: 'text',
-            inputValue: categoryy,
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Ubah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('backend/master/category_article/update') }}",
-                    type: "PUT",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': id,
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil diubah",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal diubah",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
+    $('#confirm').click(function() {
+        var id = [];
+        $('.checkbox_item:checked').each(function() {
+            id.push($(this).val());
         });
-    }
+        if (id.length > 0) {
+            Swal.fire({
+                title: 'Konfirmasi status dosen',
+                input: 'select',
+                inputOptions: {
+                    'Tidak Aktif': 'Tidak Aktif',
+                    'Aktif': 'Aktif',
+                },
+                inputPlaceholder: '--pilih--',
+                showCancelButton: true,
+                inputValidator: function(value) {
+                    return new Promise(function(resolve, reject) {
+                        if (value == '') {
+                            resolve(
+                                'Anda harus memilih status dosen'
+                            );
+                        } else {
+                            resolve();
+                        }
+                    });
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= site_url('admin/datamaster/dosen/update') ?>",
+                        type: "POST",
+                        data: {
+                            'konfirmasi': true,
+                            'id_dosen': id,
+                            'status_dosen': result.value
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: "Data berhasil dikonfirmasi",
+                                icon: "success",
+                                button: "Tutup",
+                            });
+                            dataTableA.ajax.reload();
+                            dataTableB.ajax.reload();
+                        },
+                        error: function(data) {
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: "Data gagal dikonfirmasi",
+                                icon: "error",
+                                button: "Tutup",
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Pilih data yang ingin dikonfirmasi!",
+                icon: "warning",
+                button: "Tutup",
+            });
+        }
+    });
 </script>
 
 <?php $this->endSection(); ?>

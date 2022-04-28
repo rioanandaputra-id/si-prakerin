@@ -8,13 +8,12 @@ class AllSeeder extends Seeder
 {
     public function run()
     {
-        // $this->call('UsersSeeder');
         $this->call('AkunSeeder');
         $this->call('TahunAkademikSeeder');
         $this->call('ProdiSeeder');
         $this->call('PerusahaanSeeder');
         $this->call('MahasiswaSeeder');
-        $this->call('PegawaiSeeder');
+        $this->call('DosenSeeder');
         $this->call('DokumenSeeder');
     }
 }

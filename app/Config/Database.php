@@ -34,7 +34,7 @@ class Database extends Config
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'root',
-        'password' => '1234',
+        'password' => '',
         'database' => 'db_siprakerin',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',

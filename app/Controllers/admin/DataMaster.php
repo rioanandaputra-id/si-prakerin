@@ -5,7 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\AkunModel;
 use App\Models\DokumenModel;
-use App\Models\PegawaiModel;
+use App\Models\DosenModel;
 use App\Models\MahasiswaModel;
 use App\Models\PerusahaanModel;
 use App\Models\ProdiModel;
@@ -13,7 +13,6 @@ use App\Models\TahunAkademikModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-// use Myth\Auth\Password;
 
 class DataMaster extends BaseController
 {
@@ -27,13 +26,13 @@ class DataMaster extends BaseController
     
     //--------------------------------------------------------------------
 
-    public function PegawaiView()
+    public function DosenView()
     {
-        $model = new PegawaiModel();
+        $model = new DosenModel();
         if ($this->request->isAJAX()) {
             return $model->dt();
         }
-        return view('_admin/DataMaster/Pegawai');
+        return view('_admin/DataMaster/Dosen');
     }
 
     public function MahasiswaView()
@@ -105,9 +104,11 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function PegawaiViewAdd()
+    public function DosenViewAdd()
     {
-        return view('_admin/DataMaster/PegawaiAdd');
+        $mProdi = new ProdiModel();
+        $data['Prodi'] = $mProdi->findAll();
+        return view('_admin/DataMaster/DosenAdd', $data);
     }
 
     public function MahasiswaViewAdd()
@@ -141,9 +142,18 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function PegawaiViewEdit()
+    public function DosenViewEdit()
     {
-        return view('_admin/DataMaster/PegawaiEdit');
+        $id_dosen = $this->request->getGet('id_dosen');
+        $mDosen = new DosenModel();
+        $mTahunAkademik = new TahunAkademikModel();
+        $mProdi = new ProdiModel();
+        $mAkun = new AkunModel();
+        $data['Dosen'] = $mDosen->find($id_dosen);
+        $data['TahunAkademik'] = $mTahunAkademik->findAll();
+        $data['Prodi'] = $mProdi->findAll();
+        $data['Akun'] = $mAkun->find($data['Dosen']['id_akun']);
+        return view('_admin/DataMaster/DosenEdit', $data);
     }
 
     public function MahasiswaViewEdit()
@@ -153,7 +163,6 @@ class DataMaster extends BaseController
         $mProdi = new ProdiModel();
         $mMahasiswa = new MahasiswaModel();
         $mAkun = new AkunModel();
-
         $data['TahunAkademik'] = $mTahunAkademik->findAll();
         $data['Prodi'] = $mProdi->findAll();
         $data['Mahasiswa'] = $mMahasiswa->find($id_mahasiswa);
@@ -198,70 +207,63 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function PegawaiCreate()
+    public function DosenCreate()
     {
-        $input_pegawai = $this->validate([
-            'id_prodi' => 'required|number|max_length[11]',
-            'nip_pegawai' => 'required|number|max_length[20]|is_unique[tb_pegawai.nip_pegawai]',
-            'nama_pegawai' => 'required|max_length[150]',
-            'jenkel_pegawai' => 'required|enum[Laki-Laki,Perempuan]',
-            'tmpt_lahir_pegawai' => 'required|max_length[150]',
-            'tgl_lahir_pegawai' => 'required|date',
-            'no_hp_pegawai' => 'required|number|max_length[20]',
-            'alamat_pegawai' => 'required|max_length[225]',
+        $mDosen = new DosenModel();
+        $mAkun = new AkunModel();
+
+        $id_prodi = $this->request->getPost('id_prodi');
+        $nip_dosen = $this->request->getPost('nip_dosen');
+        $nama_dosen = $this->request->getPost('nama_dosen');
+        $tmpt_lahir_dosen = $this->request->getPost('tmpt_lahir_dosen');
+        $tgl_lahir_dosen = $this->request->getPost('tgl_lahir_dosen');
+        $jenkel_dosen = $this->request->getPost('jenkel_dosen');
+        $no_hp_dosen = $this->request->getPost('no_hp_dosen');
+        $alamat_dosen = $this->request->getPost('alamat_dosen');
+
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        $status_akun = $this->request->getPost('status_akun');
+        
+        $valid = $this->validate([
+            'id_prodi' => 'required',
+            'nip_dosen' => 'required|is_unique[tb_dosen.nip_dosen]',
+            'nama_dosen' => 'required',
+            'email_dosen' => 'is_unique[tb_dosen.email_dosen]',
+            'username' => 'is_unique[tb_akun.username]',
+            'password' => 'required|min_length[8]',
+            'status_akun' => 'required',
         ]);
 
-        $input_akun = $this->validate([
-            'email' => 'required|valid_email|is_unique[users.email]',
-            'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
-            'password' => 'required|min_length[8]|max_length[20]',
-        ]);
-
-        if (!$input_pegawai) {
+        if (!$valid) {
             session()->setFlashdata('errors', $this->validator->getErrors());
             return redirect()->back()->withInput();
         }
 
-        if (!$input_akun) {
-            session()->setFlashdata('errors', $this->validator->getErrors());
-            return redirect()->back()->withInput();
-        }
-
-        $model_pegawai = new PegawaiModel();
-        $model_akun = new UserModel();
-        $model_group = new GroupModel();
-
-        try {
-            $model_akun->save([
-                'email' => $this->request->getPost('email'),
-                'username' => $this->request->getPost('username'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+        try{
+            $mAkun->save([
+                'username' => $username,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'peran_akun' => 'Dosen',
+                'status_akun' => $status_akun,
             ]);
 
-            $model_group->save([
-                'id_group' => 1,
-                'id_user' => $model_akun->getLastID(),
+            $mDosen->save([
+                'id_prodi' => $id_prodi,
+                'nip_dosen' => $nip_dosen,
+                'nama_dosen' => $nama_dosen,
+                'tmpt_lahir_dosen' => $tmpt_lahir_dosen,
+                'tgl_lahir_dosen' => $tgl_lahir_dosen,
+                'jenkel_dosen' => $jenkel_dosen,
+                'no_hp_dosen' => $no_hp_dosen,
+                'alamat_dosen' => $alamat_dosen,
+                'id_akun' => $mAkun->getInsertID(),
             ]);
 
-            $model_pegawai->save([
-                'id_akun' => $model_akun->getLastID(),
-                'id_prodi' => $this->request->getPost('id_prodi'),
-                'nip_pegawai' => $this->request->getPost('nip_pegawai'),
-                'nama_pegawai' => $this->request->getPost('nama_pegawai'),
-                'jenkel_pegawai' => $this->request->getPost('jenkel_pegawai'),
-                'tmpt_lahir_pegawai' => $this->request->getPost('tmpt_lahir_pegawai'),
-                'tgl_lahir_pegawai' => $this->request->getPost('tgl_lahir_pegawai'),
-                'no_hp_pegawai' => $this->request->getPost('no_hp_pegawai'),
-                'alamat_pegawai' => $this->request->getPost('alamat_pegawai'),
-                'status_pegawai' => (in_groups('Admin')) ? 'Diterima' : 'Baru',
-                'pegawai_dibuat' => date('Y-m-d H:i:s'),
-                'id_pembuat_pegawai' => user_id(),
-            ]);
-
-            session()->setFlashdata('success', 'Data berhasil ditambahkan');
-            return redirect()->to('/admin/datamaster/pegawai');
-        } catch (\Exception $e) {
-            session()->setFlashdata('errors', 'Data gagal ditambahkan');
+            session()->setFlashdata('success', 'Data dosen berhasil ditambahkan');
+            return redirect()->to('/admin/datamaster/dosen/add');
+        } catch (\Throwable $th) {
+            session()->setFlashdata('errors', 'Data dosen gagal ditambahkan');
             return redirect()->back()->withInput();
         }
     }
@@ -345,7 +347,7 @@ class DataMaster extends BaseController
         $web_perusahaan = $this->request->getPost('web_perusahaan');
         $long_perusahaan = $this->request->getPost('long_perusahaan');
         $lat_perusahaan = $this->request->getPost('lat_perusahaan');
-        $status_perusahaan = (in_groups('Admin')) ? 'Pengajuan Diterima' : 'Pengajuan Baru';
+        $status_perusahaan = $this->request->getPost('status_perusahaan');
 
         $input = $this->validate([
             'nama_perusahaan' => 'required|min_length[3]|max_length[150]',
@@ -489,9 +491,86 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function PegawaiUpdate()
+    public function dosenUpdate()
     {
-        //
+        $mDosen = new DosenModel();
+        $mAkun = new AkunModel();
+
+        $id_dosen = $this->request->getPost('id_dosen');
+        $id_prodi = $this->request->getPost('id_prodi');
+        $nama_dosen = $this->request->getPost('nama_dosen');
+        $nip_dosen = $this->request->getPost('nip_dosen');
+        $email_dosen = $this->request->getPost('email_dosen');
+        $no_hp_dosen = $this->request->getPost('no_hp_dosen');
+        $alamat_dosen = $this->request->getPost('alamat_dosen');
+        $status_dosen = $this->request->getPost('status_dosen');
+
+        $email_dosen = $this->request->getPost('email_dosen');
+        $username = $this->request->getPost('username');
+        $password = $this->request->getPost('password');
+        $status_akun = $this->request->getPost('status_akun');
+
+        $konfirmasi = $this->request->getPost('konfirmasi');
+
+        if (!$konfirmasi) {
+
+        $id_akun = $mDosen->select('id_akun')->where('id_dosen', $id_dosen)->first();
+        $valid = $this->validate([
+            'id_prodi' => 'required',
+            'nip_dosen' => 'required|is_unique[tb_dosen.nip_dosen, id_dosen, ' . $id_dosen . ']',
+            'nama_dosen' => 'required',
+            'email_dosen' => 'is_unique[tb_dosen.email_dosen, id_dosen, ' . $id_dosen . ']',
+            'username' => 'is_unique[tb_akun.username, id_akun, ' . $id_akun["id_akun"] . ']',
+            'status_akun' => 'required',
+        ]);
+
+        if (!$valid) {
+            session()->setFlashdata('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $mDosen->update($id_dosen, [
+                'id_prodi' => $id_prodi,
+                'nip_dosen' => $nip_dosen,
+                'nama_dosen' => $nama_dosen,
+                'email_dosen' => $email_dosen,
+                'no_hp_dosen' => $no_hp_dosen,
+                'alamat_dosen' => $alamat_dosen,
+                'status_dosen' => $status_dosen,
+            ]);
+
+            if (!empty($password)) {
+                $mAkun->update($id_akun["id_akun"], [
+                    'username' => $username,
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'status_akun' => $status_akun,
+                ]);
+            } else {
+                $mAkun->update($id_akun["id_akun"], [
+                    'username' => $username,
+                    'status_akun' => $status_akun,
+                ]);
+            }
+
+            session()->setFlashdata('success', 'Data dosen berhasil diperbarui');
+            return redirect()->to('/admin/datamaster/dosen/edit/?id_dosen=' . $id_dosen);
+
+        } catch (\Exception $e) {
+            session()->setFlashdata('errors', 'Data dosen gagal diubah');
+            return redirect()->back()->withInput();
+        }
+    } else {
+        $id_akun = $mDosen->select('id_akun')->whereIn('id_dosen', $id_dosen)->getResult();
+        print_r($id_akun);        
+        
+        
+        // $update = $mAkun->update($id_akun, [
+        //     'status_akun' => $status_akun,
+        // ]);
+        // return $update;
+    }
+
     }
 
     public function MahasiswaUpdate()
@@ -605,7 +684,7 @@ class DataMaster extends BaseController
                 'web_perusahaan' => $web_perusahaan,
                 'long_perusahaan' => $long_perusahaan,
                 'lat_perusahaan' => $lat_perusahaan,
-                'status_perusahaan' => (in_groups('Admin')) ? 'Pengajuan Diterima' : 'Pengajuan Baru',
+                'status_perusahaan' => $status_perusahaan,
             ]);
 
             if ($update) {
@@ -616,7 +695,6 @@ class DataMaster extends BaseController
                 return redirect()->back()->withInput();
             }
         } else {
-
             $update = $model->update($id_perusahaan, [
                 'status_perusahaan' => $status_perusahaan,
             ]);
@@ -731,11 +809,11 @@ class DataMaster extends BaseController
 
     //--------------------------------------------------------------------
 
-    public function PegawaiDelete()
+    public function DosenDelete()
     {
-        $model = new PegawaiModel();
-        $id_pegawai = $this->request->getPost('id_pegawai');
-        $delete = $model->delete($id_pegawai);
+        $model = new DosenModel();
+        $id_dosen = $this->request->getPost('id_dosen');
+        $delete = $model->delete($id_dosen);
         return $delete;
     }
 

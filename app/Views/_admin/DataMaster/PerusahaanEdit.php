@@ -79,6 +79,17 @@
                                 <input type="hidden" id="long_perusahaan" name="long_perusahaan" value="<?= $perusahaan['long_perusahaan']; ?>">
                                 <input type="hidden" id="lat_perusahaan" name="lat_perusahaan" value="<?= $perusahaan['lat_perusahaan']; ?>">
                             </div>
+
+                            <div class="form-group">
+                            <label for="status_perusahaan">Status Perusahaan<i class="text-danger">*</i></label>
+                                        <select name="status_perusahaan" class="form-control <?php if (session('errors.status_perusahaan')) : ?>is-invalid<?php endif ?>">
+                                            <option value="">--Pilih Status--</option>
+                                                <option value="Aktif" <?= ($perusahaan['status_perusahaan'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                                <option value="Tidak Aktif" <?= ($perusahaan['status_perusahaan'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                        </select>
+                                        <small class="text-danger"><?php if (session('errors.status_perusahaan')) : echo session('errors.status_perusahaan');
+                                                                    endif ?></small>
+                            </div>
                         </div>
 
                         <div class="card-footer">
