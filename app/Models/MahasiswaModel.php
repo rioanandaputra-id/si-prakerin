@@ -32,24 +32,13 @@ class MahasiswaModel extends Model
     protected $akun          = ['tb_akun', 'tb_mahasiswa.id_akun = tb_akun.id_akun', 'INNER JOIN'];
     protected $prodi         = ['tb_prodi', 'tb_mahasiswa.id_prodi = tb_prodi.id_prodi', 'LEFT JOIN'];
 
-    public function dt($status)
+    public function dt()
     {
-        if ($status === 'baru') {
-            $data = DataTables::use($this->table)
-                ->join($this->akun[0], $this->akun[1], $this->akun[2])
-                ->join($this->tahun_akademik[0], $this->tahun_akademik[1], $this->tahun_akademik[2])
-                ->join($this->prodi[0], $this->prodi[1], $this->prodi[2])
-                ->where('tb_akun.status_akun', 'Baru')
-                ->make();
-        } else {
-            $data = DataTables::use($this->table)
-                ->join($this->akun[0], $this->akun[1], $this->akun[2])
-                ->join($this->tahun_akademik[0], $this->tahun_akademik[1], $this->tahun_akademik[2])
-                ->join($this->prodi[0], $this->prodi[1], $this->prodi[2])
-                ->where('tb_akun.status_akun', 'Aktif')
-                ->orWhere('tb_akun.status_akun', 'Tidak Aktif')
-                ->make();
-        }
+        $data = DataTables::use($this->table)
+            ->join($this->akun[0], $this->akun[1], $this->akun[2])
+            ->join($this->tahun_akademik[0], $this->tahun_akademik[1], $this->tahun_akademik[2])
+            ->join($this->prodi[0], $this->prodi[1], $this->prodi[2])
+            ->make();
         return $data;
     }
 
@@ -68,6 +57,13 @@ class MahasiswaModel extends Model
     public function akun()
     {
         $this->join($this->akun[0], $this->akun[1], $this->akun[2]);
+        return $this;
+    }
+
+    public function getStatus($status)
+    {
+        $this->join($this->akun[0], $this->akun[1], $this->akun[2]);
+        $this->where('status_akun', $status)->get()->getResult();
         return $this;
     }
 }

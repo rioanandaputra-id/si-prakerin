@@ -31,10 +31,12 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <button id="add" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
-                                Tambah</button>
+                        <a href="<?= site_url('admin/datamaster/prodi/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                                Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
+                                <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
+                                Konfirmasi</button>
                                 <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
                         </div>
@@ -95,7 +97,7 @@
                 data: 'nama_prodi',
                 name: 'nama_prodi',
                 render: function(data, type, row, meta) {
-                    return '<a href="javascript:update(' + row.id_prodi + ');">' + data + '</a>';
+                    return '<a href="<?= site_url('admin/datamaster/prodi/edit/?id='); ?>' + row.id_prodi + '">' + data + '</a>';
                 }
             },
             {
@@ -143,9 +145,9 @@
                 if (willDelete.isConfirmed) {
                     $.ajax({
                         url: "<?= current_url() ?>" + '/delete',
-                        type: "DELETE",
+                        type: "POST",
                         data: {
-                            'checkbox_item': id
+                            'id_prodi': id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -177,104 +179,71 @@
         }
     });
 
-    $('#add').click(function() {
-        Swal.fire({
-            title: 'Tambah Kategori Artikel',
-            input: 'text',
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Tambah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "<?= current_url() ?>" + '/create',
-                    type: "POST",
-                    data: {
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil ditambahkan",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal ditambahkan",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
+    $('#confirm').click(function() {
+        var id = [];
+        $('.checkbox_item:checked').each(function() {
+            id.push($(this).val());
         });
+        if (id.length > 0) {
+            Swal.fire({
+                title: 'Konfirmasi status program studi',
+                input: 'select',
+                inputOptions: {
+                    'Tidak Aktif': 'Tidak Aktif',
+                    'Aktif': 'Aktif',
+                },
+                inputPlaceholder: '--pilih--',
+                showCancelButton: true,
+                inputValidator: function(value) {
+                    return new Promise(function(resolve, reject) {
+                        if (value == '') {
+                            resolve(
+                                'Anda harus memilih status program studi'
+                            );
+                        } else {
+                            resolve();
+                        }
+                    });
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= site_url('admin/datamaster/prodi/update') ?>",
+                        type: "POST",
+                        data: {
+                            'konfirmasi': true,
+                            'id_prodi': id,
+                            'status_prodi': result.value
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: "Data berhasil dikonfirmasi",
+                                icon: "success",
+                                button: "Tutup",
+                            });
+                            dataTable.ajax.reload();
+                            dataTableB.ajax.reload();
+                        },
+                        error: function(data) {
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: "Data gagal dikonfirmasi",
+                                icon: "error",
+                                button: "Tutup",
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Pilih data yang ingin dikonfirmasi!",
+                icon: "warning",
+                button: "Tutup",
+            });
+        }
     });
-
-    function update(id, categoryy) {
-        Swal.fire({
-            title: 'Ubah Kategori Artikel',
-            input: 'text',
-            inputValue: categoryy,
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Ubah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('backend/master/category_article/update') }}",
-                    type: "PUT",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': id,
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil diubah",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal diubah",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
-        });
-    }
 </script>
 
 <?php $this->endSection(); ?>

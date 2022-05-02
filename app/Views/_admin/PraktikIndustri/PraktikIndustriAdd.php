@@ -1,6 +1,6 @@
 <?php $this->extend('/_admin/Menu/Menu'); ?>
 <?php $this->section('title'); ?>
-<?php echo $title = 'Data Master - Ubah Program Studi'; ?>
+<?php echo $title = 'Data Master - Tambah Praktik Industri'; ?>
 <?php $this->endSection(); ?>
 
 <!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
@@ -24,6 +24,15 @@
     </div>
 </section>
 
+<?php 
+
+foreach ($Mahasiswa as $m) {
+    echo $m->nama_mahasiswa;
+}
+
+?>
+
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -39,41 +48,65 @@
                 <?php } ?>
 
                 <div class="card">
-                    <form action="<?= site_url('admin/datamaster/prodi/update') ?>" method="POST">
-                    <input type="hidden" name="id_prodi" value="<?= $prodi['id_prodi'] ?>">
-                        <div class="card-body">
+                    <form action="<?= site_url('admin/praktikindustri/create') ?>" method="POST">
+                        <div class="card-body">                           
                             <div class="form-group">
-                                <label for="nama_prodi">Program Studi: <i class="text-danger">*</i></label>
-                                <input type="text" class="form-control <?php if (session('errors.nama_prodi')) : ?>is-invalid<?php endif ?>" name="nama_prodi" placeholder="Masukan Program Studi" value="<?= $prodi['nama_prodi']; ?>">
+                                <label for="id_perusahaan">Perusahaan Praktik Industri: <i class="text-danger">*</i></label>
+                                <select class="form-control <?php if (session('errors.id_perusahaan')) : ?>is-invalid<?php endif ?>" id="id_perusahaan" name="id_perusahaan">
+                                    <option value="">--Pilih--</option>
+                                    <?php foreach ($Perusahaan as $p) : ?>
+                                        <option value="<?= $p->id_perusahaan ?>" <?= (old('id_perusahaan') == $p->id_perusahaan) ? 'selected' : ''; ?> ><?= $p->nama_perusahaan ?> || <?= $p->alamat_perusahaan ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <small class="text-danger">
+                                    <?php if (session('errors.id_perusahaan')) : echo session('errors.id_perusahaan');
+                                    endif ?>
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_mahasiswa">Mahasiswa Praktik Industri: <i class="text-danger">*</i></label>
+                                <select class="form-control <?php if (session('errors.id_mahasiswa')) : ?>is-invalid<?php endif ?>" id="id_mahasiswa" name="id_mahasiswa">
+                                    <option value="">--Pilih--</option>
+                                    
+                                </select>
+                                <small class="text-danger">
+                                    <?php if (session('errors.id_mahasiswa')) : echo session('errors.id_mahasiswa');
+                                    endif ?>
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama_prodi">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
+                                <input type="date" class="form-control <?php if (session('errors.nama_prodi')) : ?>is-invalid<?php endif ?>" name="nama_prodi" placeholder="Masukan Program Studi" value="<?= old('nama_prodi'); ?>">
                                 <small class="text-danger">
                                     <?php if (session('errors.nama_prodi')) : echo session('errors.nama_prodi');
                                     endif ?>
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="nama_alias">Nama Alias: </label>
-                                <input type="text" class="form-control <?php if (session('errors.nama_alias')) : ?>is-invalid<?php endif ?>" name="nama_alias" placeholder="Masukan Program Studi" value="<?= $prodi['nama_alias']; ?>">
+                                <label for="nama_alias">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
+                                <input type="date" class="form-control <?php if (session('errors.nama_alias')) : ?>is-invalid<?php endif ?>" name="nama_alias" placeholder="Masukan Program Studi" value="<?= old('nama_alias'); ?>">
                                 <small class="text-danger">
                                     <?php if (session('errors.nama_alias')) : echo session('errors.nama_alias');
                                     endif ?>
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="status_prodi">Status Program Studi: <i class="text-danger">*</i></label>
+                                <label for="status_prodi">Status: <i class="text-danger">*</i></label>
                                 <select class="form-control <?php if (session('errors.status_prodi')) : ?>is-invalid<?php endif ?>" id="status_prodi" name="status_prodi">
                                     <option value="">--Pilih--</option>
-                                    <option value="Aktif" <?= ($prodi['status_prodi'] == 'Aktif') ? 'selected' : ''; ?> >Aktif</option>
-                                    <option value="Tidak Aktif" <?= ($prodi['status_prodi'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                    <option value="Aktif" <?= (old('status_prodi') == 'Aktif') ? 'selected' : ''; ?> >Aktif</option>
+                                    <option value="Tidak Aktif" <?= (old('status_prodi') == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
                                 </select>
                                 <small class="text-danger">
                                     <?php if (session('errors.status_prodi')) : echo session('errors.status_prodi');
                                     endif ?>
                                 </small>
                             </div>
+
                             <div class="card-footer">
                                 <div class="float-left">
-                                    <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-save"></i> Ubah</button>
-                                    <a href="<?= site_url('admin/datamaster/prodi') ?>" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Kembali</a>
+                                    <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-save"></i> Tambah</button>
+                                    <a href="<?= site_url('admin/praktikindustri') ?>" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Kembali</a>
                                 </div>
                                 <div class="float-right">
                                     <p class="text-bold mt-2"><i class="text-danger">*</i>) bidang harus diisi!</p>

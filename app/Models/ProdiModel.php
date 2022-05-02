@@ -15,15 +15,12 @@ class ProdiModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'id_prodi',
         'nama_prodi',
         'nama_alias',
-        'prodi_dibuat',
-        'prodi_diubah',
+        'status_prodi',
     ];
-    protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'prodi_dibuat';
-    protected $updatedField  = 'prodi_diubah';
+    protected $useTimestamps = false;
 
     public function dt()
     {

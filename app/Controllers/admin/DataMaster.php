@@ -10,8 +10,6 @@ use App\Models\MahasiswaModel;
 use App\Models\PerusahaanModel;
 use App\Models\ProdiModel;
 use App\Models\TahunAkademikModel;
-use Myth\Auth\Models\UserModel;
-use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class DataMaster extends BaseController
@@ -39,10 +37,9 @@ class DataMaster extends BaseController
     {
         $model = new MahasiswaModel();
         $ajax   = $this->request->isAJAX();
-        $status = $this->request->getGet('status');
 
         if ($ajax) {
-            return $model->dt($status);
+            return $model->dt();
         }
         return view('_admin/DataMaster/Mahasiswa');
     }
@@ -52,7 +49,6 @@ class DataMaster extends BaseController
         $model  = new PerusahaanModel();
         $id     = $this->request->getGet('id');
         $detail = $this->request->getGet('detail');
-        $status = $this->request->getGet('status');
         $ajax   = $this->request->isAJAX();
 
         if ($detail == true) {
@@ -64,11 +60,7 @@ class DataMaster extends BaseController
             }
         } else {
             if ($ajax) {
-                if ($status == false) {
-                    return $model->getDt(false);
-                } else {
-                    return $model->getDt(true);
-                }
+                return $model->getDt();
             } else {
                 return view('_admin/DataMaster/Perusahaan');
             }
@@ -412,9 +404,14 @@ class DataMaster extends BaseController
 
     public function ProdiCreate()
     {
+        $model = new ProdiModel();
+        $nama_prodi = $this->request->getPost('nama_prodi');
+        $nama_alias = $this->request->getPost('nama_alias');
+        $status_prodi = $this->request->getPost('status_prodi');
+
         $input = $this->validate([
             'nama_prodi' => 'required|min_length[4]|max_length[10]',
-            'nama_alias' => 'required|min_length[4]|max_length[10]',
+            'status_prodi' => 'required',
         ]);
 
         if (!$input) {
@@ -422,14 +419,11 @@ class DataMaster extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $model = new TahunAkademikModel();
-
         try {
             $model->save([
-                'nama_prodi' => $this->request->getPost('nama_prodi'),
-                'nama_alias' => $this->request->getPost('nama_alias'),
-                'prodi_dibuat' => date('Y-m-d H:i:s'),
-                'id_pembuat_prodi' => user_id(),
+                'nama_prodi' => $nama_prodi,
+                'nama_alias' => $nama_alias,
+                'status_prodi' => $status_prodi,
             ]);
 
             session()->setFlashdata('success', 'Data prodi berhasil ditambahkan');
@@ -560,16 +554,16 @@ class DataMaster extends BaseController
             session()->setFlashdata('errors', 'Data dosen gagal diubah');
             return redirect()->back()->withInput();
         }
-    } else {
-        $id_akun = $mDosen->select('id_akun')->whereIn('id_dosen', $id_dosen)->getResult();
-        print_r($id_akun);        
-        
-        
-        // $update = $mAkun->update($id_akun, [
-        //     'status_akun' => $status_akun,
-        // ]);
-        // return $update;
-    }
+        } else {
+            $id_akun = $mDosen->select('id_akun')->whereIn('id_dosen', $id_dosen)->getResult();
+            print_r($id_akun);        
+            
+            
+            // $update = $mAkun->update($id_akun, [
+            //     'status_akun' => $status_akun,
+            // ]);
+            // return $update;
+        }
 
     }
 
@@ -753,10 +747,8 @@ class DataMaster extends BaseController
         $status_prodi = $this->request->getPost('status_prodi');
 
         if (!$konfirmasi) {
-
             $input = $this->validate([
                 'nama_prodi' => 'required|min_length[5]|max_length[150]',
-                'nama_alias' => 'required|min_length[5]|max_length[150]',
                 'status_prodi' => 'required',
             ]);
 
@@ -779,7 +771,6 @@ class DataMaster extends BaseController
                 return redirect()->back()->withInput();
             }
         } else {
-
             $update = $model->update($id_prodi, [
                 'status_prodi' => $status_prodi,
             ]);
@@ -843,6 +834,7 @@ class DataMaster extends BaseController
 
     public function ProdiDelete()
     {
+        print_r($this->request->getPost());
         $model = new ProdiModel();
         $id_prodi = $this->request->getPost('id_prodi');
         $delete = $model->delete($id_prodi);

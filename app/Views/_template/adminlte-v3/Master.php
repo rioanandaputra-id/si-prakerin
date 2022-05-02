@@ -40,7 +40,6 @@
   <script src="<?= base_url('assets/adminlte-v3/plugins/jquery-mapael/jquery.mapael.min.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/plugins/jquery-mapael/maps/usa_states.min.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/plugins/chart.js/Chart.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/adminlte-v3/dist/js/demo.js'); ?>"></script>
   <script src="<?= base_url('assets/adminlte-v3/dist/js/pages/dashboard2.js'); ?>"></script>
 
   <script src="<?= base_url('assets/adminlte-v3/plugins/datatables/jquery.dataTables.min.js'); ?>"></script>

@@ -40,16 +40,11 @@
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
                         </div>
-                        <ul class="nav nav-pills ml-auto p-3">
-                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link active btn-sm" href="#tab_1" data-toggle="tab">Belum dikonfirmasi</a></li>
-                            <li class="nav-item"><a style="border-radius:0%;" class="nav-link btn-sm" href="#tab_2" data-toggle="tab">Sudah dikonfirmasi</a></li>
-                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tab_1">
                                 <div class="table-responsive">
-                                    <table id="dataTableA" class="table table-bordered table-hover dataTableA dtr-inline" style="width: 100%; font-size:smaller;">
+                                    <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
                                         <thead class="bg-success">
                                             <tr>
                                                 <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
@@ -73,38 +68,7 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                            </div>
-
-                            <div class="tab-pane" id="tab_2">
-                                <div class="table-responsive">
-                                    <table id="dataTableB" class="table table-bordered table-hover dataTableB dtr-inline" style="width: 100%; font-size:smaller;">
-                                        <thead class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tfoot class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>TELPON</th>
-                                                <th>EMAIL</th>
-                                                <th>ALAMAT</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -120,15 +84,12 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    var dataTableA = $('#dataTableA').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: '',
             type: 'GET',
-            data: {
-                status: 0
-            }
         },
         columns: [{
                 data: 'id_perusahaan',
@@ -168,57 +129,8 @@
         ],
     });
 
-    var dataTableB = $('#dataTableB').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '',
-            type: 'GET',
-            data: {
-                status: 1
-            }
-        },
-        columns: [{
-                data: 'id_perusahaan',
-                name: 'id_perusahaan',
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_perusahaan + '">';
-                }
-            },
-            {
-                data: 'nama_perusahaan',
-                name: 'nama_perusahaan',
-                render: function(data, type, row, meta) {
-                    return '<a href="?detail=1&id=' + row.id_perusahaan + ');">' + data + '</a>';
-                }
-            },
-            {
-                data: 'telp_perusahaan',
-                name: 'telp_perusahaan'
-            },
-            {
-                data: 'email_perusahaan',
-                name: 'email_perusahaan'
-            },
-            {
-                data: 'alamat_perusahaan',
-                name: 'alamat_perusahaan'
-            },
-            {
-                data: 'status_perusahaan',
-                name: 'status_perusahaan'
-            }
-        ],
-        order: [
-            [1, "desc"]
-        ],
-    });
-
     $('#reload').click(function() {
-        dataTableA.ajax.reload();
-        dataTableB.ajax.reload();
+        dataTable.ajax.reload();
     });
 
     $('.checkbox_all').click(function() {
@@ -260,7 +172,7 @@
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            dataTableB.ajax.reload();
+                            dataTable.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({
@@ -292,9 +204,8 @@
                 title: 'Konfirmasi status perusahaan',
                 input: 'select',
                 inputOptions: {
-                    'Pengajuan Baru': 'Pengajuan Baru',
-                    'Pengajuan Ditolak': 'Pengajuan Ditolak',
-                    'Pengajuan Diterima': 'Pengajuan Diterima'
+                    'Tidak Aktif': 'Tidak Aktif',
+                    'Aktif': 'Aktif',
                 },
                 inputPlaceholder: '--pilih--',
                 showCancelButton: true,
@@ -326,8 +237,7 @@
                                 icon: "success",
                                 button: "Tutup",
                             });
-                            dataTableA.ajax.reload();
-                            dataTableB.ajax.reload();
+                            dataTable.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({

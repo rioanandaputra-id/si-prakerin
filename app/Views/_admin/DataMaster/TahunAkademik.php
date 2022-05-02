@@ -35,7 +35,7 @@
                                 Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
-                            <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
+                                <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
                                 Konfirmasi</button>
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
@@ -71,12 +71,11 @@
 <?php $this->endSection(); ?>
 <!-- =================================[[[[ AKHIR KONTEN ]]]]======================================= -->
 
-
 <!-- =================================[[[[ AWAL CSS JS ]]]]======================================== -->
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-    var dataTableB = $('#dataTable').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -109,7 +108,7 @@
     });
 
     $('#reload').click(function() {
-        dataTableB.ajax.reload();
+        dataTable.ajax.reload();
     });
 
     $('.checkbox_all').click(function() {
@@ -151,7 +150,7 @@
                                 button: "Tutup",
                             });
                             $('.checkbox_all').prop('checked', false);
-                            dataTableB.ajax.reload();
+                            dataTable.ajax.reload();
                         },
                         error: function(data) {
                             Swal.fire({
@@ -173,105 +172,70 @@
         }
     });
 
-    $('#add').click(function() {
-        Swal.fire({
-            title: 'Tambah Kategori Artikel',
-            input: 'text',
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Tambah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('backend/master/category_article/create') }}",
-                    type: "POST",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil ditambahkan",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal ditambahkan",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
+    $('#confirm').click(function() {
+        var id = [];
+        $('.checkbox_item:checked').each(function() {
+            id.push($(this).val());
         });
+        if (id.length > 0) {
+            Swal.fire({
+                title: 'Konfirmasi status tahunakademik',
+                input: 'select',
+                inputOptions: {
+                    'Tidak Aktif': 'Tidak Aktif',
+                    'Aktif': 'Aktif',
+                },
+                inputPlaceholder: '--pilih--',
+                showCancelButton: true,
+                inputValidator: function(value) {
+                    return new Promise(function(resolve, reject) {
+                        if (value == '') {
+                            resolve(
+                                'Anda harus memilih status tahunakademik'
+                            );
+                        } else {
+                            resolve();
+                        }
+                    });
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= site_url('admin/datamaster/tahunakademik/update') ?>",
+                        type: "POST",
+                        data: {
+                            'konfirmasi': true,
+                            'id_tahun_akademik': id,
+                            'status_tahun_akademik': result.value
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: "Data berhasil dikonfirmasi",
+                                icon: "success",
+                                button: "Tutup",
+                            });
+                            dataTable.ajax.reload();
+                        },
+                        error: function(data) {
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: "Data gagal dikonfirmasi",
+                                icon: "error",
+                                button: "Tutup",
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Pilih data yang ingin dikonfirmasi!",
+                icon: "warning",
+                button: "Tutup",
+            });
+        }
     });
-
-    function update(id, categoryy) {
-        Swal.fire({
-            title: 'Ubah Kategori Artikel',
-            input: 'text',
-            inputValue: categoryy,
-            inputPlaceholder: 'Nama Kategori Artikel',
-            showCancelButton: true,
-            cancelButtonText: 'Batal',
-            confirmButtonText: 'Ubah',
-            inputValidator: function(value) {
-                return new Promise(function(resolve, reject) {
-                    if (value == '') {
-                        resolve(
-                            'Nama Kategori Artikel tidak boleh kosong!');
-                    } else {
-                        resolve();
-                    }
-                });
-            }
-        }).then(function(result) {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ url('backend/master/category_article/update') }}",
-                    type: "PUT",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': id,
-                        'categoryy': result.value
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Data berhasil diubah",
-                            icon: "success",
-                            button: "Tutup",
-                        });
-                        $('#tbcategory').DataTable().ajax.reload();
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            title: "Gagal!",
-                            text: "Data gagal diubah",
-                            icon: "error",
-                            button: "Tutup",
-                        });
-                    }
-                });
-            }
-        });
-    }
 </script>
 
 <?php $this->endSection(); ?>

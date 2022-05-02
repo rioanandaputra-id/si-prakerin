@@ -26,26 +26,17 @@ class PerusahaanModel extends Model
         'status_perusahaan',
     ];
     protected $useTimestamps = false;
-    
-    public function getDt($status)
+
+    public function getDt()
     {
-        if ($status == false) {
-            $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Tidak Aktif')
-                ->make();
-        } else {
-            $data = DataTables::use($this->table)
-                ->where('status_perusahaan', 'Aktif')
-                ->make();
-        }
+        $data = DataTables::use($this->table)
+            ->make();
         return $data;
     }
 
-    public function getAkun()
+    public function getStatus($status)
     {
-        $this->select('tb_perusahaan.*, pembuat.username AS username_pembuat, pengubah.username AS username_pengubah');
-        $this->join('users AS pembuat', 'pembuat.id = tb_perusahaan.id_pembuat_perusahaan', 'left');
-        $this->join('users AS pengubah', 'pengubah.id = tb_perusahaan.id_pengubah_perusahaan', 'left');
-        return $this;
+        $data = $this->where($this->allowedFields[7], $status)->get()->getResult();
+        return $data;
     }
 }
