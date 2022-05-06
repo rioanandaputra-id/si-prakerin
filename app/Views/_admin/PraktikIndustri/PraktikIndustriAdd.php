@@ -24,15 +24,6 @@
     </div>
 </section>
 
-<?php 
-
-foreach ($Mahasiswa as $m) {
-    echo $m->nama_mahasiswa;
-}
-
-?>
-
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -67,7 +58,9 @@ foreach ($Mahasiswa as $m) {
                                 <label for="id_mahasiswa">Mahasiswa Praktik Industri: <i class="text-danger">*</i></label>
                                 <select class="form-control <?php if (session('errors.id_mahasiswa')) : ?>is-invalid<?php endif ?>" id="id_mahasiswa" name="id_mahasiswa">
                                     <option value="">--Pilih--</option>
-                                    
+                                    <?php foreach ($Mahasiswa as $m) : ?>
+                                        <option value="<?= $m->id_mahasiswa ?>" <?= (old('id_mahasiswa') == $m->id_mahasiswa) ? 'selected' : ''; ?> ><?= $m->nama_mahasiswa ?> || <?= $m->nim_mahasiswa ?> || <?= $m->nama_prodi ?> || <?= $m->tahun_akademik ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <small class="text-danger">
                                     <?php if (session('errors.id_mahasiswa')) : echo session('errors.id_mahasiswa');
@@ -75,30 +68,30 @@ foreach ($Mahasiswa as $m) {
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="nama_prodi">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
-                                <input type="date" class="form-control <?php if (session('errors.nama_prodi')) : ?>is-invalid<?php endif ?>" name="nama_prodi" placeholder="Masukan Program Studi" value="<?= old('nama_prodi'); ?>">
+                                <label for="waktu_awal_praktik_industri">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
+                                <input type="date" class="form-control <?php if (session('errors.waktu_awal_praktik_industri')) : ?>is-invalid<?php endif ?>" name="waktu_awal_praktik_industri" placeholder="Masukan Program Studi" value="<?= old('waktu_awal_praktik_industri'); ?>">
                                 <small class="text-danger">
-                                    <?php if (session('errors.nama_prodi')) : echo session('errors.nama_prodi');
+                                    <?php if (session('errors.waktu_awal_praktik_industri')) : echo session('errors.waktu_awal_praktik_industri');
                                     endif ?>
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="nama_alias">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
-                                <input type="date" class="form-control <?php if (session('errors.nama_alias')) : ?>is-invalid<?php endif ?>" name="nama_alias" placeholder="Masukan Program Studi" value="<?= old('nama_alias'); ?>">
+                                <label for="waktu_akhir_praktik_industri">Waktu Awal Praktik Industri: <i class="text-danger">*</i></label>
+                                <input type="date" class="form-control <?php if (session('errors.waktu_akhir_praktik_industri')) : ?>is-invalid<?php endif ?>" name="waktu_akhir_praktik_industri" placeholder="Masukan Program Studi" value="<?= old('waktu_akhir_praktik_industri'); ?>">
                                 <small class="text-danger">
-                                    <?php if (session('errors.nama_alias')) : echo session('errors.nama_alias');
+                                    <?php if (session('errors.waktu_akhir_praktik_industri')) : echo session('errors.waktu_akhir_praktik_industri');
                                     endif ?>
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="status_prodi">Status: <i class="text-danger">*</i></label>
-                                <select class="form-control <?php if (session('errors.status_prodi')) : ?>is-invalid<?php endif ?>" id="status_prodi" name="status_prodi">
+                                <label for="status_praktik_industri">Status: <i class="text-danger">*</i></label>
+                                <select class="form-control <?php if (session('errors.status_praktik_industri')) : ?>is-invalid<?php endif ?>" id="status_praktik_industri" name="status_praktik_industri">
                                     <option value="">--Pilih--</option>
-                                    <option value="Aktif" <?= (old('status_prodi') == 'Aktif') ? 'selected' : ''; ?> >Aktif</option>
-                                    <option value="Tidak Aktif" <?= (old('status_prodi') == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                    <option value="Aktif" <?= (old('status_praktik_industri') == 'Aktif') ? 'selected' : ''; ?> >Aktif</option>
+                                    <option value="Tidak Aktif" <?= (old('status_praktik_industri') == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
                                 </select>
                                 <small class="text-danger">
-                                    <?php if (session('errors.status_prodi')) : echo session('errors.status_prodi');
+                                    <?php if (session('errors.status_praktik_industri')) : echo session('errors.status_praktik_industri');
                                     endif ?>
                                 </small>
                             </div>

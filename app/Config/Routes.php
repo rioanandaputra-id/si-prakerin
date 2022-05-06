@@ -63,8 +63,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'au
     $routes->post('datamaster/dokumen/delete', 'DataMaster::DokumenDelete');
 
     $routes->get('praktikindustri', 'PraktikIndustri::PraktikIndustriView');
+    $routes->get('praktikindustri/detail', 'PraktikIndustri::PraktikIndustriViewDetail');
     $routes->get('praktikindustri/add', 'PraktikIndustri::PraktikIndustriViewAdd');
     $routes->get('praktikindustri/edit', 'PraktikIndustri::PraktikIndustriViewEdit');
+    $routes->post('praktikindustri/create', 'PraktikIndustri::PraktikIndustriCreate');
     $routes->post('praktikindustri/update', 'PraktikIndustri::PraktikIndustriUpdate');
     $routes->post('praktikindustri/delete', 'PraktikIndustri::PraktikIndustriDelete');
 
@@ -72,13 +74,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'au
 
 $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
-    $routes->get('praktikindustri', 'PraktikIndustri::index');
-    $routes->get('praktikindustri/add', 'PraktikIndustri::add');
-    $routes->get('praktikindustri/edit', 'PraktikIndustri::edit');
-
-    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
-    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
-    $routes->get('praktikindustri/delete', 'PraktikIndustri::delete');
+    $routes->get('praktikindustri', 'PraktikIndustri::PraktikIndustriView');
 });
 
 $routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'auth'], function ($routes) {

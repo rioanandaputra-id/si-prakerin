@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Notifikasi extends Migration
+class Bimbingan extends Migration
 {
     public function up()
     {

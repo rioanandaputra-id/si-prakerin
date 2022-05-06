@@ -31,11 +31,11 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <a href="<?= site_url('admin/datamaster/mahasiswa/add') ?>"  class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                            <a href="<?= site_url('admin/datamaster/mahasiswa/add') ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
                                 Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
-                                <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
+                            <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
                                 Konfirmasi</button>
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
@@ -43,33 +43,33 @@
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                                <div class="table-responsive">
-                                    <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
-                                        <thead class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </thead>
+                            <div class="table-responsive">
+                                <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
+                                    <thead class="bg-success">
+                                        <tr>
+                                            <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                            <th>NAMA</th>
+                                            <th>NPM</th>
+                                            <th>JENKEL</th>
+                                            <th>PRODI</th>
+                                            <th>THN. AKADEMIK</th>
+                                            <th>STATUS</th>
+                                        </tr>
+                                    </thead>
 
-                                        <tfoot class="bg-success">
-                                            <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                                <th>NAMA</th>
-                                                <th>NPM</th>
-                                                <th>JENKEL</th>
-                                                <th>PRODI</th>
-                                                <th>THN. AKADEMIK</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                    <tfoot class="bg-success">
+                                        <tr>
+                                            <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                            <th>NAMA</th>
+                                            <th>NPM</th>
+                                            <th>JENKEL</th>
+                                            <th>PRODI</th>
+                                            <th>THN. AKADEMIK</th>
+                                            <th>STATUS</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,8 +87,7 @@
 <?php $this->section('js'); ?>
 
 <script type="text/javascript">
-
-var dataTable = $('#dataTable').DataTable({
+    var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {

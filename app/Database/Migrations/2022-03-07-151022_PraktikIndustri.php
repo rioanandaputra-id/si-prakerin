@@ -8,11 +8,40 @@ class PraktikIndustri extends Migration
 {
     public function up()
     {
-        //
+        $this->forge->addField([
+            'status_praktik_industri'  => [
+                'type' => 'enum',
+                'constraint' => "'Aktif','Tidak Aktif'",
+            ],
+            'waktu_awal_praktik_industri'  => [
+                'type' => 'date',
+            ],
+            'waktu_akhir_praktik_industri'  => [
+                'type' => 'date',
+            ],
+            'id_praktik_industri'  => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
+            ],
+            'id_perusahaan'  => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
+            'id_mahasiswa'  => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
+        ]);
+        $this->forge->addKey('id_praktik_industri', true);
+        $this->forge->createTable('tb_praktik_industri');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('tb_praktik_industri');
     }
 }

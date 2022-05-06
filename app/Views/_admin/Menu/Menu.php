@@ -92,7 +92,7 @@ $this->section('menu');
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="<?= $seg = site_url('admin/pesan'); ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-comments"></i>
                 <p>
@@ -107,7 +107,7 @@ $this->section('menu');
                     Rekap
                 </p>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a href="<?= $seg = site_url('admin/akun'); ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-lock"></i>

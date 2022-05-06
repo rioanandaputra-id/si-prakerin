@@ -5,7 +5,7 @@ $this->section('menu');
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Beranda
@@ -13,7 +13,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/praktikindustri') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-building"></i>
                 <p>
                     Praktik Industri
@@ -21,7 +21,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/bimbingan') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fas fa-chalkboard-teacher"></i>
                 <p>
                     Bimbingan
@@ -29,7 +29,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/seminar') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-window-restore"></i>
                 <p>
                     Seminar
@@ -37,7 +37,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/penilaian') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-edit"></i>
                 <p>
                     Penilaian
@@ -45,7 +45,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/dukumen') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-file"></i>
                 <p>
                     Dokumen
@@ -53,7 +53,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/pesan') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-comments"></i>
                 <p>
                     Pesan
@@ -61,7 +61,7 @@ $this->section('menu');
             </a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="<?= $seg = site_url('mahasiswa/akun') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-lock"></i>
                 <p>
                     Akun Saya

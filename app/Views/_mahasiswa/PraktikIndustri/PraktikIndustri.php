@@ -1,6 +1,6 @@
-<?php $this->extend('/_admin/Menu/Menu'); ?>
+<?php $this->extend('/_mahasiswa/Menu/Menu'); ?>
 <?php $this->section('title'); ?>
-<?php echo $title = 'Praktik Industri'; ?>
+<?php echo $title = 'Data Master - Perusahaan'; ?>
 <?php $this->endSection(); ?>
 
 <!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <a href="<?= site_url('admin/praktikindustri/add') ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                            <a href="<?= site_url('admin/datamaster/perusahaan/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
                                 Tambah</a>
                             <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
                                 Hapus</button>
@@ -43,39 +43,31 @@
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="table-responsive">
-                                <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
-                                    <thead class="bg-success">
-                                        <tr>
-                                            <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>MAHASISWA</th>
-                                            <th>PERUSAHAAN</th>
-                                            <th>WAKTU PI</th>
-                                            <th>THN. AKADEMIK</th>
-                                            <th>STATUS</th>
-                                        </tr>
-                                    </thead>
+                                <div class="table-responsive">
+                                    <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
+                                        <thead class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </thead>
 
-                                    <tfoot class="bg-success">
-                                        <tr>
-                                            <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>MAHASISWA</th>
-                                            <th>PERUSAHAAN</th>
-                                            <th>WAKTU PI</th>
-                                            <th>THN. AKADEMIK</th>
-                                            <th>STATUS</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                                        <tfoot class="bg-success">
+                                            <tr>
+                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
+                                                <th>NAMA</th>
+                                                <th>TELPON</th>
+                                                <th>EMAIL</th>
+                                                <th>ALAMAT</th>
+                                                <th>STATUS</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +76,6 @@
     </div>
 </section>
 
-
 <?php $this->endSection(); ?>
 <!-- =================================[[[[ AKHIR KONTEN ]]]]======================================= -->
 
@@ -92,7 +83,7 @@
 <!-- =================================[[[[ AWAL CSS JS ]]]]======================================== -->
 <?php $this->section('js'); ?>
 
-<script>
+<script type="text/javascript">
     var dataTable = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
@@ -101,63 +92,37 @@
             type: 'GET',
         },
         columns: [{
-                data: 'id_praktik_industri',
-                name: 'id_praktik_industri',
+                data: 'id_perusahaan',
+                name: 'id_perusahaan',
                 orderable: false,
                 searchable: false,
                 render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_praktik_industri + '">';
-                }
-            },
-            {
-                data: 'nim_mahasiswa',
-                name: 'nim_mahasiswa',
-                className: 'd-none',
-            },
-            {
-                data: 'nama_prodi',
-                name: 'nama_prodi',
-                className: 'd-none',
-            },
-            {
-                data: 'alamat_perusahaan',
-                name: 'alamat_perusahaan',
-                className: 'd-none',
-            },
-            {
-                data: 'telp_perusahaan',
-                name: 'telp_perusahaan',
-                className: 'd-none',
-            },
-            {
-                data: 'nama_mahasiswa',
-                name: 'nama_mahasiswa',
-                render: function(data, type, row, meta) {
-                    return '<a href="<?= site_url('admin/praktikindustri/detail/?id=') ?>' + row.id_praktik_industri + '">' + data + '</a><br>' + row.nim_mahasiswa + '<br>' + row.nama_prodi;
+                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_perusahaan + '">';
                 }
             },
             {
                 data: 'nama_perusahaan',
                 name: 'nama_perusahaan',
                 render: function(data, type, row, meta) {
-                    return data + '<br>' + row.alamat_perusahaan + '<br>' + row.telp_perusahaan;
+                    return '<a href="?detail=true&id=' + row.id_perusahaan + '">' + data + '</a>';
                 }
             },
             {
-                data: 'waktu_awal_praktik_industri',
-                name: 'waktu_awal_praktik_industri',
-                render: function(data, type, row, meta) {
-                    return data + '<br>s.d<br>' + row.waktu_akhir_praktik_industri;
-                }
+                data: 'telp_perusahaan',
+                name: 'telp_perusahaan'
             },
             {
-                data: 'tahun_akademik',
-                name: 'tahun_akademik'
+                data: 'email_perusahaan',
+                name: 'email_perusahaan'
             },
             {
-                data: 'status_praktik_industri',
-                name: 'status_praktik_industri'
+                data: 'alamat_perusahaan',
+                name: 'alamat_perusahaan'
             },
+            {
+                data: 'status_perusahaan',
+                name: 'status_perusahaan'
+            }
         ],
         order: [
             [1, "desc"]
@@ -194,10 +159,10 @@
             }).then((willDelete) => {
                 if (willDelete.isConfirmed) {
                     $.ajax({
-                        url: "<?= site_url('admin/praktikindustri/delete') ?>",
+                        url: "<?= site_url('admin/datamaster/perusahaan/delete') ?>",
                         type: "POST",
                         data: {
-                            'id_praktik_industri': id
+                            'id_perusahaan': id
                         },
                         success: function(data) {
                             Swal.fire({
@@ -236,7 +201,7 @@
         });
         if (id.length > 0) {
             Swal.fire({
-                title: 'Konfirmasi status praktik industri',
+                title: 'Konfirmasi status perusahaan',
                 input: 'select',
                 inputOptions: {
                     'Tidak Aktif': 'Tidak Aktif',
@@ -248,7 +213,7 @@
                     return new Promise(function(resolve, reject) {
                         if (value == '') {
                             resolve(
-                                'Anda harus memilih status praktik industri'
+                                'Anda harus memilih status perusahaan'
                             );
                         } else {
                             resolve();
@@ -258,12 +223,12 @@
             }).then(function(result) {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= site_url('admin/praktikindustri/update') ?>",
+                        url: "<?= site_url('admin/datamaster/perusahaan/update') ?>",
                         type: "POST",
                         data: {
                             'konfirmasi': true,
-                            'id_praktik_industri': id,
-                            'status_praktik_industri': result.value
+                            'id_perusahaan': id,
+                            'status_perusahaan': result.value
                         },
                         success: function(data) {
                             Swal.fire({
