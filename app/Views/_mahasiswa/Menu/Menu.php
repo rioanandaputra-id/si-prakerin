@@ -12,13 +12,28 @@ $this->section('menu');
                 </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="<?= $seg = site_url('mahasiswa/praktikindustri') ?>" class="nav-link <?= cmenu($seg); ?>">
-                <i class="nav-icon fa fa-building"></i>
+        <li class="nav-item <?= omenu('praktikindustri'); ?>">
+            <a href="#" class="nav-link <?= omenu('praktikindustri'); ?>">
+                <i class="nav-icon fas fa-th"></i>
                 <p>
                     Praktik Industri
+                    <i class="fas fa-angle-left right"></i>
                 </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="<?= $seg = site_url('mahasiswa/praktikindustri'); ?>" class="nav-link <?= cmenu($seg); ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Daftar Perusahaan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= $seg = site_url('mahasiswa/praktikindustri/history'); ?>" class="nav-link <?= cmenu($seg); ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Riwayat Pengajuan</p>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="nav-item">
             <a href="<?= $seg = site_url('mahasiswa/bimbingan') ?>" class="nav-link <?= cmenu($seg); ?>">

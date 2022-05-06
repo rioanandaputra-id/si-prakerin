@@ -39,4 +39,10 @@ class DosenModel extends Model
             ->make();
         return $data;
     }
+
+    public function getIdAkun($id)
+    {
+        $data = $this->where('id_akun', $id)->first();
+        return $data;
+    }
 }

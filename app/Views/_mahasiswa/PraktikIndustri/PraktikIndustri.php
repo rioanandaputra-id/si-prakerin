@@ -1,6 +1,6 @@
 <?php $this->extend('/_mahasiswa/Menu/Menu'); ?>
 <?php $this->section('title'); ?>
-<?php echo $title = 'Data Master - Perusahaan'; ?>
+<?php echo $title = 'Praktik Industri - Daftar Perusahaan'; ?>
 <?php $this->endSection(); ?>
 
 <!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
@@ -32,11 +32,7 @@
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
                             <a href="<?= site_url('admin/datamaster/perusahaan/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
-                                Tambah</a>
-                            <button type="button" id="delete" class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash"></i>
-                                Hapus</button>
-                            <button type="button" id="confirm" class="btn btn-warning btn-flat btn-sm text-white"> <i class="fa fa-check"></i>
-                                Konfirmasi</button>
+                                Ajukan Perusahaan Baru</a>
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
                         </div>

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AkunModel;
+use App\Models\DosenModel;
+use App\Models\MahasiswaModel;
 
 class AkunController extends BaseController
 {
@@ -56,8 +58,19 @@ class AkunController extends BaseController
 
     private function setUserSession($akun)
     {
+        $mDosen = new DosenModel();
+        $mMahasiswa = new MahasiswaModel();
+
+        $dAkun = $mDosen->getIdAkun($akun['id_akun']);
+        $mAkun = $mMahasiswa->getIdAkun($akun['id_akun']);
+
+        $id_pengguna = $dAkun['id_dosen'] ?? $mAkun['id_mahasiswa'] ?? null;
+        $nama_lengkap = $dAkun['nama_dosen'] ?? $mAkun['nama_mahasiswa'] ?? null;
+
         $data = [
             'id_akun' => $akun['id_akun'],
+            'id_pengguna' =>  $id_pengguna,
+            'nama_lengkap' => $nama_lengkap,
             'username' => $akun['username'],
             "peran_akun" => $akun['peran_akun'],
             'isLoggedIn' => true,

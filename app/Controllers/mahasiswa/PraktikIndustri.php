@@ -15,9 +15,10 @@ class PraktikIndustri extends BaseController
             exit;
         }
     }
-    
+
     public function PraktikIndustriView()
-    {   $model  = new PerusahaanModel();
+    {
+        $model  = new PerusahaanModel();
         $id     = $this->request->getGet('id');
         $detail = $this->request->getGet('detail');
         $ajax   = $this->request->isAJAX();
@@ -25,16 +26,31 @@ class PraktikIndustri extends BaseController
         if ($detail == true) {
             $data = $model->find($id);
             if ($data) {
-                return view('_mahasiswa/PraktikIndustri/PraktikIndustri', ['perusahaan' => $data]);
+                return view('_mahasiswa/PraktikIndustri/PraktikIndustriDetail', ['perusahaan' => $data]);
             } else {
                 throw new PageNotFoundException('Halaman tidak ditemukan');
             }
         } else {
             if ($ajax) {
-                return $model->getDt();
+                return $model->getDt(true);
             } else {
                 return view('_mahasiswa/PraktikIndustri/PraktikIndustri');
             }
         }
+    }
+
+    public function PraktikIndustriViewHistory()
+    {
+        # code...
+    }
+
+    public function PraktikIndustriViewHistoryDetail()
+    {
+        # code...
+    }
+
+    public function PraktikIndustriCreate()
+    {
+        # code...
     }
 }

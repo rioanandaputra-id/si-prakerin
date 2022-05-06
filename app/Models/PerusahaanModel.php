@@ -27,10 +27,16 @@ class PerusahaanModel extends Model
     ];
     protected $useTimestamps = false;
 
-    public function getDt()
+    public function getDt($status = false)
     {
+        if ($status === false) {
         $data = DataTables::use($this->table)
             ->make();
+        } else {
+        $data = DataTables::use($this->table)
+            ->where('status_perusahaan', 'Aktif')
+            ->make();
+        }
         return $data;
     }
 

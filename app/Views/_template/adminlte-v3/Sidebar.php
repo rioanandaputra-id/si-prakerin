@@ -12,8 +12,8 @@
                 <img src="<?= base_url('assets/adminlte-v3/dist/img/avatar5.png'); ?>" class="mt-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Rio Ananda Putra</a>
-                <small class="d-block">Administrator</small>
+                <a href="#" class="d-block"><?= session()->get('nama_lengkap') ?></a>
+                <small class="d-block"><?= session()->get('peran_akun') ?></small>
             </div>
         </div>
 
