@@ -23,9 +23,6 @@ class DokumenModel extends Model
         'status_dokumen',
     ];
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'dibuat';
-    protected $updatedField  = 'diperbarui';
 
     public function dt()
     {

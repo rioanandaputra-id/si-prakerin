@@ -20,29 +20,43 @@ class PraktikIndustriModel extends Model
         'id_praktik_industri',
         'id_perusahaan',
         'id_mahasiswa',
-        'status_praktik_industri',
+        'id_status',
         'waktu_awal_praktik_industri',
         'waktu_akhir_praktik_industri',
     ];
 
-    public function getDt()
+    public function getDt($id = null)
     {
-        $data = DataTables::use($this->table)
-            ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
-            ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
-            ->join('tb_tahun_akademik AS thn', 'thn.id_tahun_akademik = mhs.id_tahun_akademik', 'left')
-            ->join('tb_prodi AS prd', 'prd.id_prodi = mhs.id_prodi', 'left')
-            ->make();
+        if ($id != null) {
+            $data = DataTables::use($this->table)
+                ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
+                ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
+                ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
+                ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
+                ->join('tb_tahun_akademik AS thn', 'thn.id_tahun_akademik = mhs.id_tahun_akademik', 'left')
+                ->join('tb_prodi AS prd', 'prd.id_prodi = mhs.id_prodi', 'left')
+                ->where('tb_praktik_industri.id_mahasiswa', $id)
+                ->make();
+        } else {
+            $data = DataTables::use($this->table)
+                ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
+                ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
+                ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
+                ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
+                ->join('tb_tahun_akademik AS thn', 'thn.id_tahun_akademik = mhs.id_tahun_akademik', 'left')
+                ->join('tb_prodi AS prd', 'prd.id_prodi = mhs.id_prodi', 'left')
+                ->make();
+        }
         return $data;
     }
 
     public function getDtDetail($id)
     {
         $data = $this->where('id_praktik_industri', $id)
+            ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
             ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
             ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
             ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
-
             ->join('tb_tahun_akademik AS thn', 'thn.id_tahun_akademik = mhs.id_tahun_akademik', 'left')
             ->join('tb_prodi AS prd', 'prd.id_prodi = mhs.id_prodi', 'left')
             ->get()->getResult();

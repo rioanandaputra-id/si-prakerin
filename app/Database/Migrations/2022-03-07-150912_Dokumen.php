@@ -9,10 +9,6 @@ class Dokumen extends Migration
     public function up()
     {
         $this->forge->addField([
-            // 'jenis_dokumen'        => [
-            //     'type'           => 'VARCHAR',
-            //     'constraint'     => '100',
-            // ],
             'judul_dokumen'        => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '150',
@@ -43,25 +39,6 @@ class Dokumen extends Migration
                 'unsigned'       => TRUE,
                 'auto_increment' => TRUE
             ],
-            // 'dokumen_dibuat'           => [
-            //     'type'           => 'DATETIME',
-            // ],
-            // 'dokumen_diubah'       => [
-            //     'type'           => 'DATETIME',
-            //     'null'           => TRUE,
-            // ],
-            // 'id_pembuat_dokumen'         => [
-            //     'type'           => 'INT',
-            //     'constraint'     => 11,
-            //     'unsigned'       => TRUE,
-            // ],
-            // 'id_pengubah_dokumen'        => [
-            //     'type'           => 'INT',
-            //     'constraint'     => 11,
-            //     'unsigned'       => TRUE,
-            //     'null'           => TRUE
-            // ],
-
         ]);
         $this->forge->addKey('id_dokumen', TRUE);
         $this->forge->createTable('tb_dokumen');

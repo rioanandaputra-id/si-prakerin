@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button onclick="select(<?= $perusahaan['id_perusahaan'] ?>)" class="btn btn-primary mr-2"><i class="fa fa-hand-pointer"></i> Pilih Perusahaan</button>
+                        <button onclick="selected(<?= $perusahaan['id_perusahaan'] ?>)" class="btn btn-primary mr-2"><i class="fa fa-hand-pointer"></i> Pilih Perusahaan</button>
                         <a href="<?= site_url('mahasiswa/praktikindustri') ?>" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Kembali</a>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
 
 <?php $this->section('js'); ?>
 <script>
-    function select(id) {
+    function selected(id) {
         Swal.fire({
             title: "Konfirmasi!",
             text: "Apakah anda yakin Memilih perusahaan ini sebagai penempatan praktik industri anda ?",
@@ -106,20 +106,32 @@
         }).then(function(result) {
             if (result.value) {
                 $.ajax({
-                    url: "<?= site_url('mahasiswa/praktikindustri/select') ?>",
+                    url: "<?= site_url('mahasiswa/praktikindustri/create') ?>",
                     type: "POST",
+                    dataType: "JSON",
                     data: {
-                        id: id
+                        id_perusahaan: id
                     },
                     success: function(data) {
-                        Swal.fire({
-                            title: "Berhasil!",
-                            text: "Perusahaan berhasil dipilih",
-                            icon: "success",
-                            confirmButtonText: "Oke"
-                        }).then(function() {
-                            window.location.href = "<?= site_url('mahasiswa/praktikindustri/history') ?>";
-                        });
+                        if (data.status === true) {
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: data.msg,
+                                icon: "success",
+                                confirmButtonText: "Oke"
+                            }).then(function() {
+                                window.location.href = "<?= site_url('mahasiswa/praktikindustri/history/detail?id=') ?>" + data.id;
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: data.msg,
+                                icon: "error",
+                                confirmButtonText: "Oke"
+                            }).then(function() {
+                                window.location.href = "<?= site_url('mahasiswa/praktikindustri/history') ?>";
+                            });
+                        }
                     },
                     error: function(data) {
                         Swal.fire({
@@ -132,9 +144,6 @@
                 });
             }
         });
-
-
-
     }
 </script>
 <?php $this->endSection(); ?>

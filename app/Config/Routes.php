@@ -75,6 +75,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'au
 $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
     $routes->get('praktikindustri', 'PraktikIndustri::PraktikIndustriView');
+    $routes->get('praktikindustri/history', 'PraktikIndustri::PraktikIndustriViewHistory');
+    $routes->get('praktikindustri/history/detail', 'PraktikIndustri::PraktikIndustriViewHistoryDetail');
+    $routes->post('praktikindustri/create', 'PraktikIndustri::PraktikIndustriCreate');
+    $routes->post('praktikindustri/update', 'PraktikIndustri::PraktikIndustriUpdate');
 });
 
 $routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'auth'], function ($routes) {
