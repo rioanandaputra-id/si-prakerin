@@ -9,11 +9,8 @@ class PraktikIndustriNilai extends Migration
     public function up()
     {
         $this->forge->addField([
-            'nilai_singkat' => [
+            'nilai_praktik_industri' => [
                 'type' => 'FLOAT',
-            ],
-            'nilai_lengkap' => [
-                'type' => 'JSON',
             ],
             'id_praktik_industri_nilai' => [
                 'type' => 'INT',

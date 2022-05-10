@@ -28,6 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
+            <?= msgg(); ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">

@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use App\Models\PerusahaanModel;
 use App\Models\PraktikIndustriModel;
+use App\Models\PraktikIndustriNilaiModel;
 
 class PraktikIndustri extends BaseController
 {
@@ -104,33 +105,73 @@ class PraktikIndustri extends BaseController
     public function PraktikIndustriUpdate()
     {
         $mPraktikIndustri = new PraktikIndustriModel();
-        $id_praktik_industri = $this->request->getPost('id_praktik_industri');
-        $waktu_awal_praktik_industri = $this->request->getPost('waktu_awal_praktik_industri');
-        $waktu_akhir_praktik_industri = $this->request->getPost('waktu_akhir_praktik_industri');
-        $dokumen_pengajuan_praktik_industri = $this->request->getFile('dokumen_pengajuan_praktik_industri');
-        $dokumen_nilai_praktik_industri = $this->request->getFile('dokumen_nilai_praktik_industri');
+        $mPraktikIndustriNilai = new PraktikIndustriNilaiModel();
+        $id = $this->request->getPost('id_praktik_industri');
+        $wkt_awal = $this->request->getPost('waktu_awal_praktik_industri');
+        $wkt_akhir = $this->request->getPost('waktu_akhir_praktik_industri');
+        $dok_peng_pi = $this->request->getFile('dokumen_pengajuan_praktik_industri');
+        $nil_pi = $this->request->getPost('nilai_praktik_industri');
+        $dok_nil_pi = $this->request->getFile('dokumen_nilai_praktik_industri');
 
-        $valid = $this->validate([
-            'id_praktik_industri' => 'required',
-            'waktu_awal_praktik_industri' => 'required',
-            'waktu_akhir_praktik_industri' => 'required',
-        ]);
+        // dd($this->request->getPost());
 
-        if (!$valid) {
-            session()->setFlashdata('errors', $this->validator->getErrors());
-            return redirect()->back()->withInput();
-        }
+        // if (!empty($wkt_awal) || !empty($wkt_akhir) || !empty($dok_peng_pi)) {
+        //     $valid = $this->validate([
+        //         'id_praktik_industri' => 'required',
+        //         'waktu_awal_praktik_industri' => 'required',
+        //         'waktu_akhir_praktik_industri' => 'required',
+        //         // 'dokumen_pengajuan_praktik_industri' => 'required',
+        //     ]);
 
-        try {
-            $mPraktikIndustri->update($id_praktik_industri, [
-                'waktu_awal_praktik_industri' => $waktu_awal_praktik_industri,
-                'waktu_akhir_praktik_industri' => $waktu_akhir_praktik_industri,
+        //     if (!$valid) {
+        //         session()->setFlashdata('errors', $this->validator->getErrors());
+        //         return redirect()->back()->withInput();
+        //     }
+
+        //     try {
+        //         $mPraktikIndustri->update($id, [
+        //             'waktu_awal_praktik_industri' => $wkt_awal,
+        //             'waktu_akhir_praktik_industri' => $wkt_akhir,
+        //         ]);
+        //         session()->setFlashdata('success', 'Data berhasil diubah');
+        //         return redirect()->to('/mahasiswa/praktikindustri/history/detail?id=' . $id);
+        //     } catch (\Exception $e) {
+        //         session()->setFlashdata('errors', 'Data gagal diubah');
+        //         return redirect()->back()->withInput();
+        //     }
+        // }
+
+        if (!empty($nil_pi) || !empty($dok_nil_pi)) {
+            $valid = $this->validate([
+                'id_praktik_industri' => 'required',
+                'nilai_praktik_industri' => 'required',
+                // 'dokumen_nilai_praktik_industri' => 'required',
             ]);
-            session()->setFlashdata('success', 'Data berhasil diubah');
-            return redirect()->to('/mahasiswa/praktikindustri/history/detail?id=' . $id_praktik_industri);
-        } catch (\Exception $e) {
-            session()->setFlashdata('errors', 'Data gagal diubah');
-            return redirect()->back()->withInput();
+
+            if (!$valid) {
+                session()->setFlashdata('errors', $this->validator->getErrors());
+                return redirect()->back()->withInput();
+            }
+
+            try {
+                $check = $mPraktikIndustriNilai->where('id_praktik_industri', $id);
+                if ($check->countAllResults() > 0) {
+                    $mPraktikIndustriNilai->update($id, [
+                        'nilai_praktik_industri' => $nil_pi,
+                    ]);
+                } else {
+                    $mPraktikIndustriNilai->save([
+                        'id_praktik_industri' => $id,
+                        'nilai_praktik_industri' => $nil_pi,
+                        'id_dokumen' => null,
+                    ]);
+                }
+                session()->setFlashdata('success', 'Data berhasil diubah');
+                return redirect()->to('/mahasiswa/praktikindustri/history/detail?id=' . $id);
+            } catch (\Exception $e) {
+                session()->setFlashdata('errors', 'Data gagal diubah');
+                return redirect()->back()->withInput();
+            }
         }
     }
 }

@@ -16,8 +16,7 @@ class PraktikIndustriNilaiModel extends Model
     protected $protectFields    = true;
     protected $useTimestamps = false;
     protected $allowedFields    = [
-        'nilai_singkat',
-        'nilai_lengkap',
+        'nilai_praktik_industri',
         'id_praktik_industri_nilai',
         'id_praktik_industri',
         'id_dokumen',

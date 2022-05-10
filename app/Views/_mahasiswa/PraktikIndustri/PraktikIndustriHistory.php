@@ -28,6 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+            <?= msgg(); ?>
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">

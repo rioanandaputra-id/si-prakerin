@@ -29,6 +29,9 @@
         <div class="row">
             <div class="col">
                 <div class="card">
+
+                <?= msgg(); ?>
+
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -157,7 +160,11 @@
                                                 <tr>
                                                     <td>Waktu Praktik Industri</td>
                                                     <td>:</td>
-                                                    <td><input type="date" name="waktu_awal_praktik_industri" /> s.d <input type="date" name="waktu_akhir_praktik_industri" /> </td>
+                                                    <?php if (!empty($PraktikIndustri[0]->waktu_awal_praktik_industri)) : ?>
+                                                        <td><?= $PraktikIndustri[0]->waktu_awal_praktik_industri; ?> s.d <?= $PraktikIndustri[0]->waktu_akhir_praktik_industri; ?></td>
+                                                    <?php else : ?>
+                                                        <td><input type="date" name="waktu_awal_praktik_industri" /> s.d <input type="date" name="waktu_akhir_praktik_industri" /> </td>
+                                                    <?php endif; ?>
                                                 </tr>
                                                 <tr>
                                                     <td>Dokumen Pengajuan Praktik Industri</td>
@@ -167,12 +174,12 @@
                                                 <tr>
                                                     <td>Nilai Praktik Industri</td>
                                                     <td>:</td>
-                                                    <td><input type="number" name="dokumen_nilai_praktik_industri" disabled /> </td>
+                                                    <td><input type="number" name="dokumen_nilai_praktik_industri"  /> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>Dokumen Nilai Praktik Industri</td>
                                                     <td>:</td>
-                                                    <td><input type="file" name="nilai_praktikindustri" disabled /></td>
+                                                    <td><input type="file" name="nilai_praktikindustri"  /></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Status Praktik Industri</td>

@@ -28,15 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <?php if (session()->getFlashData('success')) { ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?= session()->getFlashData('success') ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true" class="text-white">&times;</span>
-                        </button>
-                    </div>
-                <?php } ?>
-
+            <?= msgg(); ?>
                 <div class="card">
                     <form action="<?= site_url('admin/datamaster/dosen/create') ?>" method="POST">
                     <input type="hidden" name="id_dosen" value="<?= old('id_dosen') ?>">
