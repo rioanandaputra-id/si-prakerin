@@ -30,19 +30,25 @@ class PerusahaanModel extends Model
     public function getDt($status = false)
     {
         if ($status === false) {
-        $data = DataTables::use($this->table)
-            ->make();
+            $data = DataTables::use('tb_perusahaan')
+                ->make();
         } else {
-        $data = DataTables::use($this->table)
-            ->where('status_perusahaan', 'Aktif')
-            ->make();
+            $data = DataTables::use('tb_perusahaan')
+                ->where('tb_perusahaan.status_perusahaan', 'Aktif')
+                ->make();
         }
         return $data;
     }
 
     public function getStatus($status)
     {
-        $data = $this->where($this->allowedFields[7], $status)->get()->getResult();
+        $data = $this->where('tb_perusahaan.status_perusahaan', $status)->get()->getResult();
+        return $data;
+    }
+
+    public function getId($id)
+    {
+        $data = $this->where('tb_perusahaan.id_perusahaan', $id)->get()->getResult();
         return $data;
     }
 }

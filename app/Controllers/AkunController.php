@@ -66,11 +66,13 @@ class AkunController extends BaseController
 
         $id_pengguna = $dAkun['id_dosen'] ?? $mAkun['id_mahasiswa'] ?? null;
         $nama_lengkap = $dAkun['nama_dosen'] ?? $mAkun['nama_mahasiswa'] ?? null;
+        $nim_nip = $dAkun['nip_dosen'] ?? $mAkun['nim_mahasiswa'] ?? null;
 
         $data = [
             'id_akun' => $akun['id_akun'],
             'id_pengguna' =>  $id_pengguna,
             'nama_lengkap' => $nama_lengkap,
+            'nim_nip' => $nim_nip,
             'username' => $akun['username'],
             "peran_akun" => $akun['peran_akun'],
             'isLoggedIn' => true,

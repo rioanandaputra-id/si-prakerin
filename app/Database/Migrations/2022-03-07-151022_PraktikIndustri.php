@@ -17,16 +17,16 @@ class PraktikIndustri extends Migration
                 'type' => 'date',
                 'null' => true,
             ],
+            'status_praktik_industri'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '150',
+                'null'           => TRUE
+            ],
             'id_praktik_industri'  => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
-            ],
-            'id_status'  => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
             ],
             'id_perusahaan'  => [
                 'type'           => 'INT',
@@ -37,6 +37,10 @@ class PraktikIndustri extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+            ],
+            'id_dokumen' => [
+                'type' => 'INT',
+                'constraint' => '11',
             ],
         ]);
         $this->forge->addKey('id_praktik_industri', true);

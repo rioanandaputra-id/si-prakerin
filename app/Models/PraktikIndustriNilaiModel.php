@@ -20,5 +20,6 @@ class PraktikIndustriNilaiModel extends Model
         'id_praktik_industri_nilai',
         'id_praktik_industri',
         'id_dokumen',
+        'status_praktik_industri_nilai',
     ];
 }

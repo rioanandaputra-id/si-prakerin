@@ -24,6 +24,11 @@ class PraktikIndustriNilai extends Migration
                 'type' => 'INT',
                 'constraint' => '11',
             ],
+            'status_praktik_industri_nilai'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '150',
+                'null'           => TRUE
+            ],
         ]);
         $this->forge->addKey('id_praktik_industri_nilai', true);
         $this->forge->createTable('tb_praktik_industri_nilai');

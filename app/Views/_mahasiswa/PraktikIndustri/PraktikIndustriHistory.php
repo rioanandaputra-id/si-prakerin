@@ -142,8 +142,8 @@
                 name: 'tahun_akademik'
             },
             {
-                data: 'status',
-                name: 'status'
+                data: 'status_praktik_industri',
+                name: 'status_praktik_industri'
             },
         ],
         order: [

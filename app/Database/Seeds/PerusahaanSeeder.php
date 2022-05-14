@@ -18,11 +18,7 @@ class PerusahaanSeeder extends Seeder
                 'web_perusahaan' => 'www.bintangjaya.com',
                 'long_perusahaan' => '-6.917074',
                 'lat_perusahaan' => '107.619074',
-                'status_perusahaan' => 'Tidak Aktif',
-                // 'perusahaan_dibuat' => date('Y-m-d H:i:s'),
-                // 'perusahaan_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_perusahaan' => 1,
-                // 'id_pengubah_perusahaan' => 1,
+                'status_perusahaan' => 'Aktif',
             ],
             [
                 'id_perusahaan'          => '2',
@@ -34,10 +30,6 @@ class PerusahaanSeeder extends Seeder
                 'long_perusahaan' => '-6.917074',
                 'lat_perusahaan' => '107.619074',
                 'status_perusahaan' => 'Aktif',
-                // 'perusahaan_dibuat' => date('Y-m-d H:i:s'),
-                // 'perusahaan_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_perusahaan' => 1,
-                // 'id_pengubah_perusahaan' => 1,
             ],
             [
                 'id_perusahaan'          => '3',
@@ -48,11 +40,7 @@ class PerusahaanSeeder extends Seeder
                 'web_perusahaan' => 'www.lenteradigitalnusantara.com',
                 'long_perusahaan' => '-6.918899',
                 'lat_perusahaan' => '107.696633',
-                'status_perusahaan' => 'Tidak Aktif',
-                // 'perusahaan_dibuat' => date('Y-m-d H:i:s'),
-                // 'perusahaan_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_perusahaan' => 1,
-                // 'id_pengubah_perusahaan' => 1,
+                'status_perusahaan' => 'Aktif',
             ],
         ];
 

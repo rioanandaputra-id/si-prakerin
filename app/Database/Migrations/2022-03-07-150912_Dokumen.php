@@ -25,13 +25,14 @@ class Dokumen extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => '255',
             ],
-            'upload_dokumen'       => [
-                'type' => 'BOOLEAN',
-                'default' => 0
-            ],
-            'status_dokumen'     => [
+            // 'upload_dokumen'       => [
+            //     'type' => 'BOOLEAN',
+            //     'default' => 0
+            // ],
+            'status_dokumen'       => [
                 'type'           => 'VARCHAR',
-                'constraint'     => '30',
+                'constraint'     => '150',
+                'null'           => TRUE
             ],
             'id_dokumen'          => [
                 'type'           => 'INT',

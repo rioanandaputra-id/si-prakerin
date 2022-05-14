@@ -21,9 +21,9 @@ class Akun extends Migration
                 'type' => 'enum',
                 'constraint' => "'Administrator','Dosen','Mahasiswa'",
             ],
-            'status_akun' => [
-                'type' => 'enum',
-                'constraint' => "'Aktif','Tidak Aktif'",
+            'status_akun'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '150',
             ],
             'id_akun' => [
                 'type' => 'INT',

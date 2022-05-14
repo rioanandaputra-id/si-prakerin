@@ -20,7 +20,7 @@ class PraktikIndustriModel extends Model
         'id_praktik_industri',
         'id_perusahaan',
         'id_mahasiswa',
-        'id_status',
+        'status_praktik_industri',
         'waktu_awal_praktik_industri',
         'waktu_akhir_praktik_industri',
     ];
@@ -28,8 +28,7 @@ class PraktikIndustriModel extends Model
     public function getDt($id = null)
     {
         if ($id != null) {
-            $data = DataTables::use($this->table)
-                ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
+            $data = DataTables::use('tb_praktik_industri')
                 ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
                 ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
                 ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
@@ -38,8 +37,7 @@ class PraktikIndustriModel extends Model
                 ->where('tb_praktik_industri.id_mahasiswa', $id)
                 ->make();
         } else {
-            $data = DataTables::use($this->table)
-                ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
+            $data = DataTables::use('tb_praktik_industri')
                 ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
                 ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
                 ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
@@ -53,7 +51,6 @@ class PraktikIndustriModel extends Model
     public function getDtDetail($id)
     {
         $data = $this->where('id_praktik_industri', $id)
-            ->join('tb_status AS sts', 'sts.id_status = tb_praktik_industri.id_status', 'left')
             ->join('tb_perusahaan AS prh', 'prh.id_perusahaan = tb_praktik_industri.id_perusahaan', 'left')
             ->join('tb_mahasiswa AS mhs', 'mhs.id_mahasiswa = tb_praktik_industri.id_mahasiswa', 'left')
             ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')

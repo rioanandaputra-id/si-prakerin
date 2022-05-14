@@ -37,44 +37,44 @@
                                     <tr>
                                         <td>Status Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['status_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->status_perusahaan; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Nama Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['nama_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->nama_perusahaan; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Telpon Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['telp_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->telp_perusahaan; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Email Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['email_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->email_perusahaan; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Web Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['web_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->web_perusahaan; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Alamat Perusahaan</td>
                                         <td>:</td>
-                                        <td><?= $perusahaan['alamat_perusahaan']; ?></td>
+                                        <td><?= $perusahaan[0]->alamat_perusahaan; ?></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <iframe src="https://maps.google.com/maps?q=<?= $perusahaan['lat_perusahaan']; ?>,<?= $perusahaan['long_perusahaan']; ?>&hl=en&z=18&amp;output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://maps.google.com/maps?q=<?= $perusahaan[0]->lat_perusahaan; ?>,<?= $perusahaan[0]->long_perusahaan; ?>&hl=en&z=18&amp;output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button onclick="selected(<?= $perusahaan['id_perusahaan'] ?>)" class="btn btn-primary mr-2"><i class="fa fa-hand-pointer"></i> Pilih Perusahaan</button>
+                        <button onclick="selected(<?= $perusahaan[0]->id_perusahaan ?>)" class="btn btn-primary mr-2"><i class="fa fa-hand-pointer"></i> Pilih Perusahaan</button>
                         <a href="<?= site_url('mahasiswa/praktikindustri') ?>" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Kembali</a>
                     </div>
                 </div>
@@ -111,10 +111,11 @@
                     type: "POST",
                     dataType: "JSON",
                     data: {
+                        selected: true,
                         id_perusahaan: id
                     },
                     success: function(data) {
-                        if (data.status === true) {
+                        if (data.status == true) {
                             Swal.fire({
                                 title: "Berhasil!",
                                 text: data.msg,
@@ -137,7 +138,7 @@
                     error: function(data) {
                         Swal.fire({
                             title: "Gagal!",
-                            text: "Perusahaan gagal dipilih!",
+                            text: "Perusahaan gagal dipilih!" + data,
                             icon: "error",
                             confirmButtonText: "Oke"
                         });

@@ -28,14 +28,12 @@ class DosenModel extends Model
         'alamat_dosen',
     ];
     protected $useTimestamps = false;
-    protected $prodi         = ['tb_prodi', 'tb_dosen.id_prodi = tb_prodi.id_prodi', 'LEFT JOIN'];
-    protected $akun          = ['tb_akun', 'tb_dosen.id_akun = tb_akun.id_akun', 'INNER JOIN'];
 
     public function dt()
     {
-        $data = DataTables::use($this->table)
-            ->join($this->prodi[0], $this->prodi[1], $this->prodi[2])
-            ->join($this->akun[0], $this->akun[1], $this->akun[2])
+        $data = DataTables::use('tb_dosen')
+            ->join('tb_prodi AS prodi', 'tb_dosen.id_prodi = prodi.id_prodi', 'LEFT JOIN')
+            ->join('tb_akun AS akun', 'tb_dosen.id_akun = akun.id_akun', 'INNER JOIN')
             ->make();
         return $data;
     }

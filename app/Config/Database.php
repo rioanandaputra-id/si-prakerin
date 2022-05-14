@@ -35,7 +35,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'db_siprakerin',
+        'database' => 'db_praktikindustri',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

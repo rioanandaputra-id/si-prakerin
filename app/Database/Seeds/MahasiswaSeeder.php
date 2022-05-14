@@ -24,11 +24,6 @@ class MahasiswaSeeder extends Seeder
                 'alamat_mahasiswa' => 'Jl. Surya Kencana No.1',
                 'nama_ortua' => 'Iqbal',
                 'no_hp_ortua' => '081212121212',
-                // 'status_mahasiswa' => 'Tidak Aktif',
-                // 'mahasiswa_dibuat' => date('Y-m-d H:i:s'),
-                // 'mahasiswa_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_mahasiswa' => 1,
-                // 'id_pengubah_mahasiswa' => 1,
             ],
             [
                 'id_mahasiswa' => '2',
@@ -45,11 +40,6 @@ class MahasiswaSeeder extends Seeder
                 'alamat_mahasiswa' => 'Jl. Mawar No.1',
                 'nama_ortua' => 'Sumargo',
                 'no_hp_ortua' => '08122222222',
-                // 'status_mahasiswa' => 'Aktif',
-                // 'mahasiswa_dibuat' => date('Y-m-d H:i:s'),
-                // 'mahasiswa_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_mahasiswa' => 1,
-                // 'id_pengubah_mahasiswa' => 1,
             ],
             [
                 'id_mahasiswa' => '3',
@@ -66,11 +56,6 @@ class MahasiswaSeeder extends Seeder
                 'alamat_mahasiswa' => 'Jl. Horas Bro No.1',
                 'nama_ortua' => 'Aduh Biyung',
                 'no_hp_ortua' => '08133333333',
-                // 'status_mahasiswa' => 'Tidak Aktif',
-                // 'mahasiswa_dibuat' => date('Y-m-d H:i:s'),
-                // 'mahasiswa_diubah' => date('Y-m-d H:i:s'),
-                // 'id_pembuat_mahasiswa' => 1,
-                // 'id_pengubah_mahasiswa' => 1,
             ]
         ];
 

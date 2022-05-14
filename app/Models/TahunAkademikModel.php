@@ -22,7 +22,7 @@ class TahunAkademikModel extends Model
 
     public function dt()
     {
-        $data = DataTables::use($this->table)
+        $data = DataTables::use('tb_tahun_akademik')
             ->make();
         return $data;
     }

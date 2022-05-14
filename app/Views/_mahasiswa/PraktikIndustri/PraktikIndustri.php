@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-header d-flex p-0">
                         <div class="card-title p-3">
-                            <a href="<?= site_url('admin/datamaster/perusahaan/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
+                            <a href="<?= site_url('mahasiswa/praktikindustri/add'); ?>" class="btn btn-primary btn-flat btn-sm"> <i class="fa fa-plus-circle"></i>
                                 Ajukan Perusahaan Baru</a>
                             <button type="button" id="reload" class="btn btn-secondary btn-flat btn-sm"> <i class="fa fa-retweet"></i>
                                 Segarkan</button>
@@ -44,7 +44,6 @@
                                     <table id="dataTable" class="table table-bordered table-hover dataTable dtr-inline" style="width: 100%; font-size:smaller;">
                                         <thead class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
                                                 <th>TELPON</th>
                                                 <th>EMAIL</th>
@@ -55,7 +54,6 @@
 
                                         <tfoot class="bg-success">
                                             <tr>
-                                                <th style="width: 10px;"><input type="checkbox" class="checkbox_all"></th>
                                                 <th>NAMA</th>
                                                 <th>TELPON</th>
                                                 <th>EMAIL</th>
@@ -88,15 +86,7 @@
             url: '',
             type: 'GET',
         },
-        columns: [{
-                data: 'id_perusahaan',
-                name: 'id_perusahaan',
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row, meta) {
-                    return '<input type="checkbox" class="checkbox_item" name="checkbox_item[]" value="' + row.id_perusahaan + '">';
-                }
-            },
+        columns: [
             {
                 data: 'nama_perusahaan',
                 name: 'nama_perusahaan',

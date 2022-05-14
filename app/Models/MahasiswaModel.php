@@ -32,18 +32,13 @@ class MahasiswaModel extends Model
         'nama_ortua',
         'no_hp_ortua',
     ];
-    protected $join = [
-        'tb_tahun_akademik',
-        'tb_akun', 
-        'tb_prodi'
-    ];
-    
+
     public function dt()
     {
-        $data = DataTables::use($this->table)
-            ->join($this->join[0], $this->table . '.'.$this->allowedFields[1].' = ' . $this->join[0] . '.'.$this->allowedFields[1], 'LEFT')
-            ->join($this->join[1], $this->table . '.'.$this->allowedFields[2].' = ' . $this->join[1] . '.'.$this->allowedFields[2], 'LEFT')
-            ->join($this->join[2], $this->table . '.'.$this->allowedFields[3].' = ' . $this->join[2] . '.'.$this->allowedFields[3], 'LEFT')
+        $data = DataTables::use('tb_mahasiswa')
+            ->join('tb_tahun_akademik AS tahun', 'tb_mahasiswa.id_tahun_akademik = tahun.id_tahun_akademik', 'LEFT JOIN')
+            ->join('tb_akun AS akun', 'tb_mahasiswa.id_akun = akun.id_akun', 'INNER JOIN')
+            ->join('tb_prodi AS prodi', 'tb_mahasiswa.id_prodi = prodi.id_prodi', 'LEFT JOIN')
             ->make();
         return $data;
     }
@@ -51,10 +46,10 @@ class MahasiswaModel extends Model
     public function getStatus($status)
     {
         $data = $this->where('status_akun', $status)
-        ->join($this->join[0], $this->table . '.'.$this->allowedFields[1].' = ' . $this->join[0] . '.'.$this->allowedFields[1], 'LEFT')
-        ->join($this->join[1], $this->table . '.'.$this->allowedFields[2].' = ' . $this->join[1] . '.'.$this->allowedFields[2], 'LEFT')
-        ->join($this->join[2], $this->table . '.'.$this->allowedFields[3].' = ' . $this->join[2] . '.'.$this->allowedFields[3], 'LEFT')  
-        ->get()->getResult();
+            ->join('tb_tahun_akademik AS tahun', 'tb_mahasiswa.id_tahun_akademik = tahun.id_tahun_akademik', 'LEFT JOIN')
+            ->join('tb_akun AS akun', 'tb_mahasiswa.id_akun = akun.id_akun', 'INNER JOIN')
+            ->join('tb_prodi AS prodi', 'tb_mahasiswa.id_prodi = prodi.id_prodi', 'LEFT JOIN')
+            ->get()->getResult();
         return $data;
     }
 

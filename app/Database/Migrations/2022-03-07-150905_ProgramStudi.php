@@ -17,9 +17,10 @@ class ProgramStudi extends Migration
                 'type'            => 'VARCHAR',
                 'constraint'      => '100',
             ],
-            'status_prodi'  => [
-                'type' => 'enum',
-                'constraint' => "'Aktif','Tidak Aktif'",
+            'status_prodi'       => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '150',
+                'null'           => TRUE
             ],
             'id_prodi'          => [
                 'type'           => 'INT',
@@ -27,24 +28,6 @@ class ProgramStudi extends Migration
                 'unsigned'       => TRUE,
                 'auto_increment' => TRUE
             ],
-            // 'prodi_dibuat'           => [
-            //     'type'           => 'DATETIME',
-            // ],
-            // 'prodi_diubah'       => [
-            //     'type'           => 'DATETIME',
-            //     'null'           => TRUE,
-            // ],
-            // 'id_pembuat_prodi'         => [
-            //     'type'           => 'INT',
-            //     'constraint'     => 11,
-            //     'unsigned'       => TRUE,
-            // ],
-            // 'id_pengubah_prodi'        => [
-            //     'type'           => 'INT',
-            //     'constraint'     => 11,
-            //     'unsigned'       => TRUE,
-            //     'null'           => TRUE
-            // ],
         ]);
         $this->forge->addKey('id_prodi', TRUE);
         $this->forge->createTable('tb_prodi');
