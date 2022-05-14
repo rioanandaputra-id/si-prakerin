@@ -28,11 +28,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-            <?= msgg(); ?>
+                <?= msgg(); ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
+                            <p class="text-primary">Data Perusahaan</p>
                                 <table>
                                     <tr>
                                         <td>Status Perusahaan</td>

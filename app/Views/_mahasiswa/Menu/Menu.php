@@ -51,14 +51,14 @@ $this->section('menu');
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="<?= $seg = site_url('mahasiswa/penilaian') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-edit"></i>
                 <p>
                     Penilaian
                 </p>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a href="<?= $seg = site_url('mahasiswa/dukumen') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-file"></i>
@@ -67,14 +67,14 @@ $this->section('menu');
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="<?= $seg = site_url('mahasiswa/pesan') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-comments"></i>
                 <p>
                     Pesan
                 </p>
             </a>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a href="<?= $seg = site_url('mahasiswa/akun') ?>" class="nav-link <?= cmenu($seg); ?>">
                 <i class="nav-icon fa fa-lock"></i>

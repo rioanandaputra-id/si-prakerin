@@ -20,6 +20,7 @@ class PraktikIndustriModel extends Model
         'id_praktik_industri',
         'id_perusahaan',
         'id_mahasiswa',
+        'id_dokumen',
         'status_praktik_industri',
         'waktu_awal_praktik_industri',
         'waktu_akhir_praktik_industri',
@@ -56,7 +57,7 @@ class PraktikIndustriModel extends Model
             ->join('tb_akun AS akn', 'akn.id_akun = mhs.id_akun', 'left')
             ->join('tb_tahun_akademik AS thn', 'thn.id_tahun_akademik = mhs.id_tahun_akademik', 'left')
             ->join('tb_prodi AS prd', 'prd.id_prodi = mhs.id_prodi', 'left')
-            ->get()->getResult();
+            ->first();
         return $data;
     }
 }

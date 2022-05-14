@@ -13,21 +13,20 @@ class PraktikIndustriNilai extends Migration
                 'type' => 'FLOAT',
             ],
             'id_praktik_industri_nilai' => [
-                'type' => 'INT',
-                'constraint' => '11',
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
             ],
             'id_praktik_industri' => [
-                'type' => 'INT',
-                'constraint' => '11',
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
             ],
             'id_dokumen' => [
-                'type' => 'INT',
-                'constraint' => '11',
-            ],
-            'status_praktik_industri_nilai'       => [
-                'type'           => 'VARCHAR',
-                'constraint'     => '150',
-                'null'           => TRUE
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
             ],
         ]);
         $this->forge->addKey('id_praktik_industri_nilai', true);
