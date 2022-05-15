@@ -15,5 +15,9 @@ class AllSeeder extends Seeder
         $this->call('MahasiswaSeeder');
         $this->call('DosenSeeder');
         $this->call('DokumenSeeder');
+        $this->call('BimbinganSeeder');
+        $this->call('BimbinganJudulSeeder');
+        $this->call('BimbinganJudulRiwayatSeeder');
+
     }
 }

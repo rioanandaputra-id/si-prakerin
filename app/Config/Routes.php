@@ -80,6 +80,15 @@ $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter
     $routes->get('praktikindustri/history/detail', 'PraktikIndustri::PraktikIndustriViewHistoryDetail');
     $routes->post('praktikindustri/create', 'PraktikIndustri::PraktikIndustriCreate');
     $routes->post('praktikindustri/update', 'PraktikIndustri::PraktikIndustriUpdate');
+
+    $routes->get('bimbingan', 'Bimbingan::BimbinganView');
+    $routes->get('bimbingan/add', 'Bimbingan::BimbinganViewAdd');
+    $routes->get('bimbingan/detail', 'Bimbingan::BimbinganViewDetail');
+    $routes->get('bimbingan/edit', 'Bimbingan::BimbinganViewEdit');
+    $routes->get('bimbingan/create', 'Bimbingan::BimbinganCreate');
+    $routes->get('bimbingan/update', 'Bimbingan::BimbinganUpdate');
+    $routes->get('bimbingan/delete', 'Bimbingan::BimbinganDelete');
+
 });
 
 $routes->group('dosen', ['namespace' => 'App\Controllers\Dosen', 'filter' => 'auth'], function ($routes) {
