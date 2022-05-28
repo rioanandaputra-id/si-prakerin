@@ -85,9 +85,9 @@ $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter
     $routes->get('bimbingan/add', 'Bimbingan::BimbinganViewAdd');
     $routes->get('bimbingan/detail', 'Bimbingan::BimbinganViewDetail');
     $routes->get('bimbingan/edit', 'Bimbingan::BimbinganViewEdit');
-    $routes->get('bimbingan/create', 'Bimbingan::BimbinganCreate');
-    $routes->get('bimbingan/update', 'Bimbingan::BimbinganUpdate');
-    $routes->get('bimbingan/delete', 'Bimbingan::BimbinganDelete');
+    $routes->post('bimbingan/create', 'Bimbingan::BimbinganCreate');
+    $routes->post('bimbingan/update', 'Bimbingan::BimbinganUpdate');
+    $routes->post('bimbingan/delete', 'Bimbingan::BimbinganDelete');
 
 });
 

@@ -60,4 +60,12 @@ class PraktikIndustriModel extends Model
             ->first();
         return $data;
     }
+
+    public function getStatusCount($id_mahasiswa, $status_praktik_industri)
+    {
+        $data = $this->where('id_mahasiswa', $id_mahasiswa)
+            ->where('status_praktik_industri', $status_praktik_industri)
+            ->countAllResults();
+        return $data;
+    }
 }

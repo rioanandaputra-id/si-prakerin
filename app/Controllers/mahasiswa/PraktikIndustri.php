@@ -269,7 +269,7 @@ class PraktikIndustri extends BaseController
                 ]);
 
                 $status = $mPraktikIndustri->update($id, [
-                    'status_praktik_industri' => 'Penilaian praktik industi menunggu konfirmasi admin',
+                    'status_praktik_industri' => 'Penilaian praktik industri menunggu konfirmasi admin',
                 ]);
             }
         }
