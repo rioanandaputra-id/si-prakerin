@@ -70,6 +70,49 @@ $routes->group('admin', ['namespace' => 'App\Controllers\admin', 'filter' => 'au
     $routes->post('praktikindustri/update', 'PraktikIndustri::PraktikIndustriUpdate');
     $routes->post('praktikindustri/delete', 'PraktikIndustri::PraktikIndustriDelete');
 
+    $routes->get('bimbingan', 'Bimbingan::BimbinganView');
+    $routes->get('bimbingan/detail', 'Bimbingan::BimbinganViewDetail');
+    $routes->get('bimbingan/add', 'Bimbingan::BimbinganViewAdd');
+    $routes->get('bimbingan/edit', 'Bimbingan::BimbinganViewEdit');
+    $routes->post('bimbingan/create', 'Bimbingan::BimbinganCreate');
+    $routes->post('bimbingan/update', 'Bimbingan::BimbinganUpdate');
+    $routes->post('bimbingan/delete', 'Bimbingan::BimbinganDelete');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 $routes->group('mahasiswa', ['namespace' => 'App\Controllers\Mahasiswa', 'filter' => 'auth'], function ($routes) {

@@ -1,6 +1,6 @@
 <?php $this->extend('/_mahasiswa/Menu/Menu'); ?>
 <?php $this->section('title'); ?>
-<?php echo $title = 'Bimbingan - Ajukan Judul'; ?>
+<?php echo $title = 'Bimbingan - Detail Pengajuan Judul'; ?>
 <?php $this->endSection(); ?>
 
 <!-- =================================[[[[ AWAL KONTEN ]]]]========================================= -->
@@ -29,20 +29,47 @@
         <div class="row">
             <div class="col-12">
                 <?= msgg(); ?>
-                    <div class="card">
-                        <div class="card-body">
-
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead class="bg-success">
+                                        <tr>
+                                            <th>Judul</th>
+                                            <th>Status</th>
+                                            <th>Tanggal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($judul as $j) : ?>
+                                            <tr>
+                                                <td><?= $j['judul_diajukan']; ?></td>
+                                                <td><?= $j['status_bimbingan']; ?></td>
+                                                <td><?= $j['tanggal_diajukan']; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="pesan">Pesan</label>
+                                        <textarea class="form-control" id="pesan" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dokumen">File</label>
+                                        <input type="file" class="form-control" id="dokumen">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Kirim</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="float-left">
-                            <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-save"></i> Tambah</button>
-                            <a href="<?= site_url('mahasiswa/bimbingan') ?>" class="btn btn-danger"><i class="fa fa-angle-double-left"></i> Kembali</a>
-                        </div>
-                        <div class="float-right">
-                            <p class="text-bold mt-2"><i class="text-danger">*</i>) bidang harus diisi!</p>
-                        </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>

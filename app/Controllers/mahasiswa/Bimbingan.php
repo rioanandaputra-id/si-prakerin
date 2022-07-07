@@ -34,7 +34,15 @@ class Bimbingan extends BaseController
 
     public function BimbinganViewDetail()
     {
-        return view('_mahasiswa/Bimbingan/BimbinganDetail');
+        $mBimbinganJudul = new BimbinganJudulModel();
+        $mBimbinganJudulRiwayat = new BimbinganJudulRiwayatModel();
+        $mBimbingan = new BimbinganModel();
+        $mPraktikIndustri = new PraktikIndustriModel();
+
+        $data['judul'] = $mBimbinganJudul->find($this->request->getPost('id'));
+        $data['riwayat'] = $mBimbinganJudulRiwayat->where('id_bimbingan_judul', $this->request->getPost('id'))->orderBy('id_bimbingan_judul_riwayat', 'DESC')->get();
+
+        return view('_mahasiswa/Bimbingan/BimbinganDetail', $data);
     }
 
     public function BimbinganCreate()

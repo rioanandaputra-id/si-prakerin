@@ -14,8 +14,8 @@ class Bimbingan extends BaseController
         }
     }
     
-    public function index()
+    public function BimbinganView()
     {
-        //
+        return view('_admin/Bimbingan/Bimbingan');
     }
 }
